@@ -101,7 +101,7 @@ class Todo extends React.Component {
                                 onBlur={ e => this.updateTodoItem(e, todoItem) } />
                         </td>
                     }
-                    <td className="{'hidingElement': props.hideEverything}">{ moment(todoItem.todoCreatedDate).fromNow() }</td>
+                    <td className={this.props.hideEverything ? "hidingElement" : ""}>{ moment(todoItem.todoCreatedDate).fromNow() }</td>
                     <td className="text-right">
                         <button className="btn btn-danger btn-sm" onClick={ () => this.deleteTodoItem(todoItem) }>
                             <i className="fas fa-trash-alt"></i>
@@ -125,8 +125,7 @@ class Todo extends React.Component {
                             onChange={ this.updateNewTodoItemName } />
                         <div className="input-group-append">
                             <button className="btn btn-primary" type="submit" disabled={ !this.state.newTodoItemName }>
-                                <i className="fas fa-plus"></i>
-                                Create
+                                <i className="fas fa-plus"></i> Create
                             </button>
                         </div>
                     </div>
