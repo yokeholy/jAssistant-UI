@@ -52,10 +52,11 @@ html, body {
   border: 1px solid rgba(255, 255, 255, 0.5);
   color: #dddddd;
 }
-.form-control:focus {
+.form-control:focus, .form-control:active {
   background: rgba(255, 255, 255, 0.4);
   border: 1px solid white;
   color: white;
+  text-shadow: 0px 1px 3px black;
 }
 
 .hidingElement {
