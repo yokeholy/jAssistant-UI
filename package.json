@@ -1,5 +1,5 @@
 {
-  "name": "jAssistant",
+  "name": "j-assistant",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -20,6 +20,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "homepage": "https://j-assistant.wangjin.me/",
   "eslintConfig": {
     "extends": "react-app"
   },
