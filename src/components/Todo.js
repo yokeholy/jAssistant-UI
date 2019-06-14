@@ -115,7 +115,7 @@ class Todo extends React.Component {
 
         return (
             <section id="todoList" className="col-12 col-lg-4">
-                <h3>Todo List</h3>
+                <h3>Todo List ({ this.state.todoList.filter(todo => !todo.todoStatus).length })</h3>
                 <p className="text-muted">Everything you need to get done or got done today.</p>
                 <form onSubmit={ this.createTodoItem }>
                     <div className="input-group">

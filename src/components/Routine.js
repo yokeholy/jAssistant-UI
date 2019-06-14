@@ -113,7 +113,7 @@ class Routine extends React.Component {
 
         return (
             <section id="routines" className="col-12 col-lg-4">
-                <h3>Routines</h3>
+                <h3>Routines ({ this.state.routineList.filter(routine => !routine.routineCheckedIn).length })</h3>
                 <p className="text-muted">Things that repeat but essential.</p>
                 <form onSubmit={ this.createRoutine }>
                     <div className="input-group">
