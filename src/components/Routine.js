@@ -7,24 +7,44 @@ import API from "../services/api";
 class Routine extends React.Component {
     state = {
         routineList: [],
-        newRoutineName: ""
+        newRoutineName: "",
+        sortingItem: "routineCheckedIn",
+        sortingDescending: true
     };
 
     componentDidMount () {
         this.getRoutineList();
     }
 
+    setSort = field => {
+        if (field === this.state.sortingItem) {
+            this.setState({
+                sortingDescending: !this.state.sortingDescending
+            });
+        } else {
+            this.setState({
+                sortingItem: field
+            });
+        }
+    }
+
+    sortedRoutineList = () =>
+        this.state.routineList.sort((a, b) => {
+            if (a[this.state.sortingItem] < b[this.state.sortingItem]) {
+                return this.state.sortingDescending ? -1 : 1;
+            } else if (a[this.state.sortingItem] > b[this.state.sortingItem]) {
+                return this.state.sortingDescending ? 1 : -1;
+            } else {
+                return 0;
+            }
+        });
+
     getRoutineList = () => {
         API.get("/routine/getRoutineList")
             .then(response => {
                 this.setState({
                     // Sort by the Routine Status, put finished ones at the bottom
-                    routineList: response.data.data.routineList.sort((a, b) => {
-                        let modifier = 1;
-                        if (a.routineCheckedIn < b.routineCheckedIn) return -1 * modifier;
-                        if (a.routineCheckedIn > b.routineCheckedIn) return 1 * modifier;
-                        return 0;
-                    })
+                    routineList: response.data.data.routineList
                 });
             });
     }
@@ -82,7 +102,7 @@ class Routine extends React.Component {
 
     render () {
         const routineList = this.state.routineList.length
-            ? this.state.routineList.map(routineItem =>
+            ? this.sortedRoutineList().map(routineItem =>
                 <tr key={ routineItem.routineId }>
                     <td>
                         { !routineItem.routineCheckedIn
@@ -111,6 +131,16 @@ class Routine extends React.Component {
                 <td colSpan="4" className="bg-info">You have not set up any routines yet.</td>
             </tr>;
 
+        const sortingIndicator = field => {
+            if (field === this.state.sortingItem) {
+                return this.state.sortingDescending
+                    ? <i className="fas fa-long-arrow-alt-up"></i>
+                    : <i className="fas fa-long-arrow-alt-down"></i>;
+            } else {
+                return null;
+            }
+        };
+
         return (
             <section id="routines" className="col-12 col-lg-4">
                 <h3>Routines ({ this.state.routineList.filter(routine => !routine.routineCheckedIn).length })</h3>
@@ -131,9 +161,9 @@ class Routine extends React.Component {
                 <table className="table table-hover">
                     <thead>
                         <tr>
-                            <th></th>
-                            <th>Routine</th>
-                            <th>Consecutive</th>
+                            <th className="clickable" onClick={ () => this.setSort("routineCheckedIn") }>Done { sortingIndicator("routineCheckedIn") }</th>
+                            <th className="clickable" onClick={ () => this.setSort("routineName") }>Routine { sortingIndicator("routineName") }</th>
+                            <th className="clickable" onClick={ () => this.setSort("routineConsecutive") }>Consecutive { sortingIndicator("routineConsecutive") }</th>
                             <th></th>
                         </tr>
                     </thead>
