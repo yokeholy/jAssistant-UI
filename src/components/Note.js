@@ -22,7 +22,12 @@ class Note extends React.Component {
             });
     }
 
-    updateNoteContent = (e, noteItem) => {
+    watchNoteTitle = (e, noteItem) => {
+        noteItem.noteTitle = e.target.value;
+        this.forceUpdate();
+    }
+
+    watchNoteContent = (e, noteItem) => {
         noteItem.noteContent = e.target.value;
         this.forceUpdate();
     }
@@ -37,7 +42,7 @@ class Note extends React.Component {
     createNote = () => {
         API.post("/note/createNote")
             .then(() => {
-                toast.success("Note is created.");
+                toast.success("A new Note is created.");
                 this.getNotes();
             });
     }
@@ -45,10 +50,11 @@ class Note extends React.Component {
     updateNote = noteItem => {
         API.post("/note/updateNote", {
             noteId: noteItem.noteId,
+            noteTitle: noteItem.noteTitle,
             noteContent: noteItem.noteContent
         })
             .then(() => {
-                toast.success("Note is updated.");
+                toast.success(`Note "${noteItem.noteTitle}" is updated.`);
                 this.getNotes();
             });
     }
@@ -56,7 +62,7 @@ class Note extends React.Component {
     archiveNote = noteItem => {
         API.post("/note/archiveNote", { noteId: noteItem.noteId })
             .then(() => {
-                toast.success("Note is archived.");
+                toast.success(`Note "${noteItem.noteTitle}" is archived.`);
                 this.getNotes();
             });
     }
@@ -65,11 +71,18 @@ class Note extends React.Component {
         const noteList = this.state.noteList.length
             ? this.state.noteList.map(noteItem =>
                 <div key={ noteItem.noteId }>
-                    <textarea className={`form-control mb-3 noteContent ${this.props.hideEverything ? "hidingElement" : ""}`}
+                    <hr />
+                    <input type="text"
+                        className="form-control"
+                        placeholder="Untitled"
+                        value={ noteItem.noteTitle }
+                        onChange={ e => this.watchNoteTitle(e, noteItem) }
+                        onKeyDown={ e => this.checkToSave(e, noteItem) }
+                    />
+                    <textarea className={`form-control mt-3 mb-3 noteContent ${this.props.hideEverything ? "hidingElement" : ""}`}
                         value={ noteItem.noteContent }
-                        onChange={ e => this.updateNoteContent(e, noteItem) }
+                        onChange={ e => this.watchNoteContent(e, noteItem) }
                         onKeyDown={ e => this.checkToSave(e, noteItem) }></textarea>
-                    <p className="text-right text-muted">*You can use <span className="badge badge-secondary">Ctrl/Cmd + S</span> to save the Note.</p>
                     <p className="text-right">
                         <button className="btn btn-secondary" onClick={ () => this.archiveNote(noteItem) }>
                             <i className="fas fa-archive"></i> Archive
@@ -85,7 +98,7 @@ class Note extends React.Component {
         return (
             <section id="notes" className="col-12 col-lg-4">
                 <h3>Notes</h3>
-                <p className="text-muted">Access it anywhere.</p>
+                <p className="text-muted">You can use <span className="badge badge-secondary">Ctrl/Cmd + S</span> to save your Notes.</p>
                 <p className="text-right">
                     <button className="btn btn-primary"
                         onClick={ this.createNote }>
