@@ -1,19 +1,17 @@
-/* global localStorage */
 import axios from "axios";
-
-const APIURL = "https://wangjin.me:5319";
+import Config from "../config/config";
 
 axios.defaults.headers.common = {
-    Authorization: localStorage.getItem("iwj_token")
+    Authorization: Config.APIKey
 };
 
 class API {
     // TODO: Add global warning/error message if API fails.
     static get (URL) {
-        return axios.get(APIURL + URL);
+        return axios.get(Config.APIURL + URL);
     }
     static post (URL, body) {
-        return axios.post(APIURL + URL, body);
+        return axios.post(Config.APIURL + URL, body);
     }
 }
 

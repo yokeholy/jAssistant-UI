@@ -54,9 +54,8 @@ class Note extends React.Component {
             <section id="notes" className="col-12 col-lg-4">
                 <h3>Notes</h3>
                 <p className="text-muted">Access it anywhere.</p>
-                <textarea className={`form-control mb-3 ${this.props.hideEverything ? "hidingElement" : ""}`}
+                <textarea className={`form-control mb-3 h-50 ${this.props.hideEverything ? "hidingElement" : ""}`}
                     value={ this.state.note }
-                    rows="20"
                     onChange={ this.updateNoteContent }
                     onKeyDown={ this.checkToSave }></textarea>
                 <p className="text-right text-muted">*You can use <span className="badge badge-secondary">Ctrl/Cmd + S</span> to save the Note.</p>
