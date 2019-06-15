@@ -6,67 +6,93 @@ import API from "../services/api";
 
 class Note extends React.Component {
     state = {
-        note: ""
+        noteList: []
     };
 
     componentDidMount () {
-        this.getNote();
+        this.getNotes();
     }
 
-    getNote = () => {
-        API.get("/note/getNote")
+    getNotes = () => {
+        API.get("/note/getNotes")
             .then(response => {
                 this.setState({
-                    note: response.data.data.note
+                    noteList: response.data.data.noteList
                 });
             });
     }
 
-    updateNoteContent = e => {
-        this.setState({ note: e.target.value });
+    updateNoteContent = (e, noteItem) => {
+        noteItem.noteContent = e.target.value;
+        this.forceUpdate();
     }
 
-    checkToSave = e => {
+    checkToSave = (e, noteItem) => {
         if (e.keyCode === 83 && e.metaKey) {
             e.preventDefault();
-            this.updateNote();
+            this.updateNote(noteItem);
         }
     }
 
-    updateNote = () => {
-        API.post("/note/updateNote", { noteContent: this.state.note })
+    createNote = () => {
+        API.post("/note/createNote")
             .then(() => {
-                toast.success("Note is updated.");
-                this.getNote();
+                toast.success("Note is created.");
+                this.getNotes();
             });
     }
 
-    archiveNote = () => {
-        API.post("/note/archiveNote")
+    updateNote = noteItem => {
+        API.post("/note/updateNote", {
+            noteId: noteItem.noteId,
+            noteContent: noteItem.noteContent
+        })
+            .then(() => {
+                toast.success("Note is updated.");
+                this.getNotes();
+            });
+    }
+
+    archiveNote = noteItem => {
+        API.post("/note/archiveNote", { noteId: noteItem.noteId })
             .then(() => {
                 toast.success("Note is archived.");
-                this.setState({ note: "" });
+                this.getNotes();
             });
     }
 
     render () {
+        const noteList = this.state.noteList.length
+            ? this.state.noteList.map(noteItem =>
+                <div key={ noteItem.noteId }>
+                    <textarea className={`form-control mb-3 noteContent ${this.props.hideEverything ? "hidingElement" : ""}`}
+                        value={ noteItem.noteContent }
+                        onChange={ e => this.updateNoteContent(e, noteItem) }
+                        onKeyDown={ e => this.checkToSave(e, noteItem) }></textarea>
+                    <p className="text-right text-muted">*You can use <span className="badge badge-secondary">Ctrl/Cmd + S</span> to save the Note.</p>
+                    <p className="text-right">
+                        <button className="btn btn-secondary" onClick={ () => this.archiveNote(noteItem) }>
+                            <i className="fas fa-archive"></i> Archive
+                        </button>
+                        <button className="btn btn-primary" onClick={ () => this.updateNote(noteItem) }>
+                            <i className="fas fa-save"></i> Save
+                        </button>
+                    </p>
+                </div>
+            )
+            : <p className="alert alert-info">You don&apos;t have any notes yet.</p>;
+
         return (
             <section id="notes" className="col-12 col-lg-4">
                 <h3>Notes</h3>
                 <p className="text-muted">Access it anywhere.</p>
-                <textarea className={`form-control mb-3 h-50 ${this.props.hideEverything ? "hidingElement" : ""}`}
-                    value={ this.state.note }
-                    onChange={ this.updateNoteContent }
-                    onKeyDown={ this.checkToSave }></textarea>
-                <p className="text-right text-muted">*You can use <span className="badge badge-secondary">Ctrl/Cmd + S</span> to save the Note.</p>
                 <p className="text-right">
-                    <button className="btn btn-secondary" onClick={ this.archiveNote }>
-                        <i className="fas fa-archive"></i> Archive
-                    </button>
-                    <button className="btn btn-primary" onClick={ this.updateNote }>
-                        <i className="fas fa-save"></i> Save
+                    <button className="btn btn-primary"
+                        onClick={ this.createNote }>
+                        <i className="fas fa-plus"></i> New Note
                     </button>
                 </p>
+                { noteList }
             </section>
         );
     }
