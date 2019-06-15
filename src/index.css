@@ -24,6 +24,10 @@ html, body {
   opacity: 0.2;
 }
 
+hr {
+  border-top-color: #999999;
+}
+
 .clickable {
   cursor: pointer;
 }
