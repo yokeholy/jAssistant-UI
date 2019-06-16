@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import moment from "moment";
 import { toast } from "react-toastify";
+
 import API from "../services/api";
+import StateButton from "./fragments/StateButton";
 
 class Todo extends React.Component {
     state = {
@@ -40,7 +42,7 @@ class Todo extends React.Component {
             }
         });
 
-    getTodoList = () => {
+    getTodoList = () =>
         API.get("/todo/getTodoList")
             .then(response => {
                 this.setState({
@@ -48,7 +50,6 @@ class Todo extends React.Component {
                     todoList: response.data.data.todoList
                 });
             });
-    }
 
     updateNewTodoItemName = e => {
         this.setState({ newTodoItemName: e.target.value });
@@ -63,7 +64,7 @@ class Todo extends React.Component {
         // TODO: Use non-destructive State update (don't use use setState() to update the todoItem)
         todoItem.todoStatus = true;
         this.forceUpdate();
-        API.post("/todo/toggleTodoStatus", { todoId: todoItem.todoId })
+        return API.post("/todo/toggleTodoStatus", { todoId: todoItem.todoId })
             .then(() => {
                 toast.success(`${todoItem.todoName} is now done!`);
                 this.getTodoList();
@@ -72,7 +73,7 @@ class Todo extends React.Component {
 
     createTodoItem = e => {
         e.preventDefault();
-        API.post("/todo/createTodoItem", { itemName: this.state.newTodoItemName })
+        return API.post("/todo/createTodoItem", { itemName: this.state.newTodoItemName })
             .then(() => {
                 toast.success(`${this.state.newTodoItemName} is created successfully.`);
                 this.setState({newTodoItemName: ""});
@@ -147,16 +148,19 @@ class Todo extends React.Component {
             <section id="todoList" className="col-12 col-lg-4">
                 <h3>Todo List ({ this.state.todoList.filter(todo => !todo.todoStatus).length })</h3>
                 <p className="text-muted">Everything you need to get done or got done today.</p>
-                <form onSubmit={ this.createTodoItem }>
+                <form>
                     <div className="input-group">
                         <input type="text"
                             className="form-control"
                             value={ this.state.newTodoItemName }
                             onChange={ this.updateNewTodoItemName } />
                         <div className="input-group-append">
-                            <button className="btn btn-primary" type="submit" disabled={ !this.state.newTodoItemName }>
-                                <i className="fas fa-plus"></i> Create
-                            </button>
+                            <StateButton buttonType="primary"
+                                buttonIcon="fas fa-plus"
+                                buttonLabel="Create"
+                                inProgressLabel="Creating"
+                                action={ this.createTodoItem }>
+                            </StateButton>
                         </div>
                     </div>
                 </form>

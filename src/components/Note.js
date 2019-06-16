@@ -2,7 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
+
 import API from "../services/api";
+import StateButton from "./fragments/StateButton";
 
 class Note extends React.Component {
     state = {
@@ -13,14 +15,13 @@ class Note extends React.Component {
         this.getNotes();
     }
 
-    getNotes = () => {
+    getNotes = () =>
         API.get("/note/getNotes")
             .then(response => {
                 this.setState({
                     noteList: response.data.data.noteList
                 });
             });
-    }
 
     watchNoteTitle = (e, noteItem) => {
         noteItem.noteTitle = e.target.value;
@@ -39,15 +40,14 @@ class Note extends React.Component {
         }
     }
 
-    createNote = () => {
+    createNote = () =>
         API.post("/note/createNote")
             .then(() => {
                 toast.success("A new Note is created.");
                 this.getNotes();
             });
-    }
 
-    updateNote = noteItem => {
+    updateNote = noteItem =>
         API.post("/note/updateNote", {
             noteId: noteItem.noteId,
             noteTitle: noteItem.noteTitle,
@@ -57,15 +57,13 @@ class Note extends React.Component {
                 toast.success(`Note "${noteItem.noteTitle}" is updated.`);
                 this.getNotes();
             });
-    }
 
-    archiveNote = noteItem => {
+    archiveNote = noteItem =>
         API.post("/note/archiveNote", { noteId: noteItem.noteId })
             .then(() => {
                 toast.success(`Note "${noteItem.noteTitle}" is archived.`);
                 this.getNotes();
             });
-    }
 
     render () {
         const noteList = this.state.noteList.length
@@ -84,12 +82,18 @@ class Note extends React.Component {
                         onChange={ e => this.watchNoteContent(e, noteItem) }
                         onKeyDown={ e => this.checkToSave(e, noteItem) }></textarea>
                     <p className="text-right">
-                        <button className="btn btn-secondary" onClick={ () => this.archiveNote(noteItem) }>
-                            <i className="fas fa-archive"></i> Archive
-                        </button>
-                        <button className="btn btn-primary" onClick={ () => this.updateNote(noteItem) }>
-                            <i className="fas fa-save"></i> Save
-                        </button>
+                        <StateButton buttonType="secondary"
+                            buttonIcon="fas fa-archive"
+                            buttonLabel="Archive"
+                            inProgressLabel="Archiving"
+                            action={ () => this.archiveNote(noteItem) }>
+                        </StateButton>
+                        <StateButton buttonType="primary"
+                            buttonIcon="fas fa-save"
+                            buttonLabel="Save"
+                            inProgressLabel="Saving"
+                            action={ () => this.updateNote(noteItem) }>
+                        </StateButton>
                     </p>
                 </div>
             )
@@ -100,10 +104,12 @@ class Note extends React.Component {
                 <h3>Notes</h3>
                 <p className="text-muted">You can use <span className="badge badge-secondary">Ctrl/Cmd + S</span> to save your Notes.</p>
                 <p className="text-right">
-                    <button className="btn btn-primary"
-                        onClick={ this.createNote }>
-                        <i className="fas fa-plus"></i> New Note
-                    </button>
+                    <StateButton buttonType="primary"
+                        buttonIcon="fas fa-plus"
+                        buttonLabel="New Note"
+                        inProgressLabel="Creating Note"
+                        action={ this.createNote }>
+                    </StateButton>
                 </p>
                 { noteList }
             </section>
