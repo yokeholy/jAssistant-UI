@@ -24,6 +24,10 @@ html, body {
   opacity: 0.2;
 }
 
+hr {
+  border-top-color: #999999;
+}
+
 .clickable {
   cursor: pointer;
 }
@@ -61,4 +65,8 @@ html, body {
 
 .hidingElement {
   filter: blur(4px);
+}
+
+.noteContent {
+  min-height: 30vh;
 }

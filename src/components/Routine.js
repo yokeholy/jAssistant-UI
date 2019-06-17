@@ -2,7 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
+
 import API from "../services/api";
+import StateButton from "./fragments/StateButton";
 
 class Routine extends React.Component {
     state = {
@@ -39,7 +41,7 @@ class Routine extends React.Component {
             }
         });
 
-    getRoutineList = () => {
+    getRoutineList = () =>
         API.get("/routine/getRoutineList")
             .then(response => {
                 this.setState({
@@ -47,7 +49,6 @@ class Routine extends React.Component {
                     routineList: response.data.data.routineList
                 });
             });
-    }
 
     updateNewRoutineName = e => {
         this.setState({ newRoutineName: e.target.value });
@@ -61,7 +62,7 @@ class Routine extends React.Component {
     checkInRoutine = routineItem => {
         routineItem.routineCheckedIn = true;
         this.forceUpdate();
-        API.post("/routine/checkInRoutine", { routineId: routineItem.routineId })
+        return API.post("/routine/checkInRoutine", { routineId: routineItem.routineId })
             .then(() => {
                 toast.success(`${routineItem.routineName} is done today!`);
                 this.getRoutineList();
@@ -70,7 +71,7 @@ class Routine extends React.Component {
 
     createRoutine = e => {
         e.preventDefault();
-        API.post("/routine/createRoutine", { newRoutine: this.state.newRoutineName })
+        return API.post("/routine/createRoutine", { newRoutine: this.state.newRoutineName })
             .then(() => {
                 toast.success(`${this.state.newRoutineName} is created successfully.`);
                 this.setState({newRoutineName: ""});
@@ -82,7 +83,7 @@ class Routine extends React.Component {
         routineItem.editing = false;
         routineItem.routineName = e.target.value;
         this.forceUpdate();
-        API.post("/routine/updateRoutine", {
+        return API.post("/routine/updateRoutine", {
             routineId: routineItem.routineId,
             routineName: routineItem.routineName
         })
@@ -92,13 +93,12 @@ class Routine extends React.Component {
             });
     }
 
-    deleteRoutine = routineItem => {
+    deleteRoutine = routineItem =>
         API.post("/routine/deleteRoutine", { routineId: routineItem.routineId })
             .then(() => {
                 toast.success(`${routineItem.routineName} is deleted.`);
                 this.getRoutineList();
             });
-    }
 
     render () {
         const routineList = this.state.routineList.length
@@ -145,16 +145,19 @@ class Routine extends React.Component {
             <section id="routines" className="col-12 col-lg-4">
                 <h3>Routines ({ this.state.routineList.filter(routine => !routine.routineCheckedIn).length })</h3>
                 <p className="text-muted">Things that repeat but essential.</p>
-                <form onSubmit={ this.createRoutine }>
+                <form>
                     <div className="input-group">
                         <input type="text"
                             className="form-control"
                             value={ this.state.newRoutineName }
                             onChange={ this.updateNewRoutineName } />
                         <div className="input-group-append">
-                            <button className="btn btn-primary" type="submit" disabled={ !this.state.newRoutineName }>
-                                <i className="fas fa-plus"></i> Create
-                            </button>
+                            <StateButton buttonType="primary"
+                                buttonIcon="fas fa-plus"
+                                buttonLabel="Create"
+                                inProgressLabel="Creating"
+                                action={ this.createRoutine }>
+                            </StateButton>
                         </div>
                     </div>
                 </form>
