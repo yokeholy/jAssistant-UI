@@ -81,7 +81,9 @@ class Settings extends React.Component {
             ? this.state.lifestyleSettings.map(lifestyleItem =>
                 <tr key={ lifestyleItem.lifestyleId }>
                     { !lifestyleItem.editing
-                        ? <td onDoubleClick={ () => this.enterEditing(lifestyleItem) }>{ lifestyleItem.lifestyleName }</td>
+                        ? <td onDoubleClick={ () => this.enterEditing(lifestyleItem) }>
+                            { lifestyleItem.lifestyleName }
+                        </td>
                         : <td>
                             <input type="text"
                                 className="form-control"
@@ -90,7 +92,9 @@ class Settings extends React.Component {
                         </td>
                     }
                     { !lifestyleItem.editing
-                        ? <td onDoubleClick={ () => this.enterEditing(lifestyleItem) }>{ lifestyleItem.lifestyleDailyValue } per day</td>
+                        ? <td onDoubleClick={ () => this.enterEditing(lifestyleItem) }>
+                            { lifestyleItem.lifestyleDailyValue } per day
+                        </td>
                         : <td>
                             <input type="text"
                                 className="form-control"
@@ -116,7 +120,7 @@ class Settings extends React.Component {
                         <h3>Settings</h3>
                         <div className="card">
                             <div className="card-body">
-                                <h5 className="card-title">Lifestyles</h5>
+                                <h4 className="card-title">Lifestyles</h4>
                                 <form>
                                     <div className="input-group">
                                         <input type="text"
