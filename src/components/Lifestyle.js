@@ -7,8 +7,7 @@ import API from "../services/api";
 class Lifestyle extends React.Component {
     state = {
         showingFooter: true,
-        lifestyleConfig: {dailyWater: 6, dailyStandingUp: 8, dailyWorkout: 1},
-        lifestyles: {water: 0, standing: 0, workout: 0}
+        lifestyles: []
     };
 
     componentDidMount () {
@@ -19,13 +18,12 @@ class Lifestyle extends React.Component {
         API.get("/lifestyle/getLifestyle")
             .then(response => {
                 this.setState({
-                    lifestyles: response.data.data.lifestyles,
-                    lifestyleConfig: response.data.data.lifestyleConfig
+                    lifestyles: response.data.data.lifestyles
                 });
             });
     }
-    lifestyleUp = type => {
-        API.post("/lifestyle/upLifestyle", { type })
+    lifestyleUp = lifestyleId => {
+        API.post("/lifestyle/upLifestyle", { lifestyleId })
             .then(() => {
                 toast.success("Cheers! Keep this good lifestyle up.");
                 this.getLifestyle();
@@ -33,6 +31,28 @@ class Lifestyle extends React.Component {
     }
 
     render () {
+        const lifestyleList = this.state.lifestyles.length
+            ? this.state.lifestyles.map(lifestyle =>
+                <div key={ lifestyle.lifestyleId } className="col-12 col-md-4 lifestyleSection clickable" onClick={ () => this.lifestyleUp(lifestyle.lifestyleId)}>
+                    <div className="plusIcon bg-info">
+                        <i className="fas fa-plus"></i>
+                    </div>
+                    <div className="row mt-2">
+                        {
+                            [...Array(lifestyle.lifestyleDailyValue).keys()].map(value =>
+                                <div className={`col-1 ${value < lifestyle.todayValue ? "text-info" : ""}`} key={ value }>
+                                    <i className="fas fa-tint"></i>
+                                </div>
+                            )
+                        }
+                    </div>
+                    <h5 className="mb-0 mt-2">{ lifestyle.lifestyleName }</h5>
+                    <p className="text-muted">{ lifestyle.lifestyleCaption || "Hahaha" }</p>
+                </div>)
+            : <div>
+                nothing
+            </div>;
+
         return (
             <footer className="fixed-bottom bg-secondary">
                 <div id="toggleFooter" className="d-block d-md-none">
@@ -53,54 +73,7 @@ class Lifestyle extends React.Component {
                 { this.state.showingFooter
                     ? <div className="container-fluid p-2">
                         <div className="row">
-                            <div className="col-12 col-md-4 lifestyleSection clickable" onClick={ () => this.lifestyleUp("water")}>
-                                <div className="plusIcon bg-info">
-                                    <i className="fas fa-plus"></i>
-                                </div>
-                                <div className="row mt-2">
-                                    {
-                                        [...Array(this.state.lifestyleConfig.dailyWater).keys()].map(water =>
-                                            <div className={`col-1 ${water < this.state.lifestyles.water ? "text-info" : ""}`} key={water}>
-                                                <i className="fas fa-tint"></i>
-                                            </div>
-                                        )
-                                    }
-                                </div>
-                                <h5 className="mb-0 mt-2">Water</h5>
-                                <p className="text-muted">6 cups of 500ml of water</p>
-                            </div>
-                            <div className="col-12 col-md-4 lifestyleSection clickable" onClick={ () => this.lifestyleUp("standing")}>
-                                <div className="plusIcon bg-success">
-                                    <i className="fas fa-plus"></i>
-                                </div>
-                                <div className="row mt-2">
-                                    {
-                                        [...Array(this.state.lifestyleConfig.dailyStandingUp).keys()].map(standing =>
-                                            <div className={`col-1 ${standing < this.state.lifestyles.standing ? "text-success" : ""}`} key={standing}>
-                                                <i className="fas fa-shoe-prints"></i>
-                                            </div>
-                                        )
-                                    }
-                                </div>
-                                <h5 className="mb-0 mt-2">Standing Up</h5>
-                                <p className="text-muted">8 stand-ups 1 hour apart</p>
-                            </div>
-                            <div className="col-12 col-md-4 lifestyleSection clickable" onClick={ () => this.lifestyleUp("workout")}>
-                                <div className="plusIcon bg-warning">
-                                    <i className="fas fa-plus"></i>
-                                </div>
-                                <div className="row mt-2">
-                                    {
-                                        [...Array(this.state.lifestyleConfig.dailyWorkout).keys()].map(workout =>
-                                            <div className={`col-1 ${workout < this.state.lifestyles.workout ? "text-warning" : ""}`} key={workout}>
-                                                <i className="fas fa-dumbbell"></i>
-                                            </div>
-                                        )
-                                    }
-                                </div>
-                                <h5 className="mb-0 mt-2">Workout</h5>
-                                <p className="text-muted">Any sports</p>
-                            </div>
+                            { lifestyleList }
                         </div>
                     </div>
                     : null
