@@ -40,14 +40,14 @@ class Lifestyle extends React.Component {
                     <div className="row mt-2">
                         {
                             [...Array(lifestyle.lifestyleDailyValue).keys()].map(value =>
-                                <div className={`col-1 ${value < lifestyle.todayValue ? "text-info" : ""}`} key={ value }>
-                                    <i className="fas fa-tint"></i>
+                                <div className={`col-1 ${value < lifestyle.todayValue ? `text-${lifestyle.lifestyleColorName}` : ""}`} key={ value }>
+                                    <i className={`fas fa-${lifestyle.lifestyleIconName}`}></i>
                                 </div>
                             )
                         }
                     </div>
                     <h5 className="mb-0 mt-2">{ lifestyle.lifestyleName }</h5>
-                    <p className="text-muted">{ lifestyle.lifestyleCaption || "Hahaha" }</p>
+                    <p className="text-muted">{ lifestyle.lifestyleCaption }</p>
                 </div>)
             : <div>
                 nothing
