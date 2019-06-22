@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { toast } from "react-toastify";
 
 import API from "../services/api";
+import ConfirmationButton from "./fragments/ConfirmationButton";
 import StateButton from "./fragments/StateButton";
 
 class Routine extends React.Component {
@@ -121,9 +122,12 @@ class Routine extends React.Component {
                     }
                     <td className={this.props.hideEverything ? "hidingElement" : ""}>{ routineItem.routineConsecutive } { routineItem.routineConsecutive !== 1 ? "days" : "day" }</td>
                     <td className="text-right">
-                        <button className="btn btn-danger btn-sm" onClick={ () => this.deleteRoutine(routineItem) }>
-                            <i className="fas fa-trash-alt"></i>
-                        </button>
+                        <ConfirmationButton buttonType="danger"
+                            buttonIcon="fas fa-trash-alt"
+                            buttonLabel=""
+                            buttonSize="sm"
+                            action={ () => this.deleteRoutine(routineItem) }>
+                        </ConfirmationButton>
                     </td>
                 </tr>
             )

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { toast } from "react-toastify";
 
 import API from "../services/api";
+import ConfirmationButton from "./fragments/ConfirmationButton";
 import StateButton from "./fragments/StateButton";
 
 class Note extends React.Component {
@@ -82,12 +83,11 @@ class Note extends React.Component {
                         onChange={ e => this.watchNoteContent(e, noteItem) }
                         onKeyDown={ e => this.checkToSave(e, noteItem) }></textarea>
                     <p className="text-right">
-                        <StateButton buttonType="secondary"
+                        <ConfirmationButton buttonType="secondary"
                             buttonIcon="fas fa-archive"
                             buttonLabel="Archive"
-                            inProgressLabel="Archiving"
                             action={ () => this.archiveNote(noteItem) }>
-                        </StateButton>
+                        </ConfirmationButton>
                         <StateButton buttonType="primary"
                             buttonIcon="fas fa-save"
                             buttonLabel="Save"
