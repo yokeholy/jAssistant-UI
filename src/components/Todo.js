@@ -5,6 +5,7 @@ import moment from "moment";
 import { toast } from "react-toastify";
 
 import API from "../services/api";
+import ConfirmationButton from "./fragments/ConfirmationButton";
 import StateButton from "./fragments/StateButton";
 
 class Todo extends React.Component {
@@ -95,13 +96,12 @@ class Todo extends React.Component {
             });
     }
 
-    deleteTodoItem = todoItem => {
+    deleteTodoItem = todoItem =>
         API.post("/todo/deleteTodo", { todoId: todoItem.todoId })
             .then(() => {
                 toast.success(`${todoItem.todoName} is deleted.`);
                 this.getTodoList();
             });
-    }
 
     render () {
         const todoList = this.state.todoList.length
@@ -124,9 +124,12 @@ class Todo extends React.Component {
                     }
                     <td className={this.props.hideEverything ? "hidingElement" : ""}>{ moment(todoItem.todoCreatedDate).fromNow() }</td>
                     <td className="text-right">
-                        <button className="btn btn-danger btn-sm" onClick={ () => this.deleteTodoItem(todoItem) }>
-                            <i className="fas fa-trash-alt"></i>
-                        </button>
+                        <ConfirmationButton buttonType="danger"
+                            buttonIcon="fas fa-trash-alt"
+                            buttonLabel=""
+                            buttonSize="sm"
+                            action={ () => this.deleteTodoItem(todoItem) }>
+                        </ConfirmationButton>
                     </td>
                 </tr>
             )
