@@ -54,7 +54,7 @@ class Lifestyle extends React.Component {
             </div>;
 
         return (
-            <footer className="fixed-bottom bg-secondary">
+            <div className="fixed-bottom bg-secondary">
                 <div id="toggleFooter" className="d-block d-md-none">
                     <button className="btn btn-block btn-secondary" onClick={ () => this.setState({ showingFooter: !this.state.showingFooter }) }>
                         { !this.state.showingFooter
@@ -78,7 +78,7 @@ class Lifestyle extends React.Component {
                     </div>
                     : null
                 }
-            </footer>
+            </div>
         );
     }
 }

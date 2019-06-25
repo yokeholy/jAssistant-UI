@@ -100,19 +100,21 @@ class Note extends React.Component {
             : <p className="alert alert-info">You don&apos;t have any notes yet.</p>;
 
         return (
-            <section id="notes" className="col-12 col-lg-4">
-                <h3>Notes</h3>
-                <p className="text-muted">You can use <span className="badge badge-secondary">Ctrl/Cmd + S</span> to save your Notes.</p>
-                <p className="text-right">
-                    <StateButton buttonType="primary"
-                        buttonIcon="fas fa-plus"
-                        buttonLabel="New Note"
-                        inProgressLabel="Creating Note"
-                        action={ this.createNote }>
-                    </StateButton>
-                </p>
-                { noteList }
-            </section>
+            <div id="notes" className="row">
+                <div className="col-12">
+                    <h3>Notes ({ this.state.noteList.length })</h3>
+                    <p className="text-muted">You can use <span className="badge badge-secondary">Ctrl/Cmd + S</span> to save your Notes.</p>
+                    <p className="text-right">
+                        <StateButton buttonType="primary"
+                            buttonIcon="fas fa-plus"
+                            buttonLabel="New Note"
+                            inProgressLabel="Creating Note"
+                            action={ this.createNote }>
+                        </StateButton>
+                    </p>
+                    { noteList }
+                </div>
+            </div>
         );
     }
 }

@@ -5,13 +5,19 @@ import Note from "./Note";
 import Lifestyle from "./Lifestyle";
 
 const MainAssistant = () =>
-    <section className="container-fluid pt-3 mb-5 pb-5">
+    <div>
         <div className="row">
-            <Todo />
-            <Routine />
-            <Note />
+            <section id="notes" className="col-12 col-lg-4">
+                <Todo dashboard />
+            </section>
+            <section id="notes" className="col-12 col-lg-4">
+                <Routine dashboard />
+            </section>
+            <section id="notes" className="col-12 col-lg-4">
+                <Note dashboard />
+            </section>
         </div>
         <Lifestyle />
-    </section>;
+    </div>;
 
 export default MainAssistant;

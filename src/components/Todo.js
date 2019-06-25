@@ -148,39 +148,41 @@ class Todo extends React.Component {
         };
 
         return (
-            <section id="todoList" className="col-12 col-lg-4">
-                <h3>Todo List ({ this.state.todoList.filter(todo => !todo.todoStatus).length })</h3>
-                <p className="text-muted">Everything you need to get done or got done today.</p>
-                <form>
-                    <div className="input-group">
-                        <input type="text"
-                            className="form-control"
-                            value={ this.state.newTodoItemName }
-                            onChange={ this.updateNewTodoItemName } />
-                        <div className="input-group-append">
-                            <StateButton buttonType="primary"
-                                buttonIcon="fas fa-plus"
-                                buttonLabel="Create"
-                                inProgressLabel="Creating"
-                                action={ this.createTodoItem }>
-                            </StateButton>
+            <div id="todoList" className="row">
+                <div className="col-12">
+                    <h3>Todo List ({ this.state.todoList.filter(todo => !todo.todoStatus).length })</h3>
+                    <p className="text-muted">Everything you need to get done or got done today.</p>
+                    <form>
+                        <div className="input-group">
+                            <input type="text"
+                                className="form-control"
+                                value={ this.state.newTodoItemName }
+                                onChange={ this.updateNewTodoItemName } />
+                            <div className="input-group-append">
+                                <StateButton buttonType="primary"
+                                    buttonIcon="fas fa-plus"
+                                    buttonLabel="Create"
+                                    inProgressLabel="Creating"
+                                    action={ this.createTodoItem }>
+                                </StateButton>
+                            </div>
                         </div>
-                    </div>
-                </form>
-                <table className="table table-hover">
-                    <thead>
-                        <tr>
-                            <th className="clickable" onClick={ () => this.setSort("todoStatus") }>Done { sortingIndicator("todoStatus") }</th>
-                            <th className="clickable" onClick={ () => this.setSort("todoName") }>Item { sortingIndicator("todoName") }</th>
-                            <th className="clickable" onClick={ () => this.setSort("todoCreatedDate") }>Since { sortingIndicator("todoCreatedDate") }</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { todoList }
-                    </tbody>
-                </table>
-            </section>
+                    </form>
+                    <table className="table table-hover">
+                        <thead>
+                            <tr>
+                                <th className="clickable" onClick={ () => this.setSort("todoStatus") }>Done { sortingIndicator("todoStatus") }</th>
+                                <th className="clickable" onClick={ () => this.setSort("todoName") }>Item { sortingIndicator("todoName") }</th>
+                                <th className="clickable" onClick={ () => this.setSort("todoCreatedDate") }>Since { sortingIndicator("todoCreatedDate") }</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            { todoList }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         );
     }
 }
