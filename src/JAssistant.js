@@ -7,6 +7,7 @@ import Routine from "./components/Routine";
 import Note from "./components/Note";
 import Lifestyle from "./components/Lifestyle";
 import Settings from "./components/Settings";
+import Login from "./components/Login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -23,6 +24,7 @@ class JAssistant extends React.Component {
                         <Route exact path="/note" component={ Note } />
                         <Route exact path="/lifestyle" component={ Lifestyle } />
                         <Route exact path="/settings" component={ Settings } />
+                        <Route exact path="/login" component={ Login } />
                     </section>
                     <ToastContainer />
                 </div>
