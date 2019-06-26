@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { toast } from "react-toastify";
 
 class StateButton extends React.Component {
     constructor (props) {
@@ -17,6 +18,9 @@ class StateButton extends React.Component {
         });
         this.props.action(e).then(() => {
             this.exitInProgressState();
+        }, errorMessage => {
+            toast.warn(errorMessage);
+            this.exitInProgressState();
         });
     }
 
@@ -28,7 +32,7 @@ class StateButton extends React.Component {
     }
 
     render () {
-        return <button className={ `btn btn-${this.props.buttonType}` }
+        return <button className={ `btn btn-${this.props.buttonType} ${this.props.buttonSize ? `btn-${this.props.buttonSize}` : ""}` }
             onClick={ this.enterInProgressState }
             disabled={ this.state.disabled }>
             <i className={ this.props.buttonIcon }></i> { this.state.currentLabel }
@@ -40,6 +44,7 @@ StateButton.propTypes = {
     buttonType: PropTypes.string.isRequired,
     buttonIcon: PropTypes.string.isRequired,
     buttonLabel: PropTypes.string.isRequired,
+    buttonSize: PropTypes.string,
     inProgressLabel: PropTypes.string.isRequired,
     action: PropTypes.func.isRequired,
     preDisabled: PropTypes.bool
