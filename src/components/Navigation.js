@@ -19,10 +19,25 @@ class Navigation extends React.Component {
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/settings"><i className="fas fa-cog"></i> Settings</NavLink>
+                            <NavLink className="nav-link" to="/"><i className="fas fa-tachometer-alt"></i> Dashboard</NavLink>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="https://projects.wangjin.me" rel="noopener noreferrer" target="_blank"><i className="fas fa-external-link-alt"></i> Projects</a>
+                            <NavLink className="nav-link" to="/todo"><i className="fas fa-list-ul"></i> Todo</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/routine"><i className="fas fa-clipboard-check"></i> Routine</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/note"><i className="fas fa-sticky-note"></i> Note</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/lifestyle"><i className="fas fa-walking"></i> Lifestyle</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="https://projects.wangjin.me" rel="noopener noreferrer" target="_blank"><i className="far fa-folder-open"></i> Projects</a>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/settings"><i className="fas fa-cog"></i> Settings</NavLink>
                         </li>
                     </ul>
                     <button className={`btn my-2 ${this.props.hideEverything ? "btn-outline-success" : "btn-danger"}`}

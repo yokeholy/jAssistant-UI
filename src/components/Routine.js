@@ -146,45 +146,48 @@ class Routine extends React.Component {
         };
 
         return (
-            <section id="routines" className="col-12 col-lg-4">
-                <h3>Routines ({ this.state.routineList.filter(routine => !routine.routineCheckedIn).length })</h3>
-                <p className="text-muted">Things that repeat but essential.</p>
-                <form>
-                    <div className="input-group">
-                        <input type="text"
-                            className="form-control"
-                            value={ this.state.newRoutineName }
-                            onChange={ this.updateNewRoutineName } />
-                        <div className="input-group-append">
-                            <StateButton buttonType="primary"
-                                buttonIcon="fas fa-plus"
-                                buttonLabel="Create"
-                                inProgressLabel="Creating"
-                                action={ this.createRoutine }>
-                            </StateButton>
+            <div id="routines" className="row">
+                <div className="col-12">
+                    <h3>Routines ({ this.state.routineList.filter(routine => !routine.routineCheckedIn).length })</h3>
+                    <p className="text-muted">Things that repeat but essential.</p>
+                    <form>
+                        <div className="input-group">
+                            <input type="text"
+                                className="form-control"
+                                value={ this.state.newRoutineName }
+                                onChange={ this.updateNewRoutineName } />
+                            <div className="input-group-append">
+                                <StateButton buttonType="primary"
+                                    buttonIcon="fas fa-plus"
+                                    buttonLabel="Create"
+                                    inProgressLabel="Creating"
+                                    action={ this.createRoutine }>
+                                </StateButton>
+                            </div>
                         </div>
-                    </div>
-                </form>
-                <table className="table table-hover">
-                    <thead>
-                        <tr>
-                            <th className="clickable" onClick={ () => this.setSort("routineCheckedIn") }>Done { sortingIndicator("routineCheckedIn") }</th>
-                            <th className="clickable" onClick={ () => this.setSort("routineName") }>Routine { sortingIndicator("routineName") }</th>
-                            <th className="clickable" onClick={ () => this.setSort("routineConsecutive") }>Consecutive { sortingIndicator("routineConsecutive") }</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { routineList }
-                    </tbody>
-                </table>
-            </section>
+                    </form>
+                    <table className="table table-hover">
+                        <thead>
+                            <tr>
+                                <th className="clickable" onClick={ () => this.setSort("routineCheckedIn") }>Done { sortingIndicator("routineCheckedIn") }</th>
+                                <th className="clickable" onClick={ () => this.setSort("routineName") }>Routine { sortingIndicator("routineName") }</th>
+                                <th className="clickable" onClick={ () => this.setSort("routineConsecutive") }>Consecutive { sortingIndicator("routineConsecutive") }</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            { routineList }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         );
     }
 }
 
 Routine.propTypes = {
-    hideEverything: PropTypes.bool.isRequired
+    hideEverything: PropTypes.bool.isRequired,
+    dashboard: PropTypes.bool
 };
 
 // Map JData from Redux to this component
