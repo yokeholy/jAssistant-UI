@@ -17,7 +17,7 @@ const MainAssistant = () =>
                 <Note dashboard />
             </section>
         </div>
-        <Lifestyle />
+        <Lifestyle dashboard />
     </div>;
 
 export default MainAssistant;

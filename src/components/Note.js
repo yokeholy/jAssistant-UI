@@ -120,7 +120,8 @@ class Note extends React.Component {
 }
 
 Note.propTypes = {
-    hideEverything: PropTypes.bool.isRequired
+    hideEverything: PropTypes.bool.isRequired,
+    dashboard: PropTypes.bool
 };
 
 // Map JData from Redux to this component

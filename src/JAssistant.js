@@ -17,7 +17,7 @@ class JAssistant extends React.Component {
                 <div id="jAssistant">
                     <Navigation />
                     <section className="container-fluid pt-3 mb-5 pb-5">
-                        <Route exact path="/" component={MainAssistant} />
+                        <Route exact path="/" component={ MainAssistant } />
                         <Route exact path="/todo" component={ Todo } />
                         <Route exact path="/routine" component={ Routine } />
                         <Route exact path="/note" component={ Note } />

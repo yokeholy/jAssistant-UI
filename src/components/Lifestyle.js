@@ -54,7 +54,7 @@ class Lifestyle extends React.Component {
             </div>;
 
         return (
-            <div className="fixed-bottom bg-secondary">
+            <div className={`${this.props.dashboard ? "fixed-bottom bg-secondary" : ""}`}>
                 <div id="toggleFooter" className="d-block d-md-none">
                     <button className="btn btn-block btn-secondary" onClick={ () => this.setState({ showingFooter: !this.state.showingFooter }) }>
                         { !this.state.showingFooter
@@ -84,7 +84,8 @@ class Lifestyle extends React.Component {
 }
 
 Lifestyle.propTypes = {
-    hideEverything: PropTypes.bool.isRequired
+    hideEverything: PropTypes.bool.isRequired,
+    dashboard: PropTypes.bool
 };
 
 // Map JData from Redux to this component
