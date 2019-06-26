@@ -34,9 +34,6 @@ class Navigation extends React.Component {
                             <NavLink className="nav-link" to="/lifestyle"><i className="fas fa-walking"></i> Lifestyle</NavLink>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="https://projects.wangjin.me" rel="noopener noreferrer" target="_blank"><i className="far fa-folder-open"></i> Projects</a>
-                        </li>
-                        <li className="nav-item">
                             <NavLink className="nav-link" to="/settings"><i className="fas fa-cog"></i> Settings</NavLink>
                         </li>
                     </ul>
