@@ -42,7 +42,7 @@ class Login extends React.Component {
     }
 
     render () {
-        if (this.props.loginStatus) {
+        if (this.props.loginStatus && this.props.userAuthKey) {
             return <Redirect to="/" />;
         }
 
@@ -62,7 +62,7 @@ class Login extends React.Component {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="accountPassword">Password</label>
-                                    <input type="text"
+                                    <input type="password"
                                         className="form-control"
                                         value={ this.state.accountPassword }
                                         onChange={ this.updatePassword }/>
@@ -84,6 +84,7 @@ class Login extends React.Component {
 
 Login.propTypes = {
     loginStatus: PropTypes.bool.isRequired,
+    userAuthKey: PropTypes.string,
     updateLoginStatus: PropTypes.func.isRequired
 };
 
