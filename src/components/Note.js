@@ -13,7 +13,9 @@ class Note extends React.Component {
     };
 
     componentDidMount () {
-        this.getNotes();
+        if (this.props.loginStatus) {
+            this.getNotes();
+        }
     }
 
     getNotes = () =>
@@ -121,7 +123,8 @@ class Note extends React.Component {
 
 Note.propTypes = {
     hideEverything: PropTypes.bool.isRequired,
-    dashboard: PropTypes.bool
+    dashboard: PropTypes.bool,
+    loginStatus: PropTypes.bool.isRequired
 };
 
 // Map JData from Redux to this component

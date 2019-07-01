@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 class Navigation extends React.Component {
-    state = {
-        hideEverything: this.props.hideEverything
-    };
-
     render () {
+        if (!this.props.loginStatus && this.props.location.pathname !== "/login") {
+            return <Redirect to="/login" />;
+        }
+
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
                 <NavLink className="navbar-brand header" to="/">jAssistant</NavLink>
@@ -17,31 +17,41 @@ class Navigation extends React.Component {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul className="navbar-nav mr-auto">
+                    { this.props.loginStatus
+                        ? <ul className="navbar-nav mr-auto">
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/"><i className="fas fa-tachometer-alt"></i> Dashboard</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/todo"><i className="fas fa-list-ul"></i> Todo</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/routine"><i className="fas fa-clipboard-check"></i> Routine</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/note"><i className="fas fa-sticky-note"></i> Note</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/lifestyle"><i className="fas fa-walking"></i> Lifestyle</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/settings"><i className="fas fa-cog"></i> Settings</NavLink>
+                            </li>
+                        </ul>
+                        : <ul className="navbar-nav mr-auto">
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/login"><i className="fas fa-sign-in-alt"></i> Login</NavLink>
+                            </li>
+                        </ul>
+                    }
+                    <ul className="navbar-nav my-2">
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/"><i className="fas fa-tachometer-alt"></i> Dashboard</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/todo"><i className="fas fa-list-ul"></i> Todo</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/routine"><i className="fas fa-clipboard-check"></i> Routine</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/note"><i className="fas fa-sticky-note"></i> Note</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/lifestyle"><i className="fas fa-walking"></i> Lifestyle</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/settings"><i className="fas fa-cog"></i> Settings</NavLink>
+                            <button className={`btn ${this.props.hideEverything ? "btn-outline-success" : "btn-danger"}`}
+                                onClick={ this.props.showHideEverything }>
+                                <i className={`fas ${this.props.hideEverything ? "fa-eye" : "fa-eye-slash"}`}></i>
+                            </button>
                         </li>
                     </ul>
-                    <button className={`btn my-2 ${this.props.hideEverything ? "btn-outline-success" : "btn-danger"}`}
-                        onClick={ this.props.showHideEverything }
-                    >
-                        <i className={`fas ${this.props.hideEverything ? "fa-eye" : "fa-eye-slash"}`}></i>
-                    </button>
                 </div>
             </nav>
         );
@@ -50,7 +60,9 @@ class Navigation extends React.Component {
 
 Navigation.propTypes = {
     hideEverything: PropTypes.bool.isRequired,
-    showHideEverything: PropTypes.func.isRequired
+    showHideEverything: PropTypes.func.isRequired,
+    loginStatus: PropTypes.bool.isRequired,
+    location: PropTypes.object.isRequired
 };
 
 // Map JData from Redux to this component
@@ -63,4 +75,4 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navigation));

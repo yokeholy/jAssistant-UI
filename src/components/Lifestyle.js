@@ -11,7 +11,9 @@ class Lifestyle extends React.Component {
     };
 
     componentDidMount () {
-        this.getLifestyle();
+        if (this.props.loginStatus) {
+            this.getLifestyle();
+        }
     }
 
     getLifestyle () {
@@ -85,7 +87,8 @@ class Lifestyle extends React.Component {
 
 Lifestyle.propTypes = {
     hideEverything: PropTypes.bool.isRequired,
-    dashboard: PropTypes.bool
+    dashboard: PropTypes.bool,
+    loginStatus: PropTypes.bool.isRequired
 };
 
 // Map JData from Redux to this component

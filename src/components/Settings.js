@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { toast } from "react-toastify";
 
 import API from "../services/api";
@@ -12,7 +14,9 @@ class Settings extends React.Component {
     };
 
     componentDidMount () {
-        this.getAllSettings();
+        if (this.props.loginStatus) {
+            this.getAllSettings();
+        }
     }
 
     getAllSettings = () =>
@@ -190,7 +194,7 @@ class Settings extends React.Component {
                 </tr>
             )
             : <tr>
-                <td colSpan="4" className="bg-info">You have not set up any lifestyles yet.</td>
+                <td colSpan="6" className="bg-info">You have not set up any lifestyles yet.</td>
             </tr>;
 
         return (
@@ -241,4 +245,11 @@ class Settings extends React.Component {
     }
 }
 
-export default Settings;
+// Map JData from Redux to this component
+const mapStateToProps = state => state;
+
+Settings.propTypes = {
+    loginStatus: PropTypes.bool.isRequired
+};
+
+export default connect(mapStateToProps)(Settings);
