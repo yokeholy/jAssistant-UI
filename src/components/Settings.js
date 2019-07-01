@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 
 import API from "../services/api";
@@ -12,7 +13,9 @@ class Settings extends React.Component {
     };
 
     componentDidMount () {
-        this.getAllSettings();
+        if (this.props.loginStatus) {
+            this.getAllSettings();
+        }
     }
 
     getAllSettings = () =>
@@ -240,5 +243,9 @@ class Settings extends React.Component {
         );
     }
 }
+
+Settings.propTypes = {
+    loginStatus: PropTypes.bool.isRequired
+};
 
 export default Settings;

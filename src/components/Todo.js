@@ -17,7 +17,9 @@ class Todo extends React.Component {
     };
 
     componentDidMount () {
-        this.getTodoList();
+        if (this.props.loginStatus) {
+            this.getTodoList();
+        }
     }
 
     setSort = field => {
@@ -189,7 +191,8 @@ class Todo extends React.Component {
 
 Todo.propTypes = {
     hideEverything: PropTypes.bool.isRequired,
-    dashboard: PropTypes.bool
+    dashboard: PropTypes.bool,
+    loginStatus: PropTypes.bool.isRequired
 };
 
 // Map JData from Redux to this component

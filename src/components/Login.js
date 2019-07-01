@@ -30,9 +30,13 @@ class Login extends React.Component {
                 accountPassword: this.state.accountPassword
             })
                 .then(response => {
-                    toast.success("Welcome back.");
-                    // Store the returned auth key in localStorage
-                    this.props.updateLoginStatus(true, response.data.data.authKey);
+                    toast.success(`Welcome back, ${response.data.data.userName}`);
+                    if (response.data.data.authKey) {
+                        // Store the returned auth key in localStorage
+                        this.props.updateLoginStatus(true, response.data.data.authKey);
+                    }
+                }, error => {
+                    toast.error(`Login was not successful: ${error.response.data.metadata.message}`);
                 });
         }
     }

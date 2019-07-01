@@ -16,7 +16,9 @@ class Routine extends React.Component {
     };
 
     componentDidMount () {
-        this.getRoutineList();
+        if (this.props.loginStatus) {
+            this.getRoutineList();
+        }
     }
 
     setSort = field => {
@@ -187,7 +189,8 @@ class Routine extends React.Component {
 
 Routine.propTypes = {
     hideEverything: PropTypes.bool.isRequired,
-    dashboard: PropTypes.bool
+    dashboard: PropTypes.bool,
+    loginStatus: PropTypes.bool.isRequired
 };
 
 // Map JData from Redux to this component
