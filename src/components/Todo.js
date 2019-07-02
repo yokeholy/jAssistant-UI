@@ -151,6 +151,10 @@ class Todo extends React.Component {
                                 onClick={ () => this.enterCreatingSubTodo(todoItem) }>
                                 <i className="fas fa-plus"></i>
                             </button>
+                            <button className="btn btn-secondary btn-sm ml-2"
+                                onClick={ () => this.getTodoComment(todoItem) }>
+                                <i className="far fa-comment"></i> { todoItem.commentCount || "" }
+                            </button>
                         </td>
                     </tr>,
                     todoItem.creatingSubTodo
@@ -209,6 +213,10 @@ class Todo extends React.Component {
                                         buttonSize="sm"
                                         action={ () => this.deleteTodoItem(subTodoItem) }>
                                     </ConfirmationButton>
+                                    <button className="btn btn-secondary btn-sm ml-2"
+                                        onClick={ () => this.getTodoComment(subTodoItem) }>
+                                        <i className="far fa-comment"></i> { subTodoItem.commentCount || "" }
+                                    </button>
                                 </td>
                             </tr>)
                         : null
