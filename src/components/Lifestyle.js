@@ -20,7 +20,7 @@ class Lifestyle extends React.Component {
         API.get("/lifestyle/getLifestyle")
             .then(response => {
                 this.setState({
-                    lifestyles: response.data.data.lifestyles
+                    lifestyles: response.lifestyles
                 });
             });
     }

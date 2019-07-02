@@ -22,7 +22,7 @@ class Note extends React.Component {
         API.get("/note/getNotes")
             .then(response => {
                 this.setState({
-                    noteList: response.data.data.noteList
+                    noteList: response.noteList
                 });
             });
 

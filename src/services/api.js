@@ -18,11 +18,37 @@ class API {
         }
     }
 
-    // TODO: Add global warning/error message if API fails.
+    _handleAPIResponse (APIRequest) {
+        return APIRequest.then(
+            // Successful API call
+            APIResponse => {
+                if (APIResponse.data.metadata.status === false) {
+                    toast.warn(`Warning: ${APIResponse.data.metadata.message}`);
+                    return Promise.reject(APIResponse.data.metadata.message);
+                } else {
+                    return Promise.resolve(APIResponse.data.data);
+                }
+            },
+            failure => {
+                let failureResponse = failure.response;
+                let errorMessage = failureResponse.data.metadata.message;
+                if (failureResponse.status === 500) {
+                    toast.error(`There's a technical problem with our server. Please try again later. Error: ${errorMessage}`);
+                    return Promise.reject(`There's a technical problem with our server. Please try again later. Error: ${errorMessage}`);
+                } else if (failureResponse.status === 401) {
+                    toast.error(`Not authorized: ${errorMessage}`);
+                    return Promise.reject(errorMessage);
+                } else {
+                    toast.error(`Server encountered a problem: ${errorMessage}`);
+                    return Promise.reject(failure);
+                }
+            });
+    }
+
     static get (URL) {
         return API.prototype._prepareAPICall()
             .then(() =>
-                axios.get(Config.APIURL + URL),
+                API.prototype._handleAPIResponse(axios.get(Config.APIURL + URL)),
             failure =>
                 Promise.reject(failure)
             );
@@ -33,10 +59,7 @@ class API {
         let loginAPI = URL === "/account/login";
         return API.prototype._prepareAPICall(loginAPI)
             .then(() =>
-                axios.post(Config.APIURL + URL, body),
-            failure =>
-                Promise.reject(failure)
-            );
+                API.prototype._handleAPIResponse(axios.post(Config.APIURL + URL, body)));
     }
 }
 
