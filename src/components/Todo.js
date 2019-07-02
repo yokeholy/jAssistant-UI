@@ -50,7 +50,7 @@ class Todo extends React.Component {
             .then(response => {
                 this.setState({
                     // Sort by the current sorting item and current corting direction
-                    todoList: response.data.data.todoList
+                    todoList: response.todoList
                 });
             });
 

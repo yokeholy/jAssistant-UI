@@ -49,7 +49,7 @@ class Routine extends React.Component {
             .then(response => {
                 this.setState({
                     // Sort by the Routine Status, put finished ones at the bottom
-                    routineList: response.data.data.routineList
+                    routineList: response.routineList
                 });
             });
 

@@ -23,8 +23,8 @@ class Settings extends React.Component {
         API.get("/settings/getAllSettings")
             .then(response => {
                 this.setState({
-                    lifestyleSettings: response.data.data.lifestyleSettings,
-                    contentSettings: response.data.data.contentSettings
+                    lifestyleSettings: response.lifestyleSettings,
+                    contentSettings: response.contentSettings
                 });
             });
 
