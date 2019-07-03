@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { toast } from "react-toastify";
 
 import API from "../services/api";
+import SettingsTodoCategories from "./SettingsTodoCategories";
 import StateButton from "./fragments/StateButton";
 
 class Settings extends React.Component {
@@ -238,6 +239,7 @@ class Settings extends React.Component {
                                 </table>
                             </div>
                         </div>
+                        <SettingsTodoCategories todoCategories={[]}></SettingsTodoCategories>
                     </div>
                 </div>
             </section>
