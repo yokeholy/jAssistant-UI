@@ -11,7 +11,7 @@ import StateButton from "./fragments/StateButton";
 
 class Todo extends React.Component {
     state = {
-        todoList: [],
+        todoCategoryList: [],
         newTodoItemName: "",
         sortingItem: "todoStatus",
         sortingDescending: true
@@ -51,7 +51,7 @@ class Todo extends React.Component {
             .then(response => {
                 this.setState({
                     // Sort by the current sorting item and current corting direction
-                    todoList: response.todoList
+                    todoCategoryList: response.todoCategoryList
                 });
             });
 
@@ -126,128 +126,6 @@ class Todo extends React.Component {
             });
 
     render () {
-        const todoList = this.state.todoList.length
-            ? this.sortedTodoList(this.state.todoList).map(todoItem =>
-                [
-                    <tr key={ `todoItem_${todoItem.todoId}` }>
-                        <td>
-                            { !todoItem.todoStatus
-                                ? <i className="fas fa-circle clickable" onClick={ () => this.toggleTodoItemStatus(todoItem) }></i>
-                                : <i className="fas fa-check-circle text-success"></i>
-                            }
-                        </td>
-                        { !todoItem.editing
-                            ? <td onDoubleClick={ () => this.enterEditing(todoItem) } className={ this.props.hideEverything ? "hidingElement" : "" }>{ todoItem.todoName }</td>
-                            : <td className={ this.props.hideEverything ? "hidingElement" : "" }>
-                                <input type="text"
-                                    className="form-control"
-                                    defaultValue={ todoItem.todoName }
-                                    onBlur={ e => this.updateTodoItem(e, todoItem) } />
-                            </td>
-                        }
-                        <td className={this.props.hideEverything ? "hidingElement" : ""}>{ moment(todoItem.todoCreatedDate).fromNow() }</td>
-                        <td className="text-right">
-                            <ConfirmationButton buttonType="danger"
-                                buttonIcon="fas fa-trash-alt"
-                                buttonLabel=""
-                                buttonSize="sm"
-                                action={ () => this.deleteTodoItem(todoItem) }>
-                            </ConfirmationButton>
-                            <button className="btn btn-secondary btn-sm ml-2"
-                                onClick={ () => this.enterCreatingSubTodo(todoItem) }>
-                                <i className="fas fa-plus"></i>
-                            </button>
-                            <button className="btn btn-secondary btn-sm ml-2"
-                                onClick={ () => this.showHideComment(todoItem) }>
-                                <i className="far fa-comment"></i> { todoItem.commentCount || "" }
-                            </button>
-                        </td>
-                    </tr>,
-                    todoItem.showingComment
-                    && <tr key={ `commentList_${todoItem.todoId}` }>
-                        <td colSpan="4">
-                            <Comment commentType={1}
-                                entityId={ todoItem.todoId }>
-                            </Comment>
-                        </td>
-                    </tr>,
-                    todoItem.creatingSubTodo
-                    && <tr key={ `creatingSubTodo_${todoItem.todoId}` }>
-                        <td colSpan="4">
-                            <form>
-                                <div className="input-group">
-                                    <input type="text"
-                                        className="form-control"
-                                        value={ this.state.newTodoItemName }
-                                        onChange={ this.updateNewTodoItemName } />
-                                    <div className="input-group-append">
-                                        <StateButton buttonType="primary"
-                                            buttonIcon="fas fa-plus"
-                                            buttonLabel="Create"
-                                            inProgressLabel="Creating"
-                                            action={ e => this.createTodoItem(e, todoItem.todoId) }>
-                                        </StateButton>
-                                        <button type="button"
-                                            className="btn btn-secondary"
-                                            onClick={ e => this.exitCreatingSubTodo(e, todoItem) }>
-                                            <i className="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </td>
-                    </tr>,
-                    todoItem.subTodos.length
-                        ? this.sortedTodoList(todoItem.subTodos).map(subTodoItem =>
-                            [<tr key={ `todoItem_${todoItem.todoId}_${subTodoItem.todoId}` }>
-                                <td className="pl-4">
-                                    { !subTodoItem.todoStatus
-                                        ? <i className="fas fa-circle clickable" onClick={ () => this.toggleTodoItemStatus(subTodoItem) }></i>
-                                        : <i className="fas fa-check-circle text-success"></i>
-                                    }
-                                </td>
-                                { !subTodoItem.editing
-                                    ? <td colSpan="2"
-                                        onDoubleClick={ () => this.enterEditing(subTodoItem) }
-                                        className={ `${this.props.hideEverything ? "hidingElement" : ""} pl-4` }>
-                                        { subTodoItem.todoName }
-                                    </td>
-                                    : <td colSpan="2"
-                                        className={ this.props.hideEverything ? "hidingElement" : "" }>
-                                        <input type="text"
-                                            className="form-control"
-                                            defaultValue={ subTodoItem.todoName }
-                                            onBlur={ e => this.updateTodoItem(e, subTodoItem) } />
-                                    </td>
-                                }
-                                <td className="text-right">
-                                    <ConfirmationButton buttonType="danger"
-                                        buttonIcon="fas fa-trash-alt"
-                                        buttonLabel=""
-                                        buttonSize="sm"
-                                        action={ () => this.deleteTodoItem(subTodoItem) }>
-                                    </ConfirmationButton>
-                                    <button className="btn btn-secondary btn-sm ml-2"
-                                        onClick={ () => this.showHideComment(subTodoItem) }>
-                                        <i className="far fa-comment"></i> { subTodoItem.commentCount || "" }
-                                    </button>
-                                </td>
-                            </tr>,
-                            subTodoItem.showingComment
-                            && <tr key={ `commentList_${subTodoItem.todoId}` }>
-                                <td colSpan="4">
-                                    <Comment commentType={1}
-                                        entityId={ subTodoItem.todoId }>
-                                    </Comment>
-                                </td>
-                            </tr>])
-                        : null
-                ]
-            )
-            : <tr>
-                <td colSpan="4" className="bg-success">You&apos;ve finished everything! Yay!</td>
-            </tr>;
-
         const sortingIndicator = field => {
             if (field === this.state.sortingItem) {
                 return this.state.sortingDescending
@@ -258,40 +136,175 @@ class Todo extends React.Component {
             }
         };
 
+        const todoList = thisTodoList => {
+            if (thisTodoList.length) {
+                return this.sortedTodoList(thisTodoList).map(todoItem =>
+                    [
+                        <tr key={ `todoItem_${todoItem.todoId}` }>
+                            <td>
+                                { !todoItem.todoStatus
+                                    ? <i className="fas fa-circle clickable" onClick={ () => this.toggleTodoItemStatus(todoItem) }></i>
+                                    : <i className="fas fa-check-circle text-success"></i>
+                                }
+                            </td>
+                            { !todoItem.editing
+                                ? <td onDoubleClick={ () => this.enterEditing(todoItem) } className={ this.props.hideEverything ? "hidingElement" : "" }>{ todoItem.todoName }</td>
+                                : <td className={ this.props.hideEverything ? "hidingElement" : "" }>
+                                    <input type="text"
+                                        className="form-control"
+                                        defaultValue={ todoItem.todoName }
+                                        onBlur={ e => this.updateTodoItem(e, todoItem) } />
+                                </td>
+                            }
+                            <td className={this.props.hideEverything ? "hidingElement" : ""}>{ moment(todoItem.todoCreatedDate).fromNow() }</td>
+                            <td className="text-right">
+                                <ConfirmationButton buttonType="danger"
+                                    buttonIcon="fas fa-trash-alt"
+                                    buttonLabel=""
+                                    buttonSize="sm"
+                                    action={ () => this.deleteTodoItem(todoItem) }>
+                                </ConfirmationButton>
+                                <button className="btn btn-secondary btn-sm ml-2"
+                                    onClick={ () => this.enterCreatingSubTodo(todoItem) }>
+                                    <i className="fas fa-plus"></i>
+                                </button>
+                                <button className="btn btn-secondary btn-sm ml-2"
+                                    onClick={ () => this.showHideComment(todoItem) }>
+                                    <i className="far fa-comment"></i> { todoItem.commentCount || "" }
+                                </button>
+                            </td>
+                        </tr>,
+                        todoItem.showingComment
+                        && <tr key={ `commentList_${todoItem.todoId}` }>
+                            <td colSpan="4">
+                                <Comment commentType={1}
+                                    entityId={ todoItem.todoId }>
+                                </Comment>
+                            </td>
+                        </tr>,
+                        todoItem.creatingSubTodo
+                        && <tr key={ `creatingSubTodo_${todoItem.todoId}` }>
+                            <td colSpan="4">
+                                <form>
+                                    <div className="input-group">
+                                        <input type="text"
+                                            className="form-control"
+                                            value={ this.state.newTodoItemName }
+                                            onChange={ this.updateNewTodoItemName } />
+                                        <div className="input-group-append">
+                                            <StateButton buttonType="primary"
+                                                buttonIcon="fas fa-plus"
+                                                buttonLabel="Create"
+                                                inProgressLabel="Creating"
+                                                action={ e => this.createTodoItem(e, todoItem.todoId) }>
+                                            </StateButton>
+                                            <button type="button"
+                                                className="btn btn-secondary"
+                                                onClick={ e => this.exitCreatingSubTodo(e, todoItem) }>
+                                                <i className="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>,
+                        todoItem.subTodos.length
+                            ? this.sortedTodoList(todoItem.subTodos).map(subTodoItem =>
+                                [<tr key={ `todoItem_${todoItem.todoId}_${subTodoItem.todoId}` }>
+                                    <td className="pl-4">
+                                        { !subTodoItem.todoStatus
+                                            ? <i className="fas fa-circle clickable" onClick={ () => this.toggleTodoItemStatus(subTodoItem) }></i>
+                                            : <i className="fas fa-check-circle text-success"></i>
+                                        }
+                                    </td>
+                                    { !subTodoItem.editing
+                                        ? <td colSpan="2"
+                                            onDoubleClick={ () => this.enterEditing(subTodoItem) }
+                                            className={ `${this.props.hideEverything ? "hidingElement" : ""} pl-4` }>
+                                            { subTodoItem.todoName }
+                                        </td>
+                                        : <td colSpan="2"
+                                            className={ this.props.hideEverything ? "hidingElement" : "" }>
+                                            <input type="text"
+                                                className="form-control"
+                                                defaultValue={ subTodoItem.todoName }
+                                                onBlur={ e => this.updateTodoItem(e, subTodoItem) } />
+                                        </td>
+                                    }
+                                    <td className="text-right">
+                                        <ConfirmationButton buttonType="danger"
+                                            buttonIcon="fas fa-trash-alt"
+                                            buttonLabel=""
+                                            buttonSize="sm"
+                                            action={ () => this.deleteTodoItem(subTodoItem) }>
+                                        </ConfirmationButton>
+                                        <button className="btn btn-secondary btn-sm ml-2"
+                                            onClick={ () => this.showHideComment(subTodoItem) }>
+                                            <i className="far fa-comment"></i> { subTodoItem.commentCount || "" }
+                                        </button>
+                                    </td>
+                                </tr>,
+                                subTodoItem.showingComment
+                                && <tr key={ `commentList_${subTodoItem.todoId}` }>
+                                    <td colSpan="4">
+                                        <Comment commentType={1}
+                                            entityId={ subTodoItem.todoId }>
+                                        </Comment>
+                                    </td>
+                                </tr>])
+                            : null
+                    ]
+                );
+            } else {
+                return <tr>
+                    <td colSpan="4" className="bg-success">You&apos;ve finished everything! Yay!</td>
+                </tr>;
+            }
+        };
+
+        const categoryList = this.state.todoCategoryList.map(category =>
+            <div key={ category.todoCategoryId }>
+                <h3>
+                    { category.todoCategoryName }  ({ category.todoList.filter(todo => !todo.todoStatus).length })
+                </h3>
+                <form>
+                    <div className="input-group">
+                        <input type="text"
+                            className="form-control"
+                            value={ this.state.newTodoItemName }
+                            onChange={ this.updateNewTodoItemName } />
+                        <div className="input-group-append">
+                            <StateButton buttonType="primary"
+                                buttonIcon="fas fa-plus"
+                                buttonLabel="Create"
+                                inProgressLabel="Creating"
+                                action={ this.createTodoItem }>
+                            </StateButton>
+                        </div>
+                    </div>
+                </form>
+                <table className="table table-hover">
+                    <thead>
+                        <tr>
+                            <th className="clickable" onClick={ () => this.setSort("todoStatus") }>Done { sortingIndicator("todoStatus") }</th>
+                            <th className="clickable" onClick={ () => this.setSort("todoName") }>Item { sortingIndicator("todoName") }</th>
+                            <th className="clickable" onClick={ () => this.setSort("todoCreatedDate") }>Since { sortingIndicator("todoCreatedDate") }</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        { todoList(category.todoList) }
+                    </tbody>
+                </table>
+            </div>
+        );
+
         return (
             <div id="todoList" className="row">
                 <div className="col-12">
-                    <h3>Todo List ({ this.state.todoList.filter(todo => !todo.todoStatus).length })</h3>
+                    <h3>Todo Lists</h3>
                     <p className="text-muted">Everything you need to get done or got done today.</p>
-                    <form>
-                        <div className="input-group">
-                            <input type="text"
-                                className="form-control"
-                                value={ this.state.newTodoItemName }
-                                onChange={ this.updateNewTodoItemName } />
-                            <div className="input-group-append">
-                                <StateButton buttonType="primary"
-                                    buttonIcon="fas fa-plus"
-                                    buttonLabel="Create"
-                                    inProgressLabel="Creating"
-                                    action={ this.createTodoItem }>
-                                </StateButton>
-                            </div>
-                        </div>
-                    </form>
-                    <table className="table table-hover">
-                        <thead>
-                            <tr>
-                                <th className="clickable" onClick={ () => this.setSort("todoStatus") }>Done { sortingIndicator("todoStatus") }</th>
-                                <th className="clickable" onClick={ () => this.setSort("todoName") }>Item { sortingIndicator("todoName") }</th>
-                                <th className="clickable" onClick={ () => this.setSort("todoCreatedDate") }>Since { sortingIndicator("todoCreatedDate") }</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            { todoList }
-                        </tbody>
-                    </table>
+                    { categoryList }
                 </div>
             </div>
         );
