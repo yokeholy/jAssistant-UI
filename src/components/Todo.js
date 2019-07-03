@@ -91,11 +91,12 @@ class Todo extends React.Component {
             });
     }
 
-    createTodoItem = (e, parentTodoId = null) => {
+    createTodoItem = (e, parentTodoId = null, todoCategoryId) => {
         e.preventDefault();
         return API.post("/todo/createTodoItem", {
             itemName: this.state.newTodoItemName,
-            parentTodoId
+            parentTodoId,
+            todoCategoryId
         })
             .then(() => {
                 toast.success(`${this.state.newTodoItemName} is created successfully.`);
@@ -136,7 +137,7 @@ class Todo extends React.Component {
             }
         };
 
-        const todoList = thisTodoList => {
+        const todoList = (thisTodoList, todoCategoryId) => {
             if (thisTodoList.length) {
                 return this.sortedTodoList(thisTodoList).map(todoItem =>
                     [
@@ -196,7 +197,7 @@ class Todo extends React.Component {
                                                 buttonIcon="fas fa-plus"
                                                 buttonLabel="Create"
                                                 inProgressLabel="Creating"
-                                                action={ e => this.createTodoItem(e, todoItem.todoId) }>
+                                                action={ e => this.createTodoItem(e, todoItem.todoId, todoCategoryId) }>
                                             </StateButton>
                                             <button type="button"
                                                 className="btn btn-secondary"
@@ -278,7 +279,7 @@ class Todo extends React.Component {
                                 buttonIcon="fas fa-plus"
                                 buttonLabel="Create"
                                 inProgressLabel="Creating"
-                                action={ this.createTodoItem }>
+                                action={ e => this.createTodoItem(e, null, category.todoCategoryId) }>
                             </StateButton>
                         </div>
                     </div>
@@ -293,7 +294,7 @@ class Todo extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        { todoList(category.todoList) }
+                        { todoList(category.todoList, category.todoCategoryId) }
                     </tbody>
                 </table>
             </div>
