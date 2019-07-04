@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { toast } from "react-toastify";
 
 import API from "../services/api";
+import Comment from "./Comment";
 import ConfirmationButton from "./fragments/ConfirmationButton";
 import StateButton from "./fragments/StateButton";
 
@@ -43,6 +44,11 @@ class Routine extends React.Component {
                 return 0;
             }
         });
+
+    showHideComment = routineItem => {
+        routineItem.showingComment = !routineItem.showingComment;
+        this.forceUpdate();
+    }
 
     getRoutineList = () =>
         API.get("/routine/getRoutineList")
@@ -106,7 +112,7 @@ class Routine extends React.Component {
     render () {
         const routineList = this.state.routineList.length
             ? this.sortedRoutineList().map(routineItem =>
-                <tr key={ routineItem.routineId }>
+                [<tr key={ routineItem.routineId }>
                     <td>
                         { !routineItem.routineCheckedIn
                             ? <i className="fas fa-circle clickable" onClick={ () => this.checkInRoutine(routineItem) }></i>
@@ -130,8 +136,20 @@ class Routine extends React.Component {
                             buttonSize="sm"
                             action={ () => this.deleteRoutine(routineItem) }>
                         </ConfirmationButton>
+                        <button className="btn btn-secondary btn-sm ml-2"
+                            onClick={ () => this.showHideComment(routineItem) }>
+                            <i className="far fa-comment"></i> { routineItem.commentCount || "" }
+                        </button>
                     </td>
-                </tr>
+                </tr>,
+                routineItem.showingComment
+                && <tr key={ `commentList_${routineItem.routineId}` }>
+                    <td colSpan="4">
+                        <Comment commentType={2}
+                            entityId={ routineItem.routineId }>
+                        </Comment>
+                    </td>
+                </tr>]
             )
             : <tr>
                 <td colSpan="4" className="bg-info">You have not set up any routines yet.</td>

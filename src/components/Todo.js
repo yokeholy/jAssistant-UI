@@ -5,6 +5,7 @@ import moment from "moment";
 import { toast } from "react-toastify";
 
 import API from "../services/api";
+import Comment from "./Comment";
 import ConfirmationButton from "./fragments/ConfirmationButton";
 import StateButton from "./fragments/StateButton";
 
@@ -65,6 +66,11 @@ class Todo extends React.Component {
 
     enterCreatingSubTodo = todoItem => {
         todoItem.creatingSubTodo = true;
+        this.forceUpdate();
+    }
+
+    showHideComment = todoItem => {
+        todoItem.showingComment = !todoItem.showingComment;
         this.forceUpdate();
     }
 
@@ -151,6 +157,18 @@ class Todo extends React.Component {
                                 onClick={ () => this.enterCreatingSubTodo(todoItem) }>
                                 <i className="fas fa-plus"></i>
                             </button>
+                            <button className="btn btn-secondary btn-sm ml-2"
+                                onClick={ () => this.showHideComment(todoItem) }>
+                                <i className="far fa-comment"></i> { todoItem.commentCount || "" }
+                            </button>
+                        </td>
+                    </tr>,
+                    todoItem.showingComment
+                    && <tr key={ `commentList_${todoItem.todoId}` }>
+                        <td colSpan="4">
+                            <Comment commentType={1}
+                                entityId={ todoItem.todoId }>
+                            </Comment>
                         </td>
                     </tr>,
                     todoItem.creatingSubTodo
@@ -181,7 +199,7 @@ class Todo extends React.Component {
                     </tr>,
                     todoItem.subTodos.length
                         ? this.sortedTodoList(todoItem.subTodos).map(subTodoItem =>
-                            <tr key={ `todoItem_${todoItem.todoId}_${subTodoItem.todoId}` }>
+                            [<tr key={ `todoItem_${todoItem.todoId}_${subTodoItem.todoId}` }>
                                 <td className="pl-4">
                                     { !subTodoItem.todoStatus
                                         ? <i className="fas fa-circle clickable" onClick={ () => this.toggleTodoItemStatus(subTodoItem) }></i>
@@ -209,8 +227,20 @@ class Todo extends React.Component {
                                         buttonSize="sm"
                                         action={ () => this.deleteTodoItem(subTodoItem) }>
                                     </ConfirmationButton>
+                                    <button className="btn btn-secondary btn-sm ml-2"
+                                        onClick={ () => this.showHideComment(subTodoItem) }>
+                                        <i className="far fa-comment"></i> { subTodoItem.commentCount || "" }
+                                    </button>
                                 </td>
-                            </tr>)
+                            </tr>,
+                            subTodoItem.showingComment
+                            && <tr key={ `commentList_${subTodoItem.todoId}` }>
+                                <td colSpan="4">
+                                    <Comment commentType={1}
+                                        entityId={ subTodoItem.todoId }>
+                                    </Comment>
+                                </td>
+                            </tr>])
                         : null
                 ]
             )
