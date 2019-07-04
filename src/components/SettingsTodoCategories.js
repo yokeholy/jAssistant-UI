@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 
 import API from "../services/api";
 import StateButton from "./fragments/StateButton";
+import ConfirmationButton from "./fragments/ConfirmationButton";
 
 class SettingsTodoCategories extends React.Component {
     state = {
@@ -14,8 +15,8 @@ class SettingsTodoCategories extends React.Component {
         this.setState({ newTodoCategoryName: e.target.value });
     }
 
-    createTodoCategory = () =>
-        API.post("/settings/createTodoCategory", {
+    createTodoCategorySetting = () =>
+        API.post("/settings/saveTodoCategorySetting", {
             todoCategoryName: this.state.newTodoCategoryName
         })
             .then(() => {
@@ -23,9 +24,56 @@ class SettingsTodoCategories extends React.Component {
                 this.setState({
                     newTodoCategoryName: ""
                 });
+            })
+            .then(() => {
+                this.props.getAllSettings();
+            });
+
+    updateTodoCategorySetting = (e, todoCategoryId) => {
+        let newTodoCategoryName = e.target.value;
+        return API.post("/settings/saveTodoCategorySetting", {
+            todoCategoryName: newTodoCategoryName,
+            todoCategoryId
+        })
+            .then(() => {
+                toast.success(`${newTodoCategoryName} is updated.`);
+            })
+            .then(() => {
+                this.props.getAllSettings();
+            });
+    }
+
+    deleteTodoCategory = todoCategoryItem =>
+        API.post("/settings/deleteTodoCategorySetting", {
+            todoCategoryId: todoCategoryItem.todoCategoryId
+        })
+            .then(() => {
+                toast.success(`${todoCategoryItem.todoCategoryName} is deleted.`);
+                this.props.getAllSettings();
             });
 
     render () {
+        const todoCategoryList = this.props.todoCategorySettings.length
+            ? this.props.todoCategorySettings.map(todoCategoryItem =>
+                <tr key={ todoCategoryItem.todoCategoryId }>
+                    <td>
+                        <input type="text"
+                            className="form-control"
+                            defaultValue={ todoCategoryItem.todoCategoryName }
+                            onBlur={ e => this.updateTodoCategorySetting(e, todoCategoryItem.todoCategoryId) } />
+                    </td>
+                    <td>
+                        0
+                    </td>
+                    <td className="text-right">
+                        <ConfirmationButton buttonType="danger"
+                            buttonIcon="fas fa-trash-alt"
+                            buttonLabel=""
+                            action={ () => this.deleteTodoCategory(todoCategoryItem) }>
+                        </ConfirmationButton>
+                    </td>
+                </tr>)
+            : null;
         return (
             <div className="card mt-3">
                 <div className="card-body">
@@ -41,7 +89,7 @@ class SettingsTodoCategories extends React.Component {
                                     buttonIcon="fas fa-plus"
                                     buttonLabel="Create"
                                     inProgressLabel="Creating"
-                                    action={ this.createTodoCategory }>
+                                    action={ this.createTodoCategorySetting }>
                                 </StateButton>
                             </div>
                         </div>
@@ -55,7 +103,7 @@ class SettingsTodoCategories extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-
+                            { todoCategoryList }
                         </tbody>
                     </table>
                 </div>
@@ -65,7 +113,8 @@ class SettingsTodoCategories extends React.Component {
 }
 
 SettingsTodoCategories.propTypes = {
-    todoCategories: PropTypes.array.isRequired
+    todoCategorySettings: PropTypes.array.isRequired,
+    getAllSettings: PropTypes.func.isRequired
 };
 
 export default SettingsTodoCategories;
