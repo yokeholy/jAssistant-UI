@@ -43,14 +43,20 @@ class SettingsTodoCategories extends React.Component {
             });
     }
 
-    deleteTodoCategory = todoCategoryItem =>
-        API.post("/settings/deleteTodoCategorySetting", {
-            todoCategoryId: todoCategoryItem.todoCategoryId
-        })
-            .then(() => {
-                toast.success(`${todoCategoryItem.todoCategoryName} is deleted.`);
-                this.props.getAllSettings();
-            });
+    deleteTodoCategory = todoCategoryItem => {
+        if (todoCategoryItem.todoCount > 0) {
+            toast.warn(`The Category ${todoCategoryItem.todoCategoryName} has more than 0 unfinished Todo items. Thus it cannot be deleted.`);
+            return Promise.reject();
+        } else {
+            return API.post("/settings/deleteTodoCategorySetting", {
+                todoCategoryId: todoCategoryItem.todoCategoryId
+            })
+                .then(() => {
+                    toast.success(`${todoCategoryItem.todoCategoryName} is deleted.`);
+                    this.props.getAllSettings();
+                });
+        }
+    }
 
     render () {
         const todoCategoryList = this.props.todoCategorySettings.length

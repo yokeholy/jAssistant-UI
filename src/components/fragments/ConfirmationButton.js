@@ -21,11 +21,12 @@ class ConfirmationButton extends React.Component {
         });
     }
 
-    takeAction = e => {
+    takeAction = e =>
         this.props.action(e).then(() => {
             this.exitConfirming();
+        }, () => {
+            this.exitConfirming();
         });
-    }
 
     render () {
         return <span>
