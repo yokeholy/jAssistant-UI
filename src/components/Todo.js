@@ -264,7 +264,8 @@ class Todo extends React.Component {
         };
 
         const categoryList = this.state.todoCategoryList.map(category =>
-            <div key={ category.todoCategoryId }>
+            <div key={ category.todoCategoryId }
+                className={ this.props.dashboard ? "col-12" : "col-6"}>
                 <h3>
                     { category.todoCategoryName }  ({ category.todoCount })
                 </h3>
@@ -305,7 +306,9 @@ class Todo extends React.Component {
                 <div className="col-12">
                     <h3>Todo Lists</h3>
                     <p className="text-muted">Everything you need to get done or got done today.</p>
-                    { categoryList }
+                    <div className="row">
+                        { categoryList }
+                    </div>
                 </div>
             </div>
         );
