@@ -266,7 +266,7 @@ class Todo extends React.Component {
         const categoryList = this.state.todoCategoryList.map(category =>
             <div key={ category.todoCategoryId }>
                 <h3>
-                    { category.todoCategoryName }  ({ category.todoList.filter(todo => !todo.todoStatus).length })
+                    { category.todoCategoryName }  ({ category.todoCount })
                 </h3>
                 <form>
                     <div className="input-group">

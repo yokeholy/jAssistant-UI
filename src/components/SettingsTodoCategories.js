@@ -63,7 +63,7 @@ class SettingsTodoCategories extends React.Component {
                             onBlur={ e => this.updateTodoCategorySetting(e, todoCategoryItem.todoCategoryId) } />
                     </td>
                     <td>
-                        0
+                        { todoCategoryItem.todoCount }
                     </td>
                     <td className="text-right">
                         <ConfirmationButton buttonType="danger"
