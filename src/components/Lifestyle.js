@@ -59,7 +59,8 @@ class Lifestyle extends React.Component {
 
         return (
             <div className={`${this.props.dashboard ? "fixed-bottom bg-secondary" : ""}`}>
-                <div id="toggleFooter" className="d-block d-md-none">
+                { this.props.dashboard
+                && <div id="toggleFooter" className="d-block d-md-none">
                     <button className="btn btn-block btn-secondary" onClick={ () => this.setState({ showingFooter: !this.state.showingFooter }) }>
                         { !this.state.showingFooter
                             && <span>
@@ -74,6 +75,7 @@ class Lifestyle extends React.Component {
                         }
                     </button>
                 </div>
+                }
                 { this.state.showingFooter
                     ? <div className="container-fluid p-2">
                         <div className="row">
