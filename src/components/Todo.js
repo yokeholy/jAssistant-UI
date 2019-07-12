@@ -91,16 +91,21 @@ class Todo extends React.Component {
             });
     }
 
-    createTodoItem = (e, parentTodoId = null, todoCategoryId) => {
+    createTodoItem = (e, parentTodoId = null, todoCategoryId, entity = null) => {
         e.preventDefault();
         return API.post("/todo/createTodoItem", {
-            itemName: this.state.newTodoItemName,
+            itemName: entity ? entity.newTodoItemName : this.state.newTodoItemName,
             parentTodoId,
             todoCategoryId
         })
             .then(() => {
-                toast.success(`${this.state.newTodoItemName} is created successfully.`);
-                this.setState({newTodoItemName: ""});
+                toast.success(`${entity ? entity.newTodoItemName : this.state.newTodoItemName} is created successfully.`);
+                if (entity) {
+                    entity.newTodoItemName = "";
+                    this.forceUpdate();
+                } else {
+                    this.setState({newTodoItemName: ""});
+                }
                 this.getTodoList();
             });
     }
@@ -190,14 +195,14 @@ class Todo extends React.Component {
                                     <div className="input-group">
                                         <input type="text"
                                             className="form-control"
-                                            value={ this.state.newTodoItemName }
-                                            onChange={ this.updateNewTodoItemName } />
+                                            value={ todoItem.newTodoItemName }
+                                            onChange={ e => { todoItem.newTodoItemName = e.target.value; } } />
                                         <div className="input-group-append">
                                             <StateButton buttonType="primary"
                                                 buttonIcon="fas fa-plus"
                                                 buttonLabel="Create"
                                                 inProgressLabel="Creating"
-                                                action={ e => this.createTodoItem(e, todoItem.todoId, todoCategoryId) }>
+                                                action={ e => this.createTodoItem(e, todoItem.todoId, todoCategoryId, todoItem) }>
                                             </StateButton>
                                             <button type="button"
                                                 className="btn btn-secondary"
@@ -273,14 +278,14 @@ class Todo extends React.Component {
                     <div className="input-group">
                         <input type="text"
                             className="form-control"
-                            value={ this.state.newTodoItemName }
-                            onChange={ this.updateNewTodoItemName } />
+                            value={ category.newTodoItemName }
+                            onChange={ e => { category.newTodoItemName = e.target.value; } } />
                         <div className="input-group-append">
                             <StateButton buttonType="primary"
                                 buttonIcon="fas fa-plus"
                                 buttonLabel="Create"
                                 inProgressLabel="Creating"
-                                action={ e => this.createTodoItem(e, null, category.todoCategoryId) }>
+                                action={ e => this.createTodoItem(e, null, category.todoCategoryId, category) }>
                             </StateButton>
                         </div>
                     </div>
