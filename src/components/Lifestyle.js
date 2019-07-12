@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
+import { NavLink } from "react-router-dom";
 import API from "../services/api";
 
 class Lifestyle extends React.Component {
@@ -51,13 +52,15 @@ class Lifestyle extends React.Component {
                     <h5 className="mb-0 mt-2">{ lifestyle.lifestyleName }</h5>
                     <p className="text-muted">{ lifestyle.lifestyleCaption }</p>
                 </div>)
-            : <div>
-                nothing
+            : <div className="col-12 text-center">
+                <p className="text-info">You haven&lsquo;t set up and Lifestyle items yet.</p>
+                <p>Please go to <NavLink to="/settings">Settings</NavLink> page to set it up.</p>
             </div>;
 
         return (
             <div className={`${this.props.dashboard ? "fixed-bottom bg-secondary" : ""}`}>
-                <div id="toggleFooter" className="d-block d-md-none">
+                { this.props.dashboard
+                && <div id="toggleFooter" className="d-block d-md-none">
                     <button className="btn btn-block btn-secondary" onClick={ () => this.setState({ showingFooter: !this.state.showingFooter }) }>
                         { !this.state.showingFooter
                             && <span>
@@ -72,6 +75,7 @@ class Lifestyle extends React.Component {
                         }
                     </button>
                 </div>
+                }
                 { this.state.showingFooter
                     ? <div className="container-fluid p-2">
                         <div className="row">
