@@ -1,5 +1,12 @@
+/* global window: true, document: true */
 import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
 import { BrowserRouter, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import Navigation from "./components/Navigation";
 import MainAssistant from "./components/MainAssistant";
 import Todo from "./components/Todo";
@@ -8,10 +15,43 @@ import Note from "./components/Note";
 import Lifestyle from "./components/Lifestyle";
 import Settings from "./components/Settings";
 import Login from "./components/Login";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 class JAssistant extends React.Component {
+    state = {
+        timer: null
+    }
+
+    componentDidMount () {
+        this.resetTimer();
+        // DOM Events
+        document.onmousemove = this.resetTimer;
+        document.onkeypress = this.resetTimer;
+        document.onscroll = this.resetTimer;
+        document.onclick = this.resetTimer;
+        document.ondblclick = this.resetTimer;
+        document.onkeypress = this.resetTimer;
+    }
+
+    componentWillUnmount () {
+        window.clearTimeout(this.state.timer);
+        this.setState({
+            timer: null
+        });
+    }
+
+    resetTimer = () => {
+        window.clearTimeout(this.state.timer);
+        // Set the timer to be 180 seconds
+        this.setState({
+            timer: window.setTimeout(() => {
+                if (!this.props.hideEverything) {
+                    this.props.showHideEverything();
+                }
+                this.resetTimer();
+            }, 180000)
+        });
+    }
+
     render () {
         return (
             <BrowserRouter>
@@ -33,4 +73,19 @@ class JAssistant extends React.Component {
     }
 }
 
-export default JAssistant;
+JAssistant.propTypes = {
+    hideEverything: PropTypes.bool.isRequired,
+    showHideEverything: PropTypes.func.isRequired
+};
+
+// Map JData from Redux to this component
+const mapStateToProps = state => state;
+
+// Map JData dispatch methods
+const mapDispatchToProps = dispatch => ({
+    showHideEverything: () => {
+        dispatch({ type: "SHOW_HIDE_EVERYTHING" });
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(JAssistant);
