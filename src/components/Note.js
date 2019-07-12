@@ -3,18 +3,27 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 
+// Bootstrap
+import Form from "react-bootstrap/Form";
+
 import API from "../services/api";
 import ConfirmationButton from "./fragments/ConfirmationButton";
 import StateButton from "./fragments/StateButton";
 
 class Note extends React.Component {
     state = {
-        noteList: []
+        noteList: [],
+        archivedNoteList: []
     };
 
     componentDidMount () {
         if (this.props.loginStatus) {
             this.getNotes();
+        }
+
+        // Get archived notes if not in dashboard mode
+        if (!this.props.dashboard) {
+            this.getArchivedNotes();
         }
     }
 
@@ -23,6 +32,14 @@ class Note extends React.Component {
             .then(response => {
                 this.setState({
                     noteList: response.noteList
+                });
+            });
+
+    getArchivedNotes = () =>
+        API.get("/note/getArchivedNotes")
+            .then(response => {
+                this.setState({
+                    archivedNoteList: response.archivedNoteList
                 });
             });
 
@@ -71,19 +88,23 @@ class Note extends React.Component {
     render () {
         const noteList = this.state.noteList.length
             ? this.state.noteList.map(noteItem =>
-                <div key={ noteItem.noteId }>
-                    <hr />
-                    <input type="text"
-                        className="form-control"
+                <div key={ noteItem.noteId }
+                    className={ this.props.dashboard ? "col-12" : "col-12 col-md-6"}>
+                    <Form.Control type="text"
+                        size="lg"
                         placeholder="Untitled"
                         value={ noteItem.noteTitle }
                         onChange={ e => this.watchNoteTitle(e, noteItem) }
-                        onKeyDown={ e => this.checkToSave(e, noteItem) }
-                    />
-                    <textarea className={`form-control mt-3 mb-3 noteContent ${this.props.hideEverything ? "hidingElement" : ""}`}
+                        onKeyDown={ e => this.checkToSave(e, noteItem) } />
+                    <p className="text-muted">
+                        Created: { noteItem.noteCreatedDate }<br />
+                        Last Updated: { noteItem.noteUpdatedDate }
+                    </p>
+                    <Form.Control as="textarea"
+                        className={`mt-3 mb-3 noteContent ${this.props.hideEverything ? "hidingElement" : ""}`}
                         value={ noteItem.noteContent }
                         onChange={ e => this.watchNoteContent(e, noteItem) }
-                        onKeyDown={ e => this.checkToSave(e, noteItem) }></textarea>
+                        onKeyDown={ e => this.checkToSave(e, noteItem) } />
                     <p className="text-right">
                         <ConfirmationButton buttonType="secondary"
                             buttonIcon="fas fa-archive"
@@ -99,7 +120,21 @@ class Note extends React.Component {
                     </p>
                 </div>
             )
-            : <p className="alert alert-info">You don&apos;t have any notes yet.</p>;
+            : <p className="alert alert-info">You don&apos;t have any notes.</p>;
+
+        const archivedNoteList = this.state.archivedNoteList.length
+            ? this.state.archivedNoteList.map(noteItem =>
+                <div key={ noteItem.noteId }
+                    className={ this.props.dashboard ? "col-12" : "col-12 col-md-6"}>
+                    <h4>{ noteItem.noteTitle }</h4>
+                    <p className="text-muted">
+                        Created: { noteItem.noteCreatedDate }<br />
+                        Archived: { noteItem.noteUpdatedDate }
+                    </p>
+                    <p>{ noteItem.noteContent }</p>
+                </div>
+            )
+            : <p className="alert alert-info">You don&apos;t have any archived notes.</p>;
 
         return (
             <div id="notes" className="row">
@@ -114,7 +149,16 @@ class Note extends React.Component {
                             action={ this.createNote }>
                         </StateButton>
                     </p>
-                    { noteList }
+                    <div className="row">
+                        { noteList }
+                    </div>
+                    { !this.props.dashboard
+                    && <div className="row">
+                        <div className="col-12">
+                            <h3>Archived Notes</h3>
+                        </div>
+                        { archivedNoteList }
+                    </div>}
                 </div>
             </div>
         );
