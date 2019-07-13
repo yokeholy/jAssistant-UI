@@ -64,11 +64,11 @@ class SettingsTodoCategories extends React.Component {
                 <tr key={ todoCategoryItem.todoCategoryId }>
                     <td>
                         <input type="text"
-                            className="form-control"
+                            className="form-control hidingElement"
                             defaultValue={ todoCategoryItem.todoCategoryName }
                             onBlur={ e => this.updateTodoCategorySetting(e, todoCategoryItem.todoCategoryId) } />
                     </td>
-                    <td>
+                    <td className="hidingElement">
                         { todoCategoryItem.todoCount }
                     </td>
                     <td className="text-right">
@@ -87,7 +87,7 @@ class SettingsTodoCategories extends React.Component {
                     <form>
                         <div className="input-group">
                             <input type="text"
-                                className="form-control"
+                                className="form-control hidingElement"
                                 value={ this.state.newTodoCategoryName }
                                 onChange={ this.updateNewTodoCategoryName } />
                             <div className="input-group-append">

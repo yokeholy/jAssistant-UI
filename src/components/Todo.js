@@ -271,7 +271,7 @@ class Todo extends React.Component {
         const categoryList = this.state.todoCategoryList.map(category =>
             <div key={ category.todoCategoryId }
                 className={ this.props.dashboard ? "col-12" : "col-12 col-md-6"}>
-                <h3>
+                <h3 className="hidingElement">
                     { category.todoCategoryName }  ({ category.todoCount })
                 </h3>
                 <form>

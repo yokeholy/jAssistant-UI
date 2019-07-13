@@ -100,18 +100,18 @@ class SettingsTodoCategories extends React.Component {
                 <tr key={ lifestyleItem.lifestyleId }>
                     <td>
                         <input type="text"
-                            className="form-control"
+                            className="form-control hidingElement"
                             defaultValue={ lifestyleItem.lifestyleName }
                             onBlur={ e => this.updateLifestyleName(e, lifestyleItem) } />
                     </td>
                     <td>
                         <input type="text"
-                            className="form-control"
+                            className="form-control hidingElement"
                             defaultValue={ lifestyleItem.lifestyleCaption }
                             onBlur={ e => this.updateLifestyleCaption(e, lifestyleItem) } />
                     </td>
                     <td>
-                        <div className="dropdown">
+                        <div className="dropdown hidingElement">
                             <button key={ lifestyleItem.iconName }
                                 className="btn btn-outline-primary dropdown-toggle"
                                 type="button"
@@ -132,7 +132,7 @@ class SettingsTodoCategories extends React.Component {
                         </div>
                     </td>
                     <td>
-                        <div className="dropdown">
+                        <div className="dropdown hidingElement">
                             <button key={ lifestyleItem.colorName }
                                 className="btn btn-outline-primary dropdown-toggle"
                                 type="button"
@@ -155,7 +155,7 @@ class SettingsTodoCategories extends React.Component {
                     <td>
                         <div className="input-group">
                             <input type="text"
-                                className="form-control"
+                                className="form-control hidingElement"
                                 defaultValue={ lifestyleItem.lifestyleDailyValue }
                                 onBlur={ e => this.updateLifestyleValue(e, lifestyleItem) } />
                             <div className="input-group-append">
@@ -182,7 +182,7 @@ class SettingsTodoCategories extends React.Component {
                     <form>
                         <div className="input-group">
                             <input type="text"
-                                className="form-control"
+                                className="form-control hidingElement"
                                 value={ this.state.newLifestyleName }
                                 onChange={ this.updateNewLifestyleName } />
                             <div className="input-group-append">
