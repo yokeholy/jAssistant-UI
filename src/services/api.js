@@ -2,10 +2,7 @@ import axios from "axios";
 import Config from "../config/config";
 import { toast } from "react-toastify";
 
-import { createStore } from "redux";
-import JDataReducer from "../reducers/JDataReducer";
-
-let jData = createStore(JDataReducer);
+import jData from "../services/jData";
 
 class API {
     _prepareAPICall (authorizationException = false) {

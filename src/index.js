@@ -4,11 +4,9 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import JAssistant from "./JAssistant";
 import * as serviceWorker from "./serviceWorker";
-import { createStore } from "redux";
 import { Provider } from "react-redux";
-import JDataReducer from "./reducers/JDataReducer";
 
-const jData = createStore(JDataReducer);
+import jData from "./services/jData";
 
 ReactDOM.render(<Provider store={ jData }><JAssistant /></Provider>, document.getElementById("jAssistantRoot"));
 
