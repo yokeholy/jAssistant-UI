@@ -32,7 +32,7 @@ class Login extends React.Component {
                 .then(response => {
                     toast.success(`Welcome back, ${response.userName}`);
                     if (response.authKey) {
-                        // Store the returned auth key in localStorage
+                        // Store the returned auth key in jData
                         this.props.updateLoginStatus(true, response.authKey);
                     }
                 }, error => {
