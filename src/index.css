@@ -28,6 +28,11 @@ hr {
   border-top-color: #999999;
 }
 
+p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .clickable {
   cursor: pointer;
 }

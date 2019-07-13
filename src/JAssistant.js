@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { BrowserRouter, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "react-bootstrap-toggle/dist/bootstrap2-toggle.css";
 
 import Navigation from "./components/Navigation";
 import MainAssistant from "./components/MainAssistant";
