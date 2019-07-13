@@ -56,7 +56,8 @@ class JAssistant extends React.Component {
     render () {
         return (
             <BrowserRouter>
-                <div id="jAssistant">
+                <div id="jAssistant"
+                    className={ this.props.hideEverything ? "hidingEverything" : ""}>
                     <Navigation />
                     <section className="container-fluid pt-3 mb-5 pb-5">
                         <Route exact path="/" component={ MainAssistant } />

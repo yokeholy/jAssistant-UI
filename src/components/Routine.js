@@ -120,15 +120,15 @@ class Routine extends React.Component {
                         }
                     </td>
                     { !routineItem.editing
-                        ? <td onDoubleClick={ () => this.enterEditing(routineItem) } className={ this.props.hideEverything ? "hidingElement" : "" }>{ routineItem.routineName }</td>
-                        : <td className={ this.props.hideEverything ? "hidingElement" : "" }>
+                        ? <td onDoubleClick={ () => this.enterEditing(routineItem) } className="hidingElement">{ routineItem.routineName }</td>
+                        : <td className="hidingElement">
                             <input type="text"
                                 className="form-control"
                                 defaultValue={ routineItem.routineName }
                                 onBlur={ e => this.updateRoutine(e, routineItem) } />
                         </td>
                     }
-                    <td className={this.props.hideEverything ? "hidingElement" : ""}>{ routineItem.routineConsecutive } { routineItem.routineConsecutive !== 1 ? "days" : "day" }</td>
+                    <td className="hidingElement">{ routineItem.routineConsecutive } { routineItem.routineConsecutive !== 1 ? "days" : "day" }</td>
                     <td className="text-right">
                         <ConfirmationButton buttonType="danger"
                             buttonIcon="fas fa-trash-alt"
@@ -173,7 +173,7 @@ class Routine extends React.Component {
                     <form>
                         <div className="input-group">
                             <input type="text"
-                                className="form-control"
+                                className="form-control hidingElement"
                                 value={ this.state.newRoutineName }
                                 onChange={ this.updateNewRoutineName } />
                             <div className="input-group-append">
@@ -206,7 +206,6 @@ class Routine extends React.Component {
 }
 
 Routine.propTypes = {
-    hideEverything: PropTypes.bool.isRequired,
     dashboard: PropTypes.bool,
     loginStatus: PropTypes.bool.isRequired
 };

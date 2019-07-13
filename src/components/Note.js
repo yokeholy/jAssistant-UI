@@ -91,17 +91,18 @@ class Note extends React.Component {
                 <div key={ noteItem.noteId }
                     className={ this.props.dashboard ? "col-12" : "col-12 col-md-6"}>
                     <Form.Control type="text"
+                        className="hidingElement"
                         size="lg"
                         placeholder="Untitled"
                         value={ noteItem.noteTitle }
                         onChange={ e => this.watchNoteTitle(e, noteItem) }
                         onKeyDown={ e => this.checkToSave(e, noteItem) } />
-                    <p className="text-muted">
+                    <p className="text-muted hidingElement">
                         Created: { noteItem.noteCreatedDate }<br />
                         Last Updated: { noteItem.noteUpdatedDate }
                     </p>
                     <Form.Control as="textarea"
-                        className={`mt-3 mb-3 noteContent ${this.props.hideEverything ? "hidingElement" : ""}`}
+                        className="mt-3 mb-3 noteContent hidingElement"
                         value={ noteItem.noteContent }
                         onChange={ e => this.watchNoteContent(e, noteItem) }
                         onKeyDown={ e => this.checkToSave(e, noteItem) } />
@@ -125,7 +126,7 @@ class Note extends React.Component {
         const archivedNoteList = this.state.archivedNoteList.length
             ? this.state.archivedNoteList.map(noteItem =>
                 <div key={ noteItem.noteId }
-                    className={ this.props.dashboard ? "col-12" : "col-12 col-md-6"}>
+                    className={ `col-12 hidingElement${this.props.dashboard ? "" : " col-md-6"}` }>
                     <h4>{ noteItem.noteTitle }</h4>
                     <p className="text-muted">
                         Created: { noteItem.noteCreatedDate }<br />
@@ -166,7 +167,6 @@ class Note extends React.Component {
 }
 
 Note.propTypes = {
-    hideEverything: PropTypes.bool.isRequired,
     dashboard: PropTypes.bool,
     loginStatus: PropTypes.bool.isRequired
 };
