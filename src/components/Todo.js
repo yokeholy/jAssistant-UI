@@ -154,15 +154,15 @@ class Todo extends React.Component {
                                 }
                             </td>
                             { !todoItem.editing
-                                ? <td onDoubleClick={ () => this.enterEditing(todoItem) } className={ this.props.hideEverything ? "hidingElement" : "" }>{ todoItem.todoName }</td>
-                                : <td className={ this.props.hideEverything ? "hidingElement" : "" }>
+                                ? <td onDoubleClick={ () => this.enterEditing(todoItem) } className="hidingElement">{ todoItem.todoName }</td>
+                                : <td className="hidingElement">
                                     <input type="text"
                                         className="form-control"
                                         defaultValue={ todoItem.todoName }
                                         onBlur={ e => this.updateTodoItem(e, todoItem) } />
                                 </td>
                             }
-                            <td className={this.props.hideEverything ? "hidingElement" : ""}>{ moment(todoItem.todoCreatedDate).fromNow() }</td>
+                            <td className="hidingElement">{ moment(todoItem.todoCreatedDate).fromNow() }</td>
                             <td className="text-right">
                                 <ConfirmationButton buttonType="danger"
                                     buttonIcon="fas fa-trash-alt"
@@ -194,7 +194,7 @@ class Todo extends React.Component {
                                 <form>
                                     <div className="input-group">
                                         <input type="text"
-                                            className="form-control"
+                                            className="form-control hidingElement"
                                             value={ todoItem.newTodoItemName }
                                             onChange={ e => { todoItem.newTodoItemName = e.target.value; } } />
                                         <div className="input-group-append">
@@ -226,11 +226,11 @@ class Todo extends React.Component {
                                     { !subTodoItem.editing
                                         ? <td colSpan="2"
                                             onDoubleClick={ () => this.enterEditing(subTodoItem) }
-                                            className={ `${this.props.hideEverything ? "hidingElement" : ""} pl-4` }>
+                                            className="hidingElement pl-4">
                                             { subTodoItem.todoName }
                                         </td>
                                         : <td colSpan="2"
-                                            className={ this.props.hideEverything ? "hidingElement" : "" }>
+                                            className="hidingElement">
                                             <input type="text"
                                                 className="form-control"
                                                 defaultValue={ subTodoItem.todoName }
@@ -277,7 +277,7 @@ class Todo extends React.Component {
                 <form>
                     <div className="input-group">
                         <input type="text"
-                            className="form-control"
+                            className="form-control hidingElement"
                             value={ category.newTodoItemName }
                             onChange={ e => { category.newTodoItemName = e.target.value; } } />
                         <div className="input-group-append">
@@ -342,7 +342,6 @@ class Todo extends React.Component {
 }
 
 Todo.propTypes = {
-    hideEverything: PropTypes.bool.isRequired,
     dashboard: PropTypes.bool,
     loginStatus: PropTypes.bool.isRequired
 };

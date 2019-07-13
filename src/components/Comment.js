@@ -61,7 +61,7 @@ class Comment extends React.Component {
                     ? this.state.commentList.map(comment =>
                         <div key={ comment.commentId } className="row">
                             <div className="col-10">
-                                <p>
+                                <p className="hidingElement">
                                     <span className="text-muted">{ moment(comment.commentCreatedDate).fromNow() }</span><br/>
                                     { comment.commentContent }
                                 </p>
@@ -80,7 +80,7 @@ class Comment extends React.Component {
                 <form>
                     <div className="input-group">
                         <input type="text"
-                            className="form-control"
+                            className="form-control hidingElement"
                             value={ this.state.newCommentContent }
                             onChange={ this.updateNewComment } />
                         <div className="input-group-append">
@@ -99,7 +99,6 @@ class Comment extends React.Component {
 }
 
 Comment.propTypes = {
-    hideEverything: PropTypes.bool.isRequired,
     commentType: PropTypes.number.isRequired,
     entityId: PropTypes.number.isRequired
 };

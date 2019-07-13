@@ -36,7 +36,7 @@ class Lifestyle extends React.Component {
     render () {
         const lifestyleList = this.state.lifestyles.length
             ? this.state.lifestyles.map(lifestyle =>
-                <div key={ lifestyle.lifestyleId } className={`col-12 col-md-${12 / this.state.lifestyles.length} lifestyleSection clickable`} onClick={ () => this.lifestyleUp(lifestyle.lifestyleId)}>
+                <div key={ lifestyle.lifestyleId } className={`col-12 col-md-${12 / this.state.lifestyles.length} lifestyleSection clickable hidingElement`} onClick={ () => this.lifestyleUp(lifestyle.lifestyleId)}>
                     <div className="plusIcon bg-info">
                         <i className="fas fa-plus"></i>
                     </div>
@@ -90,7 +90,6 @@ class Lifestyle extends React.Component {
 }
 
 Lifestyle.propTypes = {
-    hideEverything: PropTypes.bool.isRequired,
     dashboard: PropTypes.bool,
     loginStatus: PropTypes.bool.isRequired
 };
