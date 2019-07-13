@@ -8,18 +8,21 @@ import API from "../services/api";
 import Comment from "./Comment";
 import ConfirmationButton from "./fragments/ConfirmationButton";
 import StateButton from "./fragments/StateButton";
+import Form from "react-bootstrap/Form";
+import Toggle from "react-bootstrap-toggle";
 
 class Todo extends React.Component {
     state = {
         todoCategoryList: [],
-        newTodoItemName: "",
+        doneTodoCategoryList: [],
         sortingItem: "todoStatus",
-        sortingDescending: true
+        sortingDescending: true,
+        displayingDoneTodos: false
     };
 
     componentDidMount () {
         if (this.props.loginStatus) {
-            this.getTodoList();
+            this.getTodoList(false);
         }
     }
 
@@ -46,18 +49,14 @@ class Todo extends React.Component {
             }
         });
 
-    getTodoList = () =>
-        API.get("/todo/getTodoList")
+    getTodoList = done =>
+        API.get(done ? "/todo/getDoneTodoList" : "/todo/getTodoList")
             .then(response => {
                 this.setState({
                     // Sort by the current sorting item and current corting direction
                     todoCategoryList: response.todoCategoryList
                 });
             });
-
-    updateNewTodoItemName = e => {
-        this.setState({ newTodoItemName: e.target.value });
-    }
 
     enterEditing = todoItem => {
         todoItem.editing = true;
@@ -91,21 +90,17 @@ class Todo extends React.Component {
             });
     }
 
-    createTodoItem = (e, parentTodoId = null, todoCategoryId, entity = null) => {
+    createTodoItem = (e, parentTodoId = null, todoCategoryId, entity) => {
         e.preventDefault();
         return API.post("/todo/createTodoItem", {
-            itemName: entity ? entity.newTodoItemName : this.state.newTodoItemName,
+            itemName: entity.newTodoItemName,
             parentTodoId,
             todoCategoryId
         })
             .then(() => {
-                toast.success(`${entity ? entity.newTodoItemName : this.state.newTodoItemName} is created successfully.`);
-                if (entity) {
-                    entity.newTodoItemName = "";
-                    this.forceUpdate();
-                } else {
-                    this.setState({newTodoItemName: ""});
-                }
+                toast.success(`${entity.newTodoItemName} is created successfully.`);
+                entity.newTodoItemName = "";
+                this.forceUpdate();
                 this.getTodoList();
             });
     }
@@ -130,6 +125,11 @@ class Todo extends React.Component {
                 toast.success(`${todoItem.todoName} is deleted.`);
                 this.getTodoList();
             });
+
+    toggleDisplayDoneTodos = () => {
+        this.getTodoList(!this.state.displayingDoneTodos);
+        this.setState({ displayingDoneTodos: !this.state.displayingDoneTodos });
+    }
 
     render () {
         const sortingIndicator = field => {
@@ -270,7 +270,7 @@ class Todo extends React.Component {
 
         const categoryList = this.state.todoCategoryList.map(category =>
             <div key={ category.todoCategoryId }
-                className={ this.props.dashboard ? "col-12" : "col-6"}>
+                className={ this.props.dashboard ? "col-12" : "col-12 col-md-6"}>
                 <h3>
                     { category.todoCategoryName }  ({ category.todoCount })
                 </h3>
@@ -309,8 +309,29 @@ class Todo extends React.Component {
         return (
             <div id="todoList" className="row">
                 <div className="col-12">
-                    <h3>Todo Lists</h3>
-                    <p className="text-muted">Everything you need to get done or got done today.</p>
+                    <div className="row">
+                        <div className={ `col-12${this.props.dashboard ? "" : " col-md-6"} `}>
+                            <h3>Todo Lists</h3>
+                            <p className="text-muted">Everything you need to get done or got done today.</p>
+                        </div>
+                        { !this.props.dashboard
+                        && <div className="col-12 col-md-6 text-right">
+                            <Form.Group controlId="doneTodosToggle">
+                                <Form.Label>Display Done Todos</Form.Label>
+                                <Toggle
+                                    onClick={ this.toggleDisplayDoneTodos }
+                                    onstyle="success"
+                                    offstyle="danger"
+                                    active={ this.state.displayingDoneTodos } />
+                            </Form.Group>
+                            <p className="text-muted">
+                                { this.state.displayingDoneTodos
+                                    ? "All Todos are shown."
+                                    : "Showing Todos that are either not done or created/done today."}
+                            </p>
+                        </div>
+                        }
+                    </div>
                     <div className="row">
                         { categoryList }
                     </div>
