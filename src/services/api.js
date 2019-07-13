@@ -1,15 +1,15 @@
-/* global localStorage: true */
 import axios from "axios";
 import Config from "../config/config";
 import { toast } from "react-toastify";
 
+import jData from "../services/jData";
+
 class API {
     _prepareAPICall (authorizationException = false) {
-        let loginStatus = typeof localStorage.getItem("jAssistantUserAuthKey") === "string";
-        if (loginStatus || authorizationException) {
+        if (jData.getState().loginStatus || authorizationException) {
             axios.defaults.headers.common = {
                 Authorization: Config.APIKey,
-                UserAuthKey: localStorage.getItem("jAssistantUserAuthKey")
+                UserAuthKey: jData.getState().userAuthKey
             };
             return Promise.resolve();
         } else {
@@ -37,6 +37,10 @@ class API {
                     return Promise.reject(`There's a technical problem with our server. Please try again later. Error: ${errorMessage}`);
                 } else if (failureResponse.status === 401) {
                     toast.error(`Not authorized: ${errorMessage}`);
+                    jData.dispatch({
+                        type: "UPDATE_LOGIN_STATUS",
+                        newStatus: false
+                    });
                     return Promise.reject(errorMessage);
                 } else {
                     toast.error(`Server encountered a problem: ${errorMessage}`);

@@ -135,7 +135,9 @@ class Note extends React.Component {
                     <p>{ noteItem.noteContent }</p>
                 </div>
             )
-            : <p className="alert alert-info">You don&apos;t have any archived notes.</p>;
+            : <div className="col-12">
+                <p className="alert alert-info">You don&apos;t have any archived notes.</p>
+            </div>;
 
         return (
             <div id="notes" className="row">
