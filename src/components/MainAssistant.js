@@ -9,7 +9,7 @@ class MainAssistant extends React.Component {
     render () {
         return (
             <div>
-                <div className="row">
+                <div className="row" id="dashboard">
                     <section id="notes" className="col-12 col-lg-4">
                         <Todo dashboard />
                     </section>

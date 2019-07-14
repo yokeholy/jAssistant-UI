@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 
-import SettingsLifestyles from "./SettingsLifestyles";
 import SettingsTodoCategories from "./SettingsTodoCategories";
 
 // Bootstrap
@@ -99,9 +98,6 @@ class Settings extends React.Component {
                                 </Form>
                             </div>
                         </div>
-                        <SettingsLifestyles lifestyleSettings={ this.state.lifestyleSettings }
-                            contentSettings={ this.state.contentSettings}
-                            getAllSettings={ this.getAllSettings } />
                         <SettingsTodoCategories todoCategorySettings={ this.state.todoCategorySettings }
                             getAllSettings={ this.getAllSettings } />
                     </div>

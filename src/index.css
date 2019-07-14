@@ -37,6 +37,10 @@ p {
   cursor: pointer;
 }
 
+#dashboard {
+  padding-bottom: 150px;
+}
+
 .lifestyleSection .plusIcon {
   position: absolute;
   top: 0;

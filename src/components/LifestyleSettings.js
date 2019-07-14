@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 
 import API from "../services/api";
@@ -7,73 +6,88 @@ import StateButton from "./fragments/StateButton";
 
 class SettingsTodoCategories extends React.Component {
     state = {
+        lifestyleSettings: [],
+        contentSettings: [],
         newLifestyleName: ""
     };
+
+    componentDidMount () {
+        this.getLifestyleSettings();
+    }
 
     updateNewLifestyleName = e => {
         this.setState({ newLifestyleName: e.target.value });
     }
 
+    getLifestyleSettings = () =>
+        API.get("/lifestyle/getLifestyleSettings")
+            .then(response => {
+                this.setState({
+                    lifestyleSettings: response.lifestyleSettings,
+                    contentSettings: response.contentSettings
+                });
+            });
+
     updateLifestyleName = (e, lifestyleItem) => {
         let newLifestyleName = e.target.value;
-        return API.post("/settings/saveLifestyleSetting", {
+        return API.post("/lifestyle/saveLifestyleSetting", {
             lifestyleId: lifestyleItem.lifestyleId,
             lifestyleName: newLifestyleName
         })
             .then(() => {
                 toast.success(`${newLifestyleName} is updated.`);
-                this.props.getAllSettings();
+                this.getLifestyleSettings();
             });
     }
 
     updateLifestyleValue = (e, lifestyleItem) => {
         let newLifestyleDailyValue = e.target.value;
-        return API.post("/settings/saveLifestyleSetting", {
+        return API.post("/lifestyle/saveLifestyleSetting", {
             lifestyleId: lifestyleItem.lifestyleId,
             lifestyleDailyValue: newLifestyleDailyValue
         })
             .then(() => {
                 toast.success(`${lifestyleItem.lifestyleName} is updated.`);
-                this.props.getAllSettings();
+                this.getLifestyleSettings();
             });
     }
 
     updateLifestyleCaption = (e, lifestyleItem) => {
         let newLifestyleName = e.target.value;
-        return API.post("/settings/saveLifestyleSetting", {
+        return API.post("/lifestyle/saveLifestyleSetting", {
             lifestyleId: lifestyleItem.lifestyleId,
             lifestyleCaption: newLifestyleName
         })
             .then(() => {
                 toast.success(`${lifestyleItem.lifestyleName}'s caption is updated.`);
-                this.props.getAllSettings();
+                this.getLifestyleSettings();
             });
     }
 
     selectLifestyleIcon = (lifestyleItem, iconName) => {
-        API.post("/settings/saveLifestyleSetting", {
+        API.post("/lifestyle/saveLifestyleSetting", {
             lifestyleId: lifestyleItem.lifestyleId,
             lifestyleIconName: iconName
         })
             .then(() => {
                 toast.success(`${lifestyleItem.lifestyleName}'s icon is updated.`);
-                this.props.getAllSettings();
+                this.getLifestyleSettings();
             });
     }
 
     selectLifestyleColor = (lifestyleItem, colorName) => {
-        API.post("/settings/saveLifestyleSetting", {
+        API.post("/lifestyle/saveLifestyleSetting", {
             lifestyleId: lifestyleItem.lifestyleId,
             lifestyleColorName: colorName
         })
             .then(() => {
                 toast.success(`${lifestyleItem.lifestyleName}'s color is updated.`);
-                this.props.getAllSettings();
+                this.getLifestyleSettings();
             });
     }
 
     createLifestyle = () =>
-        API.post("/settings/saveLifestyleSetting", {
+        API.post("/lifestyle/saveLifestyleSetting", {
             lifestyleName: this.state.newLifestyleName,
             lifestyleDailyValue: 1
         })
@@ -82,21 +96,21 @@ class SettingsTodoCategories extends React.Component {
                 this.setState({
                     newLifestyleName: ""
                 });
-                this.props.getAllSettings();
+                this.getLifestyleSettings();
             });
 
     deleteLifestyle = lifestyleItem =>
-        API.post("/settings/deleteLifestyleSetting", {
+        API.post("/lifestyle/deleteLifestyleSetting", {
             lifestyleId: lifestyleItem.lifestyleId
         })
             .then(() => {
                 toast.success(`${lifestyleItem.lifestyleName} is deleted.`);
-                this.props.getAllSettings();
+                this.getLifestyleSettings();
             });
 
     render () {
-        const lifestyleSettingList = this.props.lifestyleSettings.length
-            ? this.props.lifestyleSettings.map(lifestyleItem =>
+        const lifestyleSettingList = this.state.lifestyleSettings.length
+            ? this.state.lifestyleSettings.map(lifestyleItem =>
                 <tr key={ lifestyleItem.lifestyleId }>
                     <td>
                         <input type="text"
@@ -121,7 +135,7 @@ class SettingsTodoCategories extends React.Component {
                                 <i className={`text-info fas fa-${lifestyleItem.lifestyleIconName}`}></i>
                             </button>
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                { this.props.contentSettings.lifestyleIcons.map(icon =>
+                                { this.state.contentSettings.lifestyleIcons.map(icon =>
                                     <button key={ icon.iconName }
                                         className="dropdown-item"
                                         onClick={ () => this.selectLifestyleIcon(lifestyleItem, icon.iconName) }>
@@ -142,7 +156,7 @@ class SettingsTodoCategories extends React.Component {
                                 <span className={`text-${lifestyleItem.lifestyleColorName}`}>&#x2588;</span>
                             </button>
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                { this.props.contentSettings.lifestyleColors.map(color =>
+                                { this.state.contentSettings.lifestyleColors.map(color =>
                                     <button key={ color.colorName }
                                         className="dropdown-item"
                                         onClick={ () => this.selectLifestyleColor(lifestyleItem, color.colorName) }>
@@ -178,7 +192,7 @@ class SettingsTodoCategories extends React.Component {
         return (
             <div className="card">
                 <div className="card-body">
-                    <h4 className="card-title">Lifestyles</h4>
+                    <h4 className="card-title">Lifestyle Settings</h4>
                     <form>
                         <div className="input-group">
                             <input type="text"
@@ -188,7 +202,7 @@ class SettingsTodoCategories extends React.Component {
                             <div className="input-group-append">
                                 <StateButton buttonType="primary"
                                     buttonIcon="fas fa-plus"
-                                    buttonLabel="Create"
+                                    buttonLabel="Create New Lifestyle"
                                     inProgressLabel="Creating"
                                     action={ this.createLifestyle }>
                                 </StateButton>
@@ -215,11 +229,5 @@ class SettingsTodoCategories extends React.Component {
         );
     }
 }
-
-SettingsTodoCategories.propTypes = {
-    lifestyleSettings: PropTypes.array.isRequired,
-    contentSettings: PropTypes.object.isRequired,
-    getAllSettings: PropTypes.func.isRequired
-};
 
 export default SettingsTodoCategories;
