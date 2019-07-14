@@ -5,9 +5,11 @@ import { toast } from "react-toastify";
 import { NavLink } from "react-router-dom";
 import API from "../services/api";
 
+import LifestyleSettings from "./LifestyleSettings";
+
 class Lifestyle extends React.Component {
     state = {
-        showingFooter: true,
+        showingLifestyles: true,
         lifestyles: []
     };
 
@@ -36,7 +38,9 @@ class Lifestyle extends React.Component {
     render () {
         const lifestyleList = this.state.lifestyles.length
             ? this.state.lifestyles.map(lifestyle =>
-                <div key={ lifestyle.lifestyleId } className={`col-12 col-md-${12 / this.state.lifestyles.length} lifestyleSection clickable hidingElement`} onClick={ () => this.lifestyleUp(lifestyle.lifestyleId)}>
+                <div key={ lifestyle.lifestyleId }
+                    className={`col-12 col-md-${12 / this.state.lifestyles.length} lifestyleSection clickable hidingElement`}
+                    onClick={ () => this.lifestyleUp(lifestyle.lifestyleId)}>
                     <div className="plusIcon bg-info">
                         <i className="fas fa-plus"></i>
                     </div>
@@ -61,14 +65,14 @@ class Lifestyle extends React.Component {
             <div className={`${this.props.dashboard ? "fixed-bottom bg-secondary" : ""}`}>
                 { this.props.dashboard
                 && <div id="toggleFooter" className="d-block d-md-none">
-                    <button className="btn btn-block btn-secondary" onClick={ () => this.setState({ showingFooter: !this.state.showingFooter }) }>
-                        { !this.state.showingFooter
+                    <button className="btn btn-block btn-secondary" onClick={ () => this.setState({ showingLifestyles: !this.state.showingLifestyles }) }>
+                        { !this.state.showingLifestyles
                             && <span>
                                 <i className="fas fa-chevron-up"></i><br />
                             </span>
                         }
                         Lifestyle
-                        { this.state.showingFooter
+                        { this.state.showingLifestyles
                             && <span>
                                 <br /><i className="fas fa-chevron-down"></i>
                             </span>
@@ -76,13 +80,16 @@ class Lifestyle extends React.Component {
                     </button>
                 </div>
                 }
-                { this.state.showingFooter
+                { this.state.showingLifestyles
                     ? <div className="container-fluid p-2">
                         <div className="row">
                             { lifestyleList }
                         </div>
                     </div>
                     : null
+                }
+                { !this.props.dashboard
+                && <LifestyleSettings />
                 }
             </div>
         );

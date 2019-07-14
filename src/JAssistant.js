@@ -60,7 +60,7 @@ class JAssistant extends React.Component {
                 <div id="jAssistant"
                     className={ this.props.hideEverything ? "hidingEverything" : ""}>
                     <Navigation />
-                    <section className="container-fluid pt-3 mb-5 pb-5">
+                    <section className="container-fluid pt-3 pb-3">
                         <Route exact path="/" component={ MainAssistant } />
                         <Route exact path="/todo" component={ Todo } />
                         <Route exact path="/routine" component={ Routine } />
