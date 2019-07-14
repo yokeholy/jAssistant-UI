@@ -61,6 +61,9 @@ class Settings extends React.Component {
                 settingsName: key,
                 settingsValue: this.state.generalSettings[key]
             });
+            if (key === "appName") {
+                this.props.updateAppName(this.state.generalSettings[key]);
+            }
         }
         return API.post("/settings/saveGeneralSettings", newSettings)
             .then(() => {
@@ -107,12 +110,23 @@ class Settings extends React.Component {
         );
     }
 }
+Settings.propTypes = {
+    loginStatus: PropTypes.bool.isRequired,
+    updateAppName: PropTypes.func.isRequired
+};
 
 // Map JData from Redux to this component
 const mapStateToProps = state => state;
 
-Settings.propTypes = {
-    loginStatus: PropTypes.bool.isRequired
-};
+// Map JData dispatch methods
+const mapDispatchToProps = dispatch => ({
+    updateAppName: newAppName => {
+        dispatch({
+            type: "UPDATE_APP_NAME",
+            newAppName
+        });
+    }
+});
 
-export default connect(mapStateToProps)(Settings);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);
