@@ -1,5 +1,6 @@
 /* global window: true, document: true */
 import React from "react";
+import { Helmet } from "react-helmet";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -70,12 +71,16 @@ class JAssistant extends React.Component {
                     </section>
                     <ToastContainer />
                 </div>
+                <Helmet>
+                    <title>{ this.props.appName }</title>
+                </Helmet>
             </BrowserRouter>
         );
     }
 }
 
 JAssistant.propTypes = {
+    appName: PropTypes.string.isRequired,
     hideEverything: PropTypes.bool.isRequired,
     showHideEverything: PropTypes.func.isRequired
 };

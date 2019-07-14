@@ -1,5 +1,6 @@
 /* global localStorage: true */
 const initState = {
+    appName: localStorage.getItem("jAssistantAppName") || "jAssistant",
     hideEverything: false,
     loginStatus: typeof localStorage.getItem("jAssistantUserAuthKey") === "string",
     userAuthKey: localStorage.getItem("jAssistantUserAuthKey") || null
@@ -29,6 +30,13 @@ const JDataReducer = (state = initState, action) => {
             };
             localStorage.removeItem("jAssistantUserAuthKey");
         }
+        break;
+    case "UPDATE_APP_NAME":
+        state = {
+            ...state,
+            appName: action.newAppName
+        };
+        localStorage.setItem("jAssistantAppName", action.newAppName);
         break;
     default:
         break;
