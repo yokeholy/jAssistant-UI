@@ -11,7 +11,7 @@ class Navigation extends React.Component {
 
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-                <NavLink className="navbar-brand header" to="/">jAssistant</NavLink>
+                <NavLink className="navbar-brand header" to="/">{ this.props.appName }</NavLink>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                     aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -59,6 +59,7 @@ class Navigation extends React.Component {
 }
 
 Navigation.propTypes = {
+    appName: PropTypes.string.isRequired,
     hideEverything: PropTypes.bool.isRequired,
     showHideEverything: PropTypes.func.isRequired,
     loginStatus: PropTypes.bool.isRequired,
