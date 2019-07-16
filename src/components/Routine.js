@@ -3,7 +3,14 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 
+// Bootstrap
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import Table from "react-bootstrap/Table";
+
 import API from "../services/api";
+import RoutineConfig from "./RoutineConfig";
 import Comment from "./Comment";
 import ConfirmationButton from "./fragments/ConfirmationButton";
 import StateButton from "./fragments/StateButton";
@@ -47,6 +54,11 @@ class Routine extends React.Component {
 
     showHideComment = routineItem => {
         routineItem.showingComment = !routineItem.showingComment;
+        this.forceUpdate();
+    }
+
+    showHideRoutineConfig = routineItem => {
+        routineItem.showingRoutineConfig = !routineItem.showingRoutineConfig;
         this.forceUpdate();
     }
 
@@ -115,15 +127,14 @@ class Routine extends React.Component {
                 [<tr key={ routineItem.routineId }>
                     <td>
                         { !routineItem.routineCheckedIn
-                            ? <i className="fas fa-circle clickable" onClick={ () => this.checkInRoutine(routineItem) }></i>
-                            : <i className="fas fa-check-circle text-success"></i>
+                            ? <i className="fas fa-circle clickable" onClick={ () => this.checkInRoutine(routineItem) } />
+                            : <i className="fas fa-check-circle text-success" />
                         }
                     </td>
                     { !routineItem.editing
                         ? <td onDoubleClick={ () => this.enterEditing(routineItem) } className="hidingElement">{ routineItem.routineName }</td>
                         : <td className="hidingElement">
-                            <input type="text"
-                                className="form-control"
+                            <Form.Control type="text"
                                 defaultValue={ routineItem.routineName }
                                 onBlur={ e => this.updateRoutine(e, routineItem) } />
                         </td>
@@ -134,20 +145,32 @@ class Routine extends React.Component {
                             buttonIcon="fas fa-trash-alt"
                             buttonLabel=""
                             buttonSize="sm"
-                            action={ () => this.deleteRoutine(routineItem) }>
-                        </ConfirmationButton>
-                        <button className="btn btn-secondary btn-sm ml-2"
+                            action={ () => this.deleteRoutine(routineItem) } />
+                        <Button variant="secondary"
+                            size="sm"
+                            className="ml-2"
+                            onClick={ () => this.showHideRoutineConfig(routineItem) }>
+                            <i className="fas fa-cog" />
+                        </Button>
+                        <Button variant="secondary"
+                            size="sm"
+                            className="ml-2"
                             onClick={ () => this.showHideComment(routineItem) }>
-                            <i className="far fa-comment"></i> { routineItem.commentCount || "" }
-                        </button>
+                            <i className="far fa-comment" /> { routineItem.commentCount || "" }
+                        </Button>
+                    </td>
+                </tr>,
+                routineItem.showingRoutineConfig
+                && <tr key={ `commentList_${routineItem.routineId}` }>
+                    <td colSpan="4">
+                        <RoutineConfig routineId={ routineItem.routineId } />
                     </td>
                 </tr>,
                 routineItem.showingComment
                 && <tr key={ `commentList_${routineItem.routineId}` }>
                     <td colSpan="4">
                         <Comment commentType={2}
-                            entityId={ routineItem.routineId }>
-                        </Comment>
+                            entityId={ routineItem.routineId } />
                     </td>
                 </tr>]
             )
@@ -158,8 +181,8 @@ class Routine extends React.Component {
         const sortingIndicator = field => {
             if (field === this.state.sortingItem) {
                 return this.state.sortingDescending
-                    ? <i className="fas fa-long-arrow-alt-up"></i>
-                    : <i className="fas fa-long-arrow-alt-down"></i>;
+                    ? <i className="fas fa-long-arrow-alt-up" />
+                    : <i className="fas fa-long-arrow-alt-down" />;
             } else {
                 return null;
             }
@@ -170,23 +193,22 @@ class Routine extends React.Component {
                 <div className="col-12">
                     <h3>Routines ({ this.state.routineList.filter(routine => !routine.routineCheckedIn).length })</h3>
                     <p className="text-muted">Things that repeat but essential.</p>
-                    <form>
-                        <div className="input-group">
-                            <input type="text"
-                                className="form-control hidingElement"
+                    <Form>
+                        <InputGroup>
+                            <Form.Control type="text"
+                                className="hidingElement"
                                 value={ this.state.newRoutineName }
                                 onChange={ this.updateNewRoutineName } />
-                            <div className="input-group-append">
+                            <InputGroup.Append>
                                 <StateButton buttonType="primary"
                                     buttonIcon="fas fa-plus"
                                     buttonLabel="Create"
                                     inProgressLabel="Creating"
-                                    action={ this.createRoutine }>
-                                </StateButton>
-                            </div>
-                        </div>
-                    </form>
-                    <table className="table table-hover">
+                                    action={ this.createRoutine } />
+                            </InputGroup.Append>
+                        </InputGroup>
+                    </Form>
+                    <Table hover>
                         <thead>
                             <tr>
                                 <th className="clickable" onClick={ () => this.setSort("routineCheckedIn") }>Done { sortingIndicator("routineCheckedIn") }</th>
@@ -198,7 +220,7 @@ class Routine extends React.Component {
                         <tbody>
                             { routineList }
                         </tbody>
-                    </table>
+                    </Table>
                 </div>
             </div>
         );
