@@ -16,7 +16,7 @@ import StateButton from "./fragments/StateButton";
 class RoutineConfig extends React.Component {
     state = {
         frequencyConfig: {
-            periodType: "weekly",
+            periodType: 1,
             monthlyDay: 1,
             weeklyDay: 1,
             dailyFrequency: "1111111"
@@ -26,7 +26,29 @@ class RoutineConfig extends React.Component {
     };
 
     componentDidMount () {
-        this.getRoutineConfig();
+        let routineFrequencyConfig = {
+            periodType: 1,
+            monthlyDay: 1,
+            weeklyDay: 1,
+            dailyFrequency: "1111111"
+        };
+        routineFrequencyConfig.periodType = this.props.routine.routineFrequencyType;
+        switch (this.props.routine.routineFrequencyType) {
+        case 1:
+            routineFrequencyConfig.dailyFrequency = this.props.routine.routineFrequencyValue;
+            break;
+        case 2:
+            routineFrequencyConfig.weeklyDay = this.props.routine.routineFrequencyValue;
+            break;
+        case 3:
+            routineFrequencyConfig.monthlyDay = this.props.routine.routineFrequencyValue;
+            break;
+        default:
+            break;
+        }
+        this.setState({
+            frequencyConfig: routineFrequencyConfig
+        });
     }
 
     updatePeriodType = (e, newPeriod) => {
@@ -70,23 +92,13 @@ class RoutineConfig extends React.Component {
         });
     }
 
-    getRoutineConfig = () =>
-        API.post("/routine/getRoutineConfig", {
-            routineId: this.props.routineId
-        })
-            .then(response => {
-                this.setState({
-                    frequencyConfig: response.frequencyConfig
-                });
-            });
-
     saveRoutineConfig = () =>
         API.post("/routine/saveRoutineConfig", {
-            routineId: this.props.routineId,
+            routineId: this.props.routine.routineId,
             frequencyConfig: this.state.frequencyConfig
         })
             .then(() => {
-                toast.success("Routine's configuration is updated successfully.");
+                toast.success("Routine configuration is updated successfully.");
                 this.getRoutineConfig();
             });
 
@@ -100,20 +112,20 @@ class RoutineConfig extends React.Component {
                             <Form.Check type="radio"
                                 label="Monthly"
                                 inline
-                                checked={ this.state.frequencyConfig.periodType === "monthly" }
-                                onChange={ e => this.updatePeriodType(e, "monthly") } />
+                                checked={ this.state.frequencyConfig.periodType === 3 }
+                                onChange={ e => this.updatePeriodType(e, 3) } />
                             <Form.Check type="radio"
                                 label="Weekly"
                                 inline
-                                checked={ this.state.frequencyConfig.periodType === "weekly" }
-                                onChange={ e => this.updatePeriodType(e, "weekly") } />
+                                checked={ this.state.frequencyConfig.periodType === 2 }
+                                onChange={ e => this.updatePeriodType(e, 2) } />
                             <Form.Check type="radio"
                                 label="Daily"
                                 inline
-                                checked={ this.state.frequencyConfig.periodType === "daily" }
-                                onChange={ e => this.updatePeriodType(e, "daily") } />
+                                checked={ this.state.frequencyConfig.periodType === 1 }
+                                onChange={ e => this.updatePeriodType(e, 1) } />
                         </Form.Group>
-                        { this.state.frequencyConfig.periodType === "monthly"
+                        { this.state.frequencyConfig.periodType === 3
                         && <Form.Group>
                             <InputGroup>
                                 <InputGroup.Prepend>
@@ -138,7 +150,7 @@ class RoutineConfig extends React.Component {
                             }
                         </Form.Group>
                         }
-                        { this.state.frequencyConfig.periodType === "weekly"
+                        { this.state.frequencyConfig.periodType === 2
                         && <Form.Group>
                             <InputGroup>
                                 <InputGroup.Prepend>
@@ -157,7 +169,7 @@ class RoutineConfig extends React.Component {
                             </InputGroup>
                         </Form.Group>
                         }
-                        { this.state.frequencyConfig.periodType === "daily"
+                        { this.state.frequencyConfig.periodType === 1
                         && <Form.Group>
                             { this.state.frequencyConfig.dailyFrequency.length
                             && this.state.frequencyConfig.dailyFrequency.split("").map((day, index) =>
@@ -171,7 +183,7 @@ class RoutineConfig extends React.Component {
                         </Form.Group>
                         }
                         <StateButton buttonType="primary"
-                            buttonIcon="fas fa-plus"
+                            buttonIcon="fas fa-save"
                             buttonLabel="Save"
                             inProgressLabel="Saving"
                             action={ this.saveRoutineConfig } />
@@ -183,7 +195,7 @@ class RoutineConfig extends React.Component {
 }
 
 RoutineConfig.propTypes = {
-    routineId: PropTypes.number.isRequired
+    routine: PropTypes.object.isRequired
 };
 
 // Map JData from Redux to this component

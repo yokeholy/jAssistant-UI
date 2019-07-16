@@ -163,7 +163,7 @@ class Routine extends React.Component {
                 routineItem.showingRoutineConfig
                 && <tr key={ `commentList_${routineItem.routineId}` }>
                     <td colSpan="4">
-                        <RoutineConfig routineId={ routineItem.routineId } />
+                        <RoutineConfig routine={ routineItem } />
                     </td>
                 </tr>,
                 routineItem.showingComment
