@@ -92,14 +92,14 @@ class RoutineConfig extends React.Component {
         });
     }
 
-    saveRoutineConfig = () =>
-        API.post("/routine/saveRoutineConfig", {
+    updateRoutineConfig = () =>
+        API.post("/routine/updateRoutineConfig", {
             routineId: this.props.routine.routineId,
             frequencyConfig: this.state.frequencyConfig
         })
             .then(() => {
                 toast.success("Routine configuration is updated successfully.");
-                this.getRoutineConfig();
+                this.props.getRoutineList();
             });
 
     render () {
@@ -186,7 +186,7 @@ class RoutineConfig extends React.Component {
                             buttonIcon="fas fa-save"
                             buttonLabel="Save"
                             inProgressLabel="Saving"
-                            action={ this.saveRoutineConfig } />
+                            action={ this.updateRoutineConfig } />
                     </Form>
                 </div>
             </div>
@@ -195,7 +195,8 @@ class RoutineConfig extends React.Component {
 }
 
 RoutineConfig.propTypes = {
-    routine: PropTypes.object.isRequired
+    routine: PropTypes.object.isRequired,
+    getRoutineList: PropTypes.func.isRequired
 };
 
 // Map JData from Redux to this component
