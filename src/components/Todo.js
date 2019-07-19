@@ -15,7 +15,7 @@ class Todo extends React.Component {
     state = {
         todoCategoryList: [],
         doneTodoCategoryList: [],
-        sortingItem: "todoStatus",
+        sortingItem: "todoDone",
         sortingDescending: true,
         displayingDoneTodos: false
     };
@@ -81,7 +81,7 @@ class Todo extends React.Component {
 
     toggleTodoItemStatus = todoItem => {
         // TODO: Use non-destructive State update (don't use use setState() to update the todoItem)
-        todoItem.todoStatus = true;
+        todoItem.todoDone = true;
         this.forceUpdate();
         return API.post("/todo/toggleTodoStatus", { todoId: todoItem.todoId })
             .then(() => {
@@ -148,7 +148,7 @@ class Todo extends React.Component {
                     [
                         <tr key={ `todoItem_${todoItem.todoId}` }>
                             <td>
-                                { !todoItem.todoStatus
+                                { !todoItem.todoDone
                                     ? <i className="fas fa-circle clickable" onClick={ () => this.toggleTodoItemStatus(todoItem) }></i>
                                     : <i className="fas fa-check-circle text-success"></i>
                                 }
@@ -218,7 +218,7 @@ class Todo extends React.Component {
                             ? this.sortedTodoList(todoItem.subTodos).map(subTodoItem =>
                                 [<tr key={ `todoItem_${todoItem.todoId}_${subTodoItem.todoId}` }>
                                     <td className="pl-4">
-                                        { !subTodoItem.todoStatus
+                                        { !subTodoItem.todoDone
                                             ? <i className="fas fa-circle clickable" onClick={ () => this.toggleTodoItemStatus(subTodoItem) }></i>
                                             : <i className="fas fa-check-circle text-success"></i>
                                         }
@@ -293,7 +293,7 @@ class Todo extends React.Component {
                 <table className="table table-hover">
                     <thead>
                         <tr>
-                            <th className="clickable" onClick={ () => this.setSort("todoStatus") }>Done { sortingIndicator("todoStatus") }</th>
+                            <th className="clickable" onClick={ () => this.setSort("todoDone") }>Done { sortingIndicator("todoDone") }</th>
                             <th className="clickable" onClick={ () => this.setSort("todoName") }>Item { sortingIndicator("todoName") }</th>
                             <th className="clickable" onClick={ () => this.setSort("todoCreatedDate") }>Since { sortingIndicator("todoCreatedDate") }</th>
                             <th></th>
