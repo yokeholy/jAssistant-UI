@@ -32,9 +32,15 @@ class Routine extends React.Component {
     };
 
     _parseCountdown = seconds => {
+        if (seconds !== 0) {
+            // Don't apply countdown to routines that never has been checked in
+            seconds = seconds - this.state.timerLapse;
+        }
         momentDurationFormat(moment);
         if (seconds === 0) {
             return null;
+        } else if (seconds < 0) {
+            return <span className="text-danger">Past due</span>;
         } else if (seconds < 86400) {
             return <span className="text-danger">Due in { moment.duration(seconds, "seconds").format("hh:mm:ss") }</span>;
         } else {
@@ -86,6 +92,7 @@ class Routine extends React.Component {
         API.get("/routine/getRoutineList")
             .then(response => {
                 this.setState({
+                    timerLapse: 0,
                     // Sort by the Routine Status, put finished ones at the bottom
                     routineList: response.routineList
                 });
@@ -152,7 +159,11 @@ class Routine extends React.Component {
                         }
                     </td>
                     { !routineItem.editing
-                        ? <td onDoubleClick={ () => this.enterEditing(routineItem) } className="hidingElement">{ routineItem.routineName }</td>
+                        ? <td onDoubleClick={ () => this.enterEditing(routineItem) }
+                            className="hidingElement">
+                            { routineItem.routineName }<br />
+                            { this._parseCountdown(routineItem.nextDueDayCountdown) }
+                        </td>
                         : <td className="hidingElement">
                             <Form.Control type="text"
                                 defaultValue={ routineItem.routineName }
@@ -160,8 +171,8 @@ class Routine extends React.Component {
                         </td>
                     }
                     <td className="hidingElement">
-                        { routineItem.routineConsecutive } { routineItem.routineConsecutive !== 1 ? "days" : "day" }&nbsp;
-                        { this._parseCountdown(routineItem.nextDueDayCountdown - this.state.timerLapse) }
+                        { routineItem.nextDueDayCountdown !== 0
+                            && routineItem.routineConsecutive }
                     </td>
                     <td className="text-right">
                         <ConfirmationButton buttonType="danger"
