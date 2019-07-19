@@ -14,7 +14,9 @@ import StateButton from "./fragments/StateButton";
 class Settings extends React.Component {
     state = {
         generalSettings: {
-            appName: "jAssistant"
+            appName: "jAssistant",
+            todoAlertLevel: "7",
+            todoDangerLevel: "14"
         },
         lifestyleSettings: [],
         contentSettings: {},
@@ -49,6 +51,24 @@ class Settings extends React.Component {
             generalSettings: {
                 ...this.state.generalSettings,
                 appName: e.target.value
+            }
+        });
+    }
+
+    updateTodoAlertLevel = e => {
+        this.setState({
+            generalSettings: {
+                ...this.state.generalSettings,
+                todoAlertLevel: e.target.value
+            }
+        });
+    }
+
+    updateTodoDangerLevel = e => {
+        this.setState({
+            generalSettings: {
+                ...this.state.generalSettings,
+                todoDangerLevel: e.target.value
             }
         });
     }
@@ -98,6 +118,34 @@ class Settings extends React.Component {
                                 </Form>
                             </div>
                         </div>
+                        <div className="card mt-3">
+                            <div className="card-body">
+                                <h4 className="card-title">Todo</h4>
+                                <Form>
+                                    <Form.Group>
+                                        <Form.Label>Todo Alert Level</Form.Label>
+                                        <Form.Control type="number"
+                                            className="hidingElement"
+                                            value={ this.state.generalSettings.todoAlertLevel }
+                                            onChange={ this.updateTodoAlertLevel } />
+                                        <Form.Text>After this many days, the todo item will be shown in <span className="text-warning">orange</span></Form.Text>
+                                    </Form.Group>
+                                    <Form.Group>
+                                        <Form.Label>Todo Danger Level</Form.Label>
+                                        <Form.Control type="number"
+                                            className="hidingElement"
+                                            value={ this.state.generalSettings.todoDangerLevel }
+                                            onChange={ this.updateTodoDangerLevel } />
+                                        <Form.Text>After this many days, the todo item will be shown in <span className="text-danger">red</span></Form.Text>
+                                    </Form.Group>
+                                    <StateButton buttonType="primary"
+                                        buttonIcon="fas fa-save"
+                                        buttonLabel="Save"
+                                        inProgressLabel="Saving"
+                                        action={ this.saveGeneralSettings } />
+                                </Form>
+                            </div>
+                        </div>
                         <SettingsTodoCategories todoCategorySettings={ this.state.todoCategorySettings }
                             getAllSettings={ this.getAllSettings } />
                     </div>
@@ -106,6 +154,7 @@ class Settings extends React.Component {
         );
     }
 }
+
 Settings.propTypes = {
     loginStatus: PropTypes.bool.isRequired,
     updateAppName: PropTypes.func.isRequired
