@@ -1,7 +1,10 @@
+/* global window: true */
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
+import moment from "moment";
+import momentDurationFormat from "moment-duration-format";
 
 // Bootstrap
 import Button from "react-bootstrap/Button";
@@ -17,15 +20,32 @@ import StateButton from "./fragments/StateButton";
 
 class Routine extends React.Component {
     state = {
+        timerLapse: 0,
         routineList: [],
         newRoutineName: "",
         sortingItem: "routineCheckedIn",
         sortingDescending: true
     };
 
+    _startTimer = () => {
+        this.setState({ timerLapse: this.state.timerLapse + 1 });
+    };
+
+    _parseCountdown = seconds => {
+        momentDurationFormat(moment);
+        if (seconds === 0) {
+            return null;
+        } else if (seconds < 86400) {
+            return <span className="text-danger">Due in { moment.duration(seconds, "seconds").format("hh:mm:ss") }</span>;
+        } else {
+            return <span className="text-info">Due in { moment.duration(seconds, "seconds").humanize() }</span>;
+        }
+    };
+
     componentDidMount () {
         if (this.props.loginStatus) {
             this.getRoutineList();
+            window.setInterval(this._startTimer, 1000);
         }
     }
 
@@ -139,7 +159,10 @@ class Routine extends React.Component {
                                 onBlur={ e => this.updateRoutine(e, routineItem) } />
                         </td>
                     }
-                    <td className="hidingElement">{ routineItem.routineConsecutive } { routineItem.routineConsecutive !== 1 ? "days" : "day" }</td>
+                    <td className="hidingElement">
+                        { routineItem.routineConsecutive } { routineItem.routineConsecutive !== 1 ? "days" : "day" }&nbsp;
+                        { this._parseCountdown(routineItem.nextDueDayCountdown - this.state.timerLapse) }
+                    </td>
                     <td className="text-right">
                         <ConfirmationButton buttonType="danger"
                             buttonIcon="fas fa-trash-alt"
