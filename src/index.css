@@ -41,6 +41,14 @@ p {
   padding-bottom: 150px;
 }
 
+.todoDone {
+  background-color: #00bc8c66;
+}
+
+.subTodo {
+  background-color: #44444466;
+}
+
 .lifestyleSection .plusIcon {
   position: absolute;
   top: 0;

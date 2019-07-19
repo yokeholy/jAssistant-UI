@@ -13,6 +13,10 @@ import Toggle from "react-bootstrap-toggle";
 
 class Todo extends React.Component {
     state = {
+        todoSettings: {
+            todoAlertLevel: 7,
+            todoDangerLevel: 14
+        },
         todoCategoryList: [],
         doneTodoCategoryList: [],
         sortingItem: "todoDone",
@@ -53,8 +57,8 @@ class Todo extends React.Component {
         API.get(done ? "/todo/getDoneTodoList" : "/todo/getTodoList")
             .then(response => {
                 this.setState({
-                    // Sort by the current sorting item and current corting direction
-                    todoCategoryList: response.todoCategoryList
+                    todoCategoryList: response.todoCategoryList,
+                    todoSettings: response.todoSettings
                 });
             });
 
@@ -142,11 +146,29 @@ class Todo extends React.Component {
             }
         };
 
+        const todoColor = todoItem => {
+            if (todoItem.todoDone) {
+                return "todoDone";
+            } else if (todoItem.parentTodoId) {
+                return "subTodo";
+            } else {
+                let daysAgo = moment(new Date()).diff(moment(todoItem.todoCreatedDate), "days");
+                if (daysAgo >= this.state.todoSettings.todoDangerLevel) {
+                    return "table-danger";
+                } else if (daysAgo >= this.state.todoSettings.todoAlertLevel) {
+                    return "table-warning";
+                } else {
+                    return "";
+                }
+            }
+        };
+
         const todoList = (thisTodoList, todoCategoryId) => {
             if (thisTodoList.length) {
                 return this.sortedTodoList(thisTodoList).map(todoItem =>
                     [
-                        <tr key={ `todoItem_${todoItem.todoId}` }>
+                        <tr key={ `todoItem_${todoItem.todoId}` }
+                            className={ todoColor(todoItem) }>
                             <td>
                                 { !todoItem.todoDone
                                     ? <i className="fas fa-circle clickable" onClick={ () => this.toggleTodoItemStatus(todoItem) }></i>
@@ -216,7 +238,8 @@ class Todo extends React.Component {
                         </tr>,
                         todoItem.subTodos.length
                             ? this.sortedTodoList(todoItem.subTodos).map(subTodoItem =>
-                                [<tr key={ `todoItem_${todoItem.todoId}_${subTodoItem.todoId}` }>
+                                [<tr key={ `todoItem_${todoItem.todoId}_${subTodoItem.todoId}` }
+                                    className={ todoColor(subTodoItem) }>
                                     <td className="pl-4">
                                         { !subTodoItem.todoDone
                                             ? <i className="fas fa-circle clickable" onClick={ () => this.toggleTodoItemStatus(subTodoItem) }></i>
