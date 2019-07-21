@@ -21,7 +21,7 @@ class RoutineConfig extends React.Component {
             weeklyDay: 1,
             dailyFrequency: "1111111"
         },
-        daysInWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        daysInWeek: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
         daysInMonth: [...Array(31).keys()]
     };
 
