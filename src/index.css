@@ -33,6 +33,23 @@ p {
   margin-bottom: 1rem;
 }
 
+#floatingShowHideButton {
+  display: none;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  z-index: 5000;
+}
+
+@media (max-width: 991px) {
+  #floatingShowHideButton {
+    display: block;
+  }
+}
+
 .clickable {
   cursor: pointer;
 }
