@@ -53,6 +53,11 @@ class Navigation extends React.Component {
                         </li>
                     </ul>
                 </div>
+                <button className={`btn ${this.props.hideEverything ? "btn-outline-success" : "btn-danger"}`}
+                    id="floatingShowHideButton"
+                    onClick={ this.props.showHideEverything }>
+                    <i className={`fas ${this.props.hideEverything ? "fa-eye" : "fa-eye-slash"}`}></i>
+                </button>
             </nav>
         );
     }
