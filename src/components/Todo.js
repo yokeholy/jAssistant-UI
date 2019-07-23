@@ -26,6 +26,12 @@ class Todo extends React.Component {
 
     componentDidMount () {
         if (this.props.loginStatus) {
+            this.setState({
+                todoSettings: {
+                    todoAlertLevel: this.props.todoAlertLevel,
+                    todoDangerLevel: this.props.todoDangerLevel
+                }
+            });
             this.getTodoList(false);
         }
     }
@@ -57,8 +63,7 @@ class Todo extends React.Component {
         API.get(done ? "/todo/getDoneTodoList" : "/todo/getTodoList")
             .then(response => {
                 this.setState({
-                    todoCategoryList: response.todoCategoryList,
-                    todoSettings: response.todoSettings
+                    todoCategoryList: response.todoCategoryList
                 });
             });
 
@@ -366,7 +371,9 @@ class Todo extends React.Component {
 
 Todo.propTypes = {
     dashboard: PropTypes.bool,
-    loginStatus: PropTypes.bool.isRequired
+    loginStatus: PropTypes.bool.isRequired,
+    todoAlertLevel: PropTypes.number.isRequired,
+    todoDangerLevel: PropTypes.number.isRequired,
 };
 
 // Map JData from Redux to this component

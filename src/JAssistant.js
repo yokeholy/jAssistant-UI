@@ -87,7 +87,7 @@ class JAssistant extends React.Component {
                     <ToastContainer />
                 </div>
                 <Helmet>
-                    <title>{ this.props.appName }</title>
+                    <title>{ this.props.appName } | jAssistant</title>
                 </Helmet>
             </BrowserRouter>
         );
