@@ -1,5 +1,6 @@
 # jAssistant
 *Your personal life management assistant.*
+
 Easily manage your life in these four areas:
 - Todo Lists
 	- From things you need get done for your family like shopping lists, to work assignments and your own business tasks, it's one place for all.
@@ -27,6 +28,7 @@ jAssistant is designed to be open in your browser all the time. So when you need
 
 ### 2. Set up the config file
 Go to `src/config` folder and make a copy from `config.sample.js` file and rename it `config.js`.
+
 Fill in each field in the `Config` class and save it.
 
 ### 3. Run `npm start`
