@@ -1,6 +1,8 @@
 /* global localStorage: true */
 const initState = {
     appName: localStorage.getItem("jAssistantAppName") || "jAssistant",
+    todoAlertLevel: parseInt(localStorage.getItem("jAssistantTodoAlertLevel"), 10) || 7,
+    todoDangerLevel: parseInt(localStorage.getItem("jAssistantTodoDangerLevel"), 10) || 14,
     hideEverything: false,
     loginStatus: typeof localStorage.getItem("jAssistantUserAuthKey") === "string",
     userAuthKey: localStorage.getItem("jAssistantUserAuthKey") || null
@@ -37,6 +39,17 @@ const JDataReducer = (state = initState, action) => {
             appName: action.newAppName
         };
         localStorage.setItem("jAssistantAppName", action.newAppName);
+        break;
+    case "UPDATE_GENERAL_SETTINGS":
+        state = {
+            ...state,
+            appName: action.generalSettings.appName,
+            todoAlertLevel: parseInt(action.generalSettings.todoAlertLevel, 10),
+            todoDangerLevel: parseInt(action.generalSettings.todoDangerLevel, 10),
+        };
+        localStorage.setItem("jAssistantAppName", action.generalSettings.appName);
+        localStorage.setItem("jAssistantTodoAlertLevel", action.generalSettings.todoAlertLevel);
+        localStorage.setItem("jAssistantTodoDangerLevel", action.generalSettings.todoDangerLevel);
         break;
     default:
         break;

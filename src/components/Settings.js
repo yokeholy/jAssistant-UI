@@ -14,12 +14,10 @@ import StateButton from "./fragments/StateButton";
 class Settings extends React.Component {
     state = {
         generalSettings: {
-            appName: "jAssistant",
-            todoAlertLevel: "7",
-            todoDangerLevel: "14"
+            appName: this.props.appName,
+            todoAlertLevel: this.props.todoAlertLevel,
+            todoDangerLevel: this.props.todoDangerLevel
         },
-        lifestyleSettings: [],
-        contentSettings: {},
         todoCategorySettings: []
     };
 
@@ -40,8 +38,6 @@ class Settings extends React.Component {
                 }
                 this.setState({
                     generalSettings,
-                    lifestyleSettings: response.lifestyleSettings,
-                    contentSettings: response.contentSettings,
                     todoCategorySettings: response.todoCategorySettings
                 });
             });
@@ -157,7 +153,10 @@ class Settings extends React.Component {
 
 Settings.propTypes = {
     loginStatus: PropTypes.bool.isRequired,
-    updateAppName: PropTypes.func.isRequired
+    updateAppName: PropTypes.func.isRequired,
+    appName: PropTypes.string.isRequired,
+    todoAlertLevel: PropTypes.number.isRequired,
+    todoDangerLevel: PropTypes.number.isRequired,
 };
 
 // Map JData from Redux to this component
