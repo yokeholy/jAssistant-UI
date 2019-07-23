@@ -18,12 +18,15 @@ import Lifestyle from "./components/Lifestyle";
 import Settings from "./components/Settings";
 import Login from "./components/Login";
 
+import API from "./services/api";
+
 class JAssistant extends React.Component {
     state = {
         timer: null
     }
 
     componentDidMount () {
+        this.getGeneralSettings();
         this.resetTimer();
         // DOM Events
         document.onmousemove = this.resetTimer;
@@ -52,7 +55,19 @@ class JAssistant extends React.Component {
                 this.resetTimer();
             }, 180000)
         });
-    }
+    };
+
+    getGeneralSettings = () =>
+        API.get("/settings/getAllSettings")
+            .then(response => {
+                // Process General Settings data
+                let generalSettings = {};
+                for (let i = 0; i < response.generalSettings.length; i++) {
+                    const settingsItem = response.generalSettings[i];
+                    generalSettings[settingsItem.settingsName] = settingsItem.settingsValue;
+                }
+                this.props.updateGeneralSettings(generalSettings);
+            });
 
     render () {
         return (
@@ -82,7 +97,8 @@ class JAssistant extends React.Component {
 JAssistant.propTypes = {
     appName: PropTypes.string.isRequired,
     hideEverything: PropTypes.bool.isRequired,
-    showHideEverything: PropTypes.func.isRequired
+    showHideEverything: PropTypes.func.isRequired,
+    updateGeneralSettings: PropTypes.func.isRequired
 };
 
 // Map JData from Redux to this component
@@ -92,6 +108,12 @@ const mapStateToProps = state => state;
 const mapDispatchToProps = dispatch => ({
     showHideEverything: () => {
         dispatch({ type: "SHOW_HIDE_EVERYTHING" });
+    },
+    updateGeneralSettings: generalSettings => {
+        dispatch({
+            type: "UPDATE_GENERAL_SETTINGS",
+            generalSettings
+        });
     }
 });
 
