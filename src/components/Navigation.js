@@ -37,10 +37,16 @@ class Navigation extends React.Component {
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="/settings"><i className="fas fa-cog"></i> Settings</NavLink>
                             </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/help"><i className="fas fa-question"></i> Help</NavLink>
+                            </li>
                         </ul>
                         : <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="/login"><i className="fas fa-sign-in-alt"></i> Login</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/help"><i className="fas fa-question"></i> Help</NavLink>
                             </li>
                         </ul>
                     }
