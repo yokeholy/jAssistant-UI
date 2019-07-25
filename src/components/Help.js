@@ -25,6 +25,9 @@ const Help = () =>
                 <Tab eventKey="settings" title="Settings">
                     <h2>Settings</h2>
                 </Tab>
+                <Tab eventKey="about" title="About">
+                    <h2>About jAssistant</h2>
+                </Tab>
             </Tabs>
         </div>
     </div>;
