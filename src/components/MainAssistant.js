@@ -10,13 +10,13 @@ class MainAssistant extends React.Component {
         return (
             <div>
                 <div className="row" id="dashboard">
-                    <section id="notes" className="col-12 col-lg-4">
+                    <section className="col-12 col-lg-4">
                         <Todo dashboard />
                     </section>
-                    <section id="notes" className="col-12 col-lg-4">
+                    <section className="col-12 col-lg-4">
                         <Routine dashboard />
                     </section>
-                    <section id="notes" className="col-12 col-lg-4">
+                    <section className="col-12 col-lg-4">
                         <Note dashboard />
                     </section>
                 </div>

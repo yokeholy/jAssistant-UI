@@ -335,7 +335,7 @@ class Todo extends React.Component {
         );
 
         return (
-            <div id="todoList" className="row">
+            <div id="todo" className="row">
                 <div className="col-12">
                     <div className="row">
                         <div className={ `col-12${this.props.dashboard ? "" : " col-md-6"} `}>

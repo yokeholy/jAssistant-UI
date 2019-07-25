@@ -140,7 +140,7 @@ class Note extends React.Component {
             </div>;
 
         return (
-            <div id="notes" className="row">
+            <div id="note" className="row">
                 <div className="col-12">
                     <h3>Notes ({ this.state.noteList.length })</h3>
                     <p className="text-muted">You can use <span className="badge badge-secondary">Ctrl/Cmd + S</span> to save your Notes.</p>

@@ -62,7 +62,8 @@ class Lifestyle extends React.Component {
             </div>;
 
         return (
-            <div className={`${this.props.dashboard ? "fixed-bottom bg-secondary" : ""}`}>
+            <div id="lifestyle"
+                className={`${this.props.dashboard ? "fixed-bottom bg-secondary" : ""}`}>
                 { this.props.dashboard
                 && <div id="toggleFooter" className="d-block d-md-none">
                     <button className="btn btn-block btn-secondary" onClick={ () => this.setState({ showingLifestyles: !this.state.showingLifestyles }) }>

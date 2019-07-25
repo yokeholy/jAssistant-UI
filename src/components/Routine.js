@@ -224,7 +224,7 @@ class Routine extends React.Component {
         };
 
         return (
-            <div id="routines" className="row">
+            <div id="routine" className="row">
                 <div className="col-12">
                     <h3>Routines ({ this.state.routineList.filter(routine => !routine.routineCheckedIn).length })</h3>
                     <p className="text-muted">Things that repeat but essential.</p>
