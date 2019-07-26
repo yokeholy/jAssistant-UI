@@ -58,17 +58,20 @@ class JAssistant extends React.Component {
         });
     };
 
-    getGeneralSettings = () =>
-        API.get("/settings/getAllSettings")
-            .then(response => {
-                // Process General Settings data
-                let generalSettings = {};
-                for (let i = 0; i < response.generalSettings.length; i++) {
-                    const settingsItem = response.generalSettings[i];
-                    generalSettings[settingsItem.settingsName] = settingsItem.settingsValue;
-                }
-                this.props.updateGeneralSettings(generalSettings);
-            });
+    getGeneralSettings = () => {
+        if (this.props.loginStatus) {
+            API.get("/settings/getAllSettings")
+                .then(response => {
+                    // Process General Settings data
+                    let generalSettings = {};
+                    for (let i = 0; i < response.generalSettings.length; i++) {
+                        const settingsItem = response.generalSettings[i];
+                        generalSettings[settingsItem.settingsName] = settingsItem.settingsValue;
+                    }
+                    this.props.updateGeneralSettings(generalSettings);
+                });
+        }
+    }
 
     render () {
         return (
@@ -100,7 +103,8 @@ JAssistant.propTypes = {
     appName: PropTypes.string.isRequired,
     hideEverything: PropTypes.bool.isRequired,
     showHideEverything: PropTypes.func.isRequired,
-    updateGeneralSettings: PropTypes.func.isRequired
+    updateGeneralSettings: PropTypes.func.isRequired,
+    loginStatus: PropTypes.bool.isRequired
 };
 
 // Map JData from Redux to this component

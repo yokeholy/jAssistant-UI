@@ -5,7 +5,9 @@ import { connect } from "react-redux";
 
 class Navigation extends React.Component {
     render () {
-        if (!this.props.loginStatus && this.props.location.pathname !== "/login") {
+        if (!this.props.loginStatus
+            && this.props.location.pathname !== "/login"
+            && this.props.location.pathname !== "/help") {
             return <Redirect to="/login" />;
         }
 
