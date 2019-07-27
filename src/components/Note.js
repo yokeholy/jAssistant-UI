@@ -121,7 +121,9 @@ class Note extends React.Component {
                     </p>
                 </div>
             )
-            : <p className="alert alert-info">You don&apos;t have any notes.</p>;
+            : <div className="col-12">
+                <p className="alert alert-info">You don&apos;t have any notes.</p>
+            </div>;
 
         const archivedNoteList = this.state.archivedNoteList.length
             ? this.state.archivedNoteList.map(noteItem =>

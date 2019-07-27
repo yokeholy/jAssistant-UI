@@ -2,6 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Tabs, Tab } from "react-bootstrap";
 
+import HelpDashboard from "./Help/Dashboard";
+import HelpTodo from "./Help/Todo";
+import HelpRoutine from "./Help/Routine";
+import HelpLifestyle from "./Help/Lifestyle";
+import HelpNote from "./Help/Note";
+import HelpSettings from "./Help/Settings";
 import HelpAbout from "./Help/About";
 
 class Help extends React.Component {
@@ -17,22 +23,22 @@ class Help extends React.Component {
                         defaultActiveKey={ page }
                         onSelect={ key => this.props.history.push(`/help/${key}`) }>
                         <Tab eventKey="dashboard" title="Dashboard">
-                            <h2>Dashboard</h2>
+                            <HelpDashboard />
                         </Tab>
                         <Tab eventKey="todo" title="Todo">
-                            <h2>Todo</h2>
+                            <HelpTodo />
                         </Tab>
                         <Tab eventKey="routine" title="Routine">
-                            <h2>Routine</h2>
+                            <HelpRoutine />
                         </Tab>
                         <Tab eventKey="lifestyle" title="Lifestyle">
-                            <h2>Lifestyle</h2>
+                            <HelpLifestyle />
                         </Tab>
                         <Tab eventKey="note" title="Note">
-                            <h2>Note</h2>
+                            <HelpNote />
                         </Tab>
                         <Tab eventKey="settings" title="Settings">
-                            <h2>Settings</h2>
+                            <HelpSettings />
                         </Tab>
                         <Tab eventKey="about" title="About">
                             <HelpAbout />
