@@ -87,7 +87,7 @@ class JAssistant extends React.Component {
                         <Route exact path="/lifestyle" component={ Lifestyle } />
                         <Route exact path="/settings" component={ Settings } />
                         <Route exact path="/login" component={ Login } />
-                        <Route exact path="/help" component={ Help } />
+                        <Route exact path="/help/:page?" component={ Help } />
                     </section>
                     <ToastContainer />
                 </div>
