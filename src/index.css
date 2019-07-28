@@ -119,3 +119,15 @@ a {
     padding-top: 15px;
     border-top: 1px solid grey;
 }
+
+.btn {
+    cursor: pointer;
+}
+
+.form-label {
+    margin-right: 5px;
+}
+
+.card-header {
+    cursor: pointer;
+}

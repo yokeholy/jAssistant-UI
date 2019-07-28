@@ -22,33 +22,33 @@ class Navigation extends React.Component {
                     { this.props.loginStatus
                         ? <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/"><i className="fas fa-tachometer-alt"></i> Dashboard</NavLink>
+                                <NavLink className="nav-link" to="/"><i className="fas fa-tachometer-alt" /> Dashboard</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/todo"><i className="fas fa-list-ul"></i> Todo</NavLink>
+                                <NavLink className="nav-link" to="/todo"><i className="fas fa-list-ul" /> Todo</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/routine"><i className="fas fa-clipboard-check"></i> Routine</NavLink>
+                                <NavLink className="nav-link" to="/routine"><i className="fas fa-clipboard-check" /> Routine</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/note"><i className="fas fa-sticky-note"></i> Note</NavLink>
+                                <NavLink className="nav-link" to="/note"><i className="fas fa-sticky-note" /> Note</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/lifestyle"><i className="fas fa-walking"></i> Lifestyle</NavLink>
+                                <NavLink className="nav-link" to="/lifestyle"><i className="fas fa-walking" /> Lifestyle</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/settings"><i className="fas fa-cog"></i> Settings</NavLink>
+                                <NavLink className="nav-link" to="/settings"><i className="fas fa-cog" /> Settings</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/help"><i className="fas fa-question"></i> Help</NavLink>
+                                <NavLink className="nav-link" to="/help"><i className="fas fa-question-circle" /> Help</NavLink>
                             </li>
                         </ul>
                         : <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/login"><i className="fas fa-sign-in-alt"></i> Login</NavLink>
+                                <NavLink className="nav-link" to="/login"><i className="fas fa-sign-in-alt" /> Login</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/help"><i className="fas fa-question"></i> Help</NavLink>
+                                <NavLink className="nav-link" to="/help"><i className="fas fa-question-circle" /> Help</NavLink>
                             </li>
                         </ul>
                     }
@@ -56,7 +56,7 @@ class Navigation extends React.Component {
                         <li className="nav-item">
                             <button className={`btn ${this.props.hideEverything ? "btn-outline-success" : "btn-danger"}`}
                                 onClick={ this.props.showHideEverything }>
-                                <i className={`fas ${this.props.hideEverything ? "fa-eye" : "fa-eye-slash"}`}></i>
+                                <i className={`fas ${this.props.hideEverything ? "fa-eye" : "fa-eye-slash"}`} />
                             </button>
                         </li>
                     </ul>
@@ -64,7 +64,7 @@ class Navigation extends React.Component {
                 <button className={`btn ${this.props.hideEverything ? "btn-outline-success" : "btn-danger"}`}
                     id="floatingShowHideButton"
                     onClick={ this.props.showHideEverything }>
-                    <i className={`fas ${this.props.hideEverything ? "fa-eye" : "fa-eye-slash"}`}></i>
+                    <i className={`fas ${this.props.hideEverything ? "fa-eye" : "fa-eye-slash"}`} />
                 </button>
             </nav>
         );

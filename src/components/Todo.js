@@ -345,7 +345,7 @@ class Todo extends React.Component {
                         { !this.props.dashboard
                         && <div className="col-12 col-md-6 text-right">
                             <Form.Group controlId="doneTodosToggle">
-                                <Form.Label>Display Done Todos</Form.Label>
+                                <Form.Label>Display Done Todo Items</Form.Label>
                                 <Toggle
                                     onClick={ this.toggleDisplayDoneTodos }
                                     onstyle="success"

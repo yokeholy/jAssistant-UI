@@ -10,7 +10,7 @@ const HelpAbout = () =>
                 fluid />
         </h2>
         <p>Version { PackageJson.version }</p>
-        <p>Project started by
+        <p>Project initiated by
             <a href="https://wangjin.me"
                 target="_blank"
                 rel="noopener noreferrer">Jin Wang</a>
