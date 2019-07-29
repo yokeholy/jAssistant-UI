@@ -144,8 +144,8 @@ class Todo extends React.Component {
         const sortingIndicator = field => {
             if (field === this.state.sortingItem) {
                 return this.state.sortingDescending
-                    ? <i className="fas fa-long-arrow-alt-up"></i>
-                    : <i className="fas fa-long-arrow-alt-down"></i>;
+                    ? <i className="fas fa-long-arrow-alt-up" />
+                    : <i className="fas fa-long-arrow-alt-down" />;
             } else {
                 return null;
             }
@@ -176,8 +176,8 @@ class Todo extends React.Component {
                             className={ todoColor(todoItem) }>
                             <td>
                                 { !todoItem.todoDone
-                                    ? <i className="fas fa-circle clickable" onClick={ () => this.toggleTodoItemStatus(todoItem) }></i>
-                                    : <i className="fas fa-check-circle text-success"></i>
+                                    ? <i className="fas fa-circle clickable" onClick={ () => this.toggleTodoItemStatus(todoItem) } />
+                                    : <i className="fas fa-check-circle text-success" />
                                 }
                             </td>
                             { !todoItem.editing
@@ -199,11 +199,11 @@ class Todo extends React.Component {
                                 </ConfirmationButton>
                                 <button className="btn btn-secondary btn-sm ml-2"
                                     onClick={ () => this.enterCreatingSubTodo(todoItem) }>
-                                    <i className="fas fa-plus"></i>
+                                    <i className="fas fa-plus" />
                                 </button>
                                 <button className="btn btn-secondary btn-sm ml-2"
                                     onClick={ () => this.showHideComment(todoItem) }>
-                                    <i className="far fa-comment"></i> { todoItem.commentCount || "" }
+                                    <i className="far fa-comment" /> { todoItem.commentCount || "" }
                                 </button>
                             </td>
                         </tr>,
@@ -234,7 +234,7 @@ class Todo extends React.Component {
                                             <button type="button"
                                                 className="btn btn-secondary"
                                                 onClick={ e => this.exitCreatingSubTodo(e, todoItem) }>
-                                                <i className="fas fa-times"></i>
+                                                <i className="fas fa-times" />
                                             </button>
                                         </div>
                                     </div>
@@ -247,8 +247,8 @@ class Todo extends React.Component {
                                     className={ todoColor(subTodoItem) }>
                                     <td className="pl-4">
                                         { !subTodoItem.todoDone
-                                            ? <i className="fas fa-circle clickable" onClick={ () => this.toggleTodoItemStatus(subTodoItem) }></i>
-                                            : <i className="fas fa-check-circle text-success"></i>
+                                            ? <i className="fas fa-circle clickable" onClick={ () => this.toggleTodoItemStatus(subTodoItem) } />
+                                            : <i className="fas fa-check-circle text-success" />
                                         }
                                     </td>
                                     { !subTodoItem.editing
@@ -274,7 +274,7 @@ class Todo extends React.Component {
                                         </ConfirmationButton>
                                         <button className="btn btn-secondary btn-sm ml-2"
                                             onClick={ () => this.showHideComment(subTodoItem) }>
-                                            <i className="far fa-comment"></i> { subTodoItem.commentCount || "" }
+                                            <i className="far fa-comment" /> { subTodoItem.commentCount || "" }
                                         </button>
                                     </td>
                                 </tr>,
@@ -324,7 +324,7 @@ class Todo extends React.Component {
                             <th className="clickable" onClick={ () => this.setSort("todoDone") }>Done { sortingIndicator("todoDone") }</th>
                             <th className="clickable" onClick={ () => this.setSort("todoName") }>Item { sortingIndicator("todoName") }</th>
                             <th className="clickable" onClick={ () => this.setSort("todoCreatedDate") }>Since { sortingIndicator("todoCreatedDate") }</th>
-                            <th></th>
+                            <th />
                         </tr>
                     </thead>
                     <tbody>

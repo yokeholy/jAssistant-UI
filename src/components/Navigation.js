@@ -16,7 +16,7 @@ class Navigation extends React.Component {
                 <NavLink className="navbar-brand header" to="/">{ this.props.appName }</NavLink>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                     aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
+                    <span className="navbar-toggler-icon" />
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
                     { this.props.loginStatus

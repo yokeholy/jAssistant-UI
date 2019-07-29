@@ -36,7 +36,7 @@ class StateButton extends React.Component {
             className={ `btn btn-${this.props.buttonType} ${this.props.buttonSize ? `btn-${this.props.buttonSize}` : ""}` }
             onClick={ this.enterInProgressState }
             disabled={ this.state.disabled }>
-            <i className={ this.props.buttonIcon }></i> { this.state.currentLabel }
+            <i className={ this.props.buttonIcon } /> { this.state.currentLabel }
         </button>;
     }
 }

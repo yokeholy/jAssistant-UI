@@ -249,7 +249,7 @@ class Routine extends React.Component {
                                 <th className="clickable" onClick={ () => this.setSort("routineCheckedIn") }>Done { sortingIndicator("routineCheckedIn") }</th>
                                 <th className="clickable" onClick={ () => this.setSort("routineName") }>Routine { sortingIndicator("routineName") }</th>
                                 <th className="clickable" onClick={ () => this.setSort("routineConsecutive") }>Consecutive { sortingIndicator("routineConsecutive") }</th>
-                                <th></th>
+                                <th />
                             </tr>
                         </thead>
                         <tbody>

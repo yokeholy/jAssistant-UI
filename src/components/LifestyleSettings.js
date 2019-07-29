@@ -218,7 +218,7 @@ class SettingsTodoCategories extends React.Component {
                                 <th>Icon</th>
                                 <th>Color</th>
                                 <th>Daily Value</th>
-                                <th></th>
+                                <th />
                             </tr>
                         </thead>
                         <tbody>
