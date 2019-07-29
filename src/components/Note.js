@@ -121,7 +121,9 @@ class Note extends React.Component {
                     </p>
                 </div>
             )
-            : <p className="alert alert-info">You don&apos;t have any notes.</p>;
+            : <div className="col-12">
+                <p className="alert alert-info">You don&apos;t have any notes.</p>
+            </div>;
 
         const archivedNoteList = this.state.archivedNoteList.length
             ? this.state.archivedNoteList.map(noteItem =>
@@ -140,7 +142,7 @@ class Note extends React.Component {
             </div>;
 
         return (
-            <div id="notes" className="row">
+            <div id="note" className="row">
                 <div className="col-12">
                     <h3>Notes ({ this.state.noteList.length })</h3>
                     <p className="text-muted">You can use <span className="badge badge-secondary">Ctrl/Cmd + S</span> to save your Notes.</p>

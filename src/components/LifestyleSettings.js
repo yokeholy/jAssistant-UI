@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 
 import API from "../services/api";
 import StateButton from "./fragments/StateButton";
+import ConfirmationButton from "./fragments/ConfirmationButton";
 
 class SettingsTodoCategories extends React.Component {
     state = {
@@ -132,14 +133,14 @@ class SettingsTodoCategories extends React.Component {
                                 data-toggle="dropdown"
                                 aria-haspopup="true"
                                 aria-expanded="false">
-                                <i className={`text-info fas fa-${lifestyleItem.lifestyleIconName}`}></i>
+                                <i className={`text-info fas fa-${lifestyleItem.lifestyleIconName}`} />
                             </button>
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 { this.state.contentSettings.lifestyleIcons.map(icon =>
                                     <button key={ icon.iconName }
                                         className="dropdown-item"
                                         onClick={ () => this.selectLifestyleIcon(lifestyleItem, icon.iconName) }>
-                                        <i className={`fas fa-${icon.iconName}`}></i>
+                                        <i className={`fas fa-${icon.iconName}`} />
                                     </button>
                                 ) }
                             </div>
@@ -178,10 +179,11 @@ class SettingsTodoCategories extends React.Component {
                         </div>
                     </td>
                     <td className="text-right">
-                        <button className="btn btn-danger btn-sm"
-                            onClick={ () => this.deleteLifestyle(lifestyleItem) }>
-                            <i className="fas fa-trash-alt"></i>
-                        </button>
+                        <ConfirmationButton buttonType="danger"
+                            buttonIcon="fas fa-trash-alt"
+                            buttonLabel=""
+                            buttonSize="sm"
+                            action={ () => this.deleteLifestyle(lifestyleItem) } />
                     </td>
                 </tr>
             )
@@ -204,8 +206,7 @@ class SettingsTodoCategories extends React.Component {
                                     buttonIcon="fas fa-plus"
                                     buttonLabel="Create New Lifestyle"
                                     inProgressLabel="Creating"
-                                    action={ this.createLifestyle }>
-                                </StateButton>
+                                    action={ this.createLifestyle } />
                             </div>
                         </div>
                     </form>
@@ -217,7 +218,7 @@ class SettingsTodoCategories extends React.Component {
                                 <th>Icon</th>
                                 <th>Color</th>
                                 <th>Daily Value</th>
-                                <th></th>
+                                <th />
                             </tr>
                         </thead>
                         <tbody>

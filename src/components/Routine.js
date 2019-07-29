@@ -224,7 +224,7 @@ class Routine extends React.Component {
         };
 
         return (
-            <div id="routines" className="row">
+            <div id="routine" className="row">
                 <div className="col-12">
                     <h3>Routines ({ this.state.routineList.filter(routine => !routine.routineCheckedIn).length })</h3>
                     <p className="text-muted">Things that repeat but essential.</p>
@@ -249,7 +249,7 @@ class Routine extends React.Component {
                                 <th className="clickable" onClick={ () => this.setSort("routineCheckedIn") }>Done { sortingIndicator("routineCheckedIn") }</th>
                                 <th className="clickable" onClick={ () => this.setSort("routineName") }>Routine { sortingIndicator("routineName") }</th>
                                 <th className="clickable" onClick={ () => this.setSort("routineConsecutive") }>Consecutive { sortingIndicator("routineConsecutive") }</th>
-                                <th></th>
+                                <th />
                             </tr>
                         </thead>
                         <tbody>

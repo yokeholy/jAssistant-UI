@@ -42,13 +42,13 @@ class Lifestyle extends React.Component {
                     className={`col-12 col-md-${12 / this.state.lifestyles.length} lifestyleSection clickable hidingElement`}
                     onClick={ () => this.lifestyleUp(lifestyle.lifestyleId)}>
                     <div className="plusIcon bg-info">
-                        <i className="fas fa-plus"></i>
+                        <i className="fas fa-plus" />
                     </div>
                     <div className="row mt-2">
                         {
                             [...Array(lifestyle.lifestyleDailyValue).keys()].map(value =>
                                 <div className={`col-1 ${value < lifestyle.todayValue ? `text-${lifestyle.lifestyleColorName}` : ""}`} key={ value }>
-                                    <i className={`fas fa-${lifestyle.lifestyleIconName}`}></i>
+                                    <i className={`fas fa-${lifestyle.lifestyleIconName}`} />
                                 </div>
                             )
                         }
@@ -62,19 +62,20 @@ class Lifestyle extends React.Component {
             </div>;
 
         return (
-            <div className={`${this.props.dashboard ? "fixed-bottom bg-secondary" : ""}`}>
+            <div id="lifestyle"
+                className={`${this.props.dashboard ? "fixed-bottom bg-secondary" : ""}`}>
                 { this.props.dashboard
                 && <div id="toggleFooter" className="d-block d-md-none">
                     <button className="btn btn-block btn-secondary" onClick={ () => this.setState({ showingLifestyles: !this.state.showingLifestyles }) }>
                         { !this.state.showingLifestyles
                             && <span>
-                                <i className="fas fa-chevron-up"></i><br />
+                                <i className="fas fa-chevron-up" /><br />
                             </span>
                         }
                         Lifestyle
                         { this.state.showingLifestyles
                             && <span>
-                                <br /><i className="fas fa-chevron-down"></i>
+                                <br /><i className="fas fa-chevron-down" />
                             </span>
                         }
                     </button>

@@ -32,7 +32,7 @@ class ConfirmationButton extends React.Component {
         return <span>
             <button className={ `btn btn-${this.props.buttonType} ${this.props.buttonSize ? `btn-${this.props.buttonSize}` : ""}` }
                 onClick={ !this.state.confirmingStatus ? this.enterConfirming : e => this.takeAction(e) }>
-                <i className={ this.props.buttonIcon }></i> { this.props.buttonLabel }
+                <i className={ this.props.buttonIcon } /> { this.props.buttonLabel }
             </button>
             { !this.state.confirmingStatus
                 || <button className={ `btn btn-link ${this.props.buttonSize ? `btn-${this.props.buttonSize}` : ""}` }

@@ -105,6 +105,9 @@ class Settings extends React.Component {
                                             className="hidingElement"
                                             value={ this.state.generalSettings.appName }
                                             onChange={ this.updateAppName } />
+                                        <Form.Text>
+                                            The App Name will be displayed at the top-left corner of every page, as well as in the title bar of your browser.
+                                        </Form.Text>
                                     </Form.Group>
                                     <StateButton buttonType="primary"
                                         buttonIcon="fas fa-save"

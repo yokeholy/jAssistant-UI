@@ -17,6 +17,7 @@ import Note from "./components/Note";
 import Lifestyle from "./components/Lifestyle";
 import Settings from "./components/Settings";
 import Login from "./components/Login";
+import Help from "./components/Help";
 
 import API from "./services/api";
 
@@ -57,17 +58,20 @@ class JAssistant extends React.Component {
         });
     };
 
-    getGeneralSettings = () =>
-        API.get("/settings/getAllSettings")
-            .then(response => {
-                // Process General Settings data
-                let generalSettings = {};
-                for (let i = 0; i < response.generalSettings.length; i++) {
-                    const settingsItem = response.generalSettings[i];
-                    generalSettings[settingsItem.settingsName] = settingsItem.settingsValue;
-                }
-                this.props.updateGeneralSettings(generalSettings);
-            });
+    getGeneralSettings = () => {
+        if (this.props.loginStatus) {
+            API.get("/settings/getAllSettings")
+                .then(response => {
+                    // Process General Settings data
+                    let generalSettings = {};
+                    for (let i = 0; i < response.generalSettings.length; i++) {
+                        const settingsItem = response.generalSettings[i];
+                        generalSettings[settingsItem.settingsName] = settingsItem.settingsValue;
+                    }
+                    this.props.updateGeneralSettings(generalSettings);
+                });
+        }
+    }
 
     render () {
         return (
@@ -83,6 +87,7 @@ class JAssistant extends React.Component {
                         <Route exact path="/lifestyle" component={ Lifestyle } />
                         <Route exact path="/settings" component={ Settings } />
                         <Route exact path="/login" component={ Login } />
+                        <Route exact path="/help/:page?" component={ Help } />
                     </section>
                     <ToastContainer />
                 </div>
@@ -98,7 +103,8 @@ JAssistant.propTypes = {
     appName: PropTypes.string.isRequired,
     hideEverything: PropTypes.bool.isRequired,
     showHideEverything: PropTypes.func.isRequired,
-    updateGeneralSettings: PropTypes.func.isRequired
+    updateGeneralSettings: PropTypes.func.isRequired,
+    loginStatus: PropTypes.bool.isRequired
 };
 
 // Map JData from Redux to this component

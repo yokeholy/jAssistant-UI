@@ -105,7 +105,7 @@ class SettingsTodoCategories extends React.Component {
                             <tr>
                                 <th>Todo Category Name</th>
                                 <th>Todo Count</th>
-                                <th></th>
+                                <th />
                             </tr>
                         </thead>
                         <tbody>
