@@ -7,7 +7,6 @@ import HelpTodo from "./Help/Todo";
 import HelpRoutine from "./Help/Routine";
 import HelpLifestyle from "./Help/Lifestyle";
 import HelpNote from "./Help/Note";
-import HelpSettings from "./Help/Settings";
 import HelpAbout from "./Help/About";
 
 class Help extends React.Component {
@@ -36,9 +35,6 @@ class Help extends React.Component {
                         </Tab>
                         <Tab eventKey="note" title="Note">
                             <HelpNote />
-                        </Tab>
-                        <Tab eventKey="settings" title="Settings">
-                            <HelpSettings />
                         </Tab>
                         <Tab eventKey="about" title="About">
                             <HelpAbout />
