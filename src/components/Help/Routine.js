@@ -16,7 +16,9 @@ const HelpRoutine = () =>
                         alt="Routine Screenshot"
                         fluid thumbnail />
                 </p>
-                <p>About routines.</p>
+                <p>Routines are tasks you do repeatly over time. You can set up Routines with different frequencies, like monthly, weekly, or daily.</p>
+                <p>jAssistant helps you keep track of your Routine completion. If you keep finishing on time, you get higher number Consecutives.</p>
+                <p>The countdown indicator below every Routine serves as a nice reminder of how much time left to complete it.</p>
             </Card.Body>
         </Card>
         <hr />
