@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import { NavLink, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
+// Bootstrap
+import Image from "react-bootstrap/Image";
+
 class Navigation extends React.Component {
     render () {
         if (!this.props.loginStatus
@@ -13,7 +16,14 @@ class Navigation extends React.Component {
 
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-                <NavLink className="navbar-brand header" to="/">{ this.props.appName }</NavLink>
+                <NavLink className="navbar-brand header" to="/">
+                    { this.props.appName === "jAssistant"
+                        ? <Image src={ require("../images/logo_right_120.png") }
+                            alt="jAssistant"
+                            fluid />
+                        : this.props.appName
+                    }
+                </NavLink>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                     aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon" />

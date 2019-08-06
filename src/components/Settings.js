@@ -42,6 +42,15 @@ class Settings extends React.Component {
                 });
             });
 
+    resetAppName = () => {
+        this.setState({
+            generalSettings: {
+                ...this.state.generalSettings,
+                appName: "jAssistant"
+            }
+        });
+    }
+
     updateAppName = e => {
         this.setState({
             generalSettings: {
@@ -106,7 +115,8 @@ class Settings extends React.Component {
                                             value={ this.state.generalSettings.appName }
                                             onChange={ this.updateAppName } />
                                         <Form.Text>
-                                            The App Name will be displayed at the top-left corner of every page, as well as in the title bar of your browser.
+                                            The App Name will be displayed at the top-left corner of every page, as well as in the title bar of your browser.<br />
+                                            If you leave it as <span className="text-success clickable" onClick={ this.resetAppName }>jAssistant</span>, the jAssistant logo will be displayed. :)
                                         </Form.Text>
                                     </Form.Group>
                                     <StateButton buttonType="primary"
