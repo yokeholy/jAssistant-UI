@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 
 import API from "../services/api";
+import EditInput from "./fragments/EditInput";
 import StateButton from "./fragments/StateButton";
 import ConfirmationButton from "./fragments/ConfirmationButton";
 
@@ -63,10 +64,8 @@ class SettingsTodoCategories extends React.Component {
             ? this.props.todoCategorySettings.map(todoCategoryItem =>
                 <tr key={ todoCategoryItem.todoCategoryId }>
                     <td>
-                        <input type="text"
-                            className="form-control hidingElement"
-                            defaultValue={ todoCategoryItem.todoCategoryName }
-                            onBlur={ e => this.updateTodoCategorySetting(e, todoCategoryItem.todoCategoryId) } />
+                        <EditInput defaultValue={ todoCategoryItem.todoCategoryName }
+                            action={ e => this.updateTodoCategorySetting(e, todoCategoryItem.todoCategoryId) } />
                     </td>
                     <td className="hidingElement">
                         { todoCategoryItem.todoCount }
@@ -75,8 +74,7 @@ class SettingsTodoCategories extends React.Component {
                         <ConfirmationButton buttonType="danger"
                             buttonIcon="fas fa-trash-alt"
                             buttonLabel=""
-                            action={ () => this.deleteTodoCategory(todoCategoryItem) }>
-                        </ConfirmationButton>
+                            action={ () => this.deleteTodoCategory(todoCategoryItem) } />
                     </td>
                 </tr>)
             : null;
@@ -95,8 +93,7 @@ class SettingsTodoCategories extends React.Component {
                                     buttonIcon="fas fa-plus"
                                     buttonLabel="Create"
                                     inProgressLabel="Creating"
-                                    action={ this.createTodoCategorySetting }>
-                                </StateButton>
+                                    action={ this.createTodoCategorySetting } />
                             </div>
                         </div>
                     </form>

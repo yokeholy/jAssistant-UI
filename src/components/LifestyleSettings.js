@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 
 import API from "../services/api";
+import EditInput from "./fragments/EditInput";
 import StateButton from "./fragments/StateButton";
 import ConfirmationButton from "./fragments/ConfirmationButton";
 
@@ -120,16 +121,12 @@ class LifestyleSettings extends React.Component {
             ? this.state.lifestyleSettings.map(lifestyleItem =>
                 <tr key={ lifestyleItem.lifestyleId }>
                     <td>
-                        <input type="text"
-                            className="form-control hidingElement"
-                            defaultValue={ lifestyleItem.lifestyleName }
-                            onBlur={ e => this.updateLifestyleName(e, lifestyleItem) } />
+                        <EditInput defaultValue={ lifestyleItem.lifestyleName }
+                            action={ e => this.updateLifestyleName(e, lifestyleItem) } />
                     </td>
                     <td>
-                        <input type="text"
-                            className="form-control hidingElement"
-                            defaultValue={ lifestyleItem.lifestyleCaption }
-                            onBlur={ e => this.updateLifestyleCaption(e, lifestyleItem) } />
+                        <EditInput defaultValue={ lifestyleItem.lifestyleCaption }
+                            action={ e => this.updateLifestyleCaption(e, lifestyleItem) } />
                     </td>
                     <td>
                         <div className="dropdown hidingElement">
@@ -175,10 +172,8 @@ class LifestyleSettings extends React.Component {
                     </td>
                     <td>
                         <div className="input-group">
-                            <input type="text"
-                                className="form-control hidingElement"
-                                defaultValue={ lifestyleItem.lifestyleDailyValue }
-                                onBlur={ e => this.updateLifestyleValue(e, lifestyleItem) } />
+                            <EditInput defaultValue={ lifestyleItem.lifestyleDailyValue }
+                                action={ e => this.updateLifestyleValue(e, lifestyleItem) } />
                             <div className="input-group-append">
                                 <span className="input-group-text">per day</span>
                             </div>
