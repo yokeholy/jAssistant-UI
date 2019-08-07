@@ -64,14 +64,14 @@ class Navigation extends React.Component {
                     }
                     <ul className="navbar-nav my-2">
                         <li className="nav-item">
-                            <button className={`btn ${this.props.hideEverything ? "btn-outline-success" : "btn-danger"}`}
+                            <button className={`btn ${this.props.hideEverything ? "btn-success" : "btn-danger"}`}
                                 onClick={ this.props.showHideEverything }>
                                 <i className={`fas ${this.props.hideEverything ? "fa-eye" : "fa-eye-slash"}`} />
                             </button>
                         </li>
                     </ul>
                 </div>
-                <button className={`btn ${this.props.hideEverything ? "btn-outline-success" : "btn-danger"}`}
+                <button className={`btn ${this.props.hideEverything ? "btn-success" : "btn-danger"}`}
                     id="floatingShowHideButton"
                     onClick={ this.props.showHideEverything }>
                     <i className={`fas ${this.props.hideEverything ? "fa-eye" : "fa-eye-slash"}`} />
