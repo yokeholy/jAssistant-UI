@@ -90,7 +90,7 @@ class Lifestyle extends React.Component {
                     : null
                 }
                 { !this.props.dashboard
-                && <LifestyleSettings />
+                && <LifestyleSettings getLifestyle={ () => this.getLifestyle() } />
                 }
             </div>
         );
