@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 
 // Filter
-import OrginalFilter from "../filters/OrdinalFilter";
+import OrdinalFilter from "../filters/OrdinalFilter";
 
 import API from "../services/api";
 import StateButton from "./fragments/StateButton";
@@ -62,7 +62,7 @@ class RoutineConfig extends React.Component {
         }
     }
 
-    updateMonthlyFrenquency = e => {
+    updateMonthlyFrequency = e => {
         this.setState({
             frequencyConfig: {
                 ...this.state.frequencyConfig,
@@ -71,7 +71,7 @@ class RoutineConfig extends React.Component {
         });
     }
 
-    updateWeeklyFrenquency = e => {
+    updateWeeklyFrequency = e => {
         this.setState({
             frequencyConfig: {
                 ...this.state.frequencyConfig,
@@ -80,7 +80,7 @@ class RoutineConfig extends React.Component {
         });
     }
 
-    updateDailyFrenquency = index => {
+    updateDailyFrequency = index => {
         let frequencyConfig = this.state.frequencyConfig.dailyFrequency;
         let newFrequency = frequencyConfig[index] === "0" ? "1" : "0";
         frequencyConfig = frequencyConfig.substr(0, index) + newFrequency + frequencyConfig.substr(index + newFrequency.length);
@@ -133,11 +133,11 @@ class RoutineConfig extends React.Component {
                                 </InputGroup.Prepend>
                                 <Form.Control as="select"
                                     value={ this.state.frequencyConfig.monthlyDay }
-                                    onChange={ this.updateMonthlyFrenquency }>
+                                    onChange={ this.updateMonthlyFrequency }>
                                     { this.state.daysInMonth.map(day =>
                                         <option key={ day + 1 }
                                             value={ day + 1 }>
-                                            { OrginalFilter(day + 1) }
+                                            { OrdinalFilter(day + 1) }
                                         </option>
                                     )}
                                 </Form.Control>
@@ -158,7 +158,7 @@ class RoutineConfig extends React.Component {
                                 </InputGroup.Prepend>
                                 <Form.Control as="select"
                                     value={ this.state.frequencyConfig.weeklyDay }
-                                    onChange={ this.updateWeeklyFrenquency }>
+                                    onChange={ this.updateWeeklyFrequency }>
                                     { this.state.daysInWeek.map((day, index) =>
                                         <option key={ day }
                                             value={ index + 1 }>
@@ -178,7 +178,7 @@ class RoutineConfig extends React.Component {
                                     inline
                                     label={ this.state.daysInWeek[index] }
                                     checked={ day === "1" }
-                                    onChange={ () => this.updateDailyFrenquency(index) } />
+                                    onChange={ () => this.updateDailyFrequency(index) } />
                             )}
                         </Form.Group>
                         }

@@ -15,6 +15,7 @@ import Table from "react-bootstrap/Table";
 import API from "../services/api";
 import RoutineConfig from "./RoutineConfig";
 import Comment from "./Comment";
+import EditInput from "./fragments/EditInput";
 import ConfirmationButton from "./fragments/ConfirmationButton";
 import StateButton from "./fragments/StateButton";
 
@@ -174,9 +175,8 @@ class Routine extends React.Component {
                             { this._parseCountdown(routineItem.nextDueDayCountdown) }
                         </td>
                         : <td className="hidingElement">
-                            <Form.Control type="text"
-                                defaultValue={ routineItem.routineName }
-                                onBlur={ e => this.updateRoutine(e, routineItem) } />
+                            <EditInput defaultValue={ routineItem.routineName }
+                                action={ e => this.updateRoutine(e, routineItem) } />
                         </td>
                     }
                     <td className="hidingElement">

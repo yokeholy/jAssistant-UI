@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 import API from "../services/api";
 import Comment from "./Comment";
+import EditInput from "./fragments/EditInput";
 import ConfirmationButton from "./fragments/ConfirmationButton";
 import StateButton from "./fragments/StateButton";
 import Form from "react-bootstrap/Form";
@@ -199,10 +200,8 @@ class Todo extends React.Component {
                             { !todoItem.editing
                                 ? <td onDoubleClick={ () => this.enterEditing(todoItem) } className="hidingElement">{ todoItem.todoName }</td>
                                 : <td className="hidingElement">
-                                    <input type="text"
-                                        className="form-control"
-                                        defaultValue={ todoItem.todoName }
-                                        onBlur={ e => this.updateTodoItem(e, todoItem) } />
+                                    <EditInput defaultValue={ todoItem.todoName }
+                                        action={ e => this.updateTodoItem(e, todoItem) } />
                                 </td>
                             }
                             <td className="hidingElement">{ moment(todoItem.todoCreatedDate).fromNow() }</td>
@@ -273,10 +272,8 @@ class Todo extends React.Component {
                                         </td>
                                         : <td colSpan="2"
                                             className="hidingElement">
-                                            <input type="text"
-                                                className="form-control"
-                                                defaultValue={ subTodoItem.todoName }
-                                                onBlur={ e => this.updateTodoItem(e, subTodoItem) } />
+                                            <EditInput defaultValue={ subTodoItem.todoName }
+                                                action={ e => this.updateTodoItem(e, subTodoItem) } />
                                         </td>
                                     }
                                     <td className="text-right">
