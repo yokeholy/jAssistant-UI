@@ -140,6 +140,15 @@ class Todo extends React.Component {
         this.setState({ displayingDoneTodos: !this.state.displayingDoneTodos });
     }
 
+    updateCommentCount = (todoItem, increase) => {
+        if (increase) {
+            todoItem.commentCount += 1;
+        } else {
+            todoItem.commentCount -= 1;
+        }
+        this.forceUpdate();
+    }
+
     render () {
         const sortingIndicator = field => {
             if (field === this.state.sortingItem) {
@@ -195,8 +204,7 @@ class Todo extends React.Component {
                                     buttonIcon="fas fa-trash-alt"
                                     buttonLabel=""
                                     buttonSize="sm"
-                                    action={ () => this.deleteTodoItem(todoItem) }>
-                                </ConfirmationButton>
+                                    action={ () => this.deleteTodoItem(todoItem) } />
                                 <button className="btn btn-secondary btn-sm ml-2"
                                     onClick={ () => this.enterCreatingSubTodo(todoItem) }>
                                     <i className="fas fa-plus" />
@@ -211,8 +219,8 @@ class Todo extends React.Component {
                         && <tr key={ `commentList_${todoItem.todoId}` }>
                             <td colSpan="4">
                                 <Comment commentType={1}
-                                    entityId={ todoItem.todoId }>
-                                </Comment>
+                                    entityId={ todoItem.todoId }
+                                    updateCommentCount={ increase => this.updateCommentCount(todoItem, increase) } />
                             </td>
                         </tr>,
                         todoItem.creatingSubTodo
@@ -229,8 +237,7 @@ class Todo extends React.Component {
                                                 buttonIcon="fas fa-plus"
                                                 buttonLabel="Create"
                                                 inProgressLabel="Creating"
-                                                action={ e => this.createTodoItem(e, todoItem.todoId, todoCategoryId, todoItem) }>
-                                            </StateButton>
+                                                action={ e => this.createTodoItem(e, todoItem.todoId, todoCategoryId, todoItem) } />
                                             <button type="button"
                                                 className="btn btn-secondary"
                                                 onClick={ e => this.exitCreatingSubTodo(e, todoItem) }>
@@ -270,8 +277,7 @@ class Todo extends React.Component {
                                             buttonIcon="fas fa-trash-alt"
                                             buttonLabel=""
                                             buttonSize="sm"
-                                            action={ () => this.deleteTodoItem(subTodoItem) }>
-                                        </ConfirmationButton>
+                                            action={ () => this.deleteTodoItem(subTodoItem) } />
                                         <button className="btn btn-secondary btn-sm ml-2"
                                             onClick={ () => this.showHideComment(subTodoItem) }>
                                             <i className="far fa-comment" /> { subTodoItem.commentCount || "" }
@@ -282,8 +288,8 @@ class Todo extends React.Component {
                                 && <tr key={ `commentList_${subTodoItem.todoId}` }>
                                     <td colSpan="4">
                                         <Comment commentType={1}
-                                            entityId={ subTodoItem.todoId }>
-                                        </Comment>
+                                            entityId={ subTodoItem.todoId }
+                                            updateCommentCount={ increase => this.updateCommentCount(subTodoItem, increase) } />
                                     </td>
                                 </tr>])
                             : null
@@ -313,8 +319,7 @@ class Todo extends React.Component {
                                 buttonIcon="fas fa-plus"
                                 buttonLabel="Create"
                                 inProgressLabel="Creating"
-                                action={ e => this.createTodoItem(e, null, category.todoCategoryId, category) }>
-                            </StateButton>
+                                action={ e => this.createTodoItem(e, null, category.todoCategoryId, category) } />
                         </div>
                     </div>
                 </form>
