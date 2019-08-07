@@ -44,6 +44,7 @@ class Comment extends React.Component {
                 toast.success("New comment is created successfully.");
                 this.setState({newCommentContent: ""});
                 this.getCommentList();
+                this.props.updateCommentCount(true);
             });
     }
 
@@ -52,6 +53,7 @@ class Comment extends React.Component {
             .then(() => {
                 toast.success("Comment is deleted.");
                 this.getCommentList();
+                this.props.updateCommentCount(false);
             });
 
     render () {
@@ -100,7 +102,8 @@ class Comment extends React.Component {
 
 Comment.propTypes = {
     commentType: PropTypes.number.isRequired,
-    entityId: PropTypes.number.isRequired
+    entityId: PropTypes.number.isRequired,
+    updateCommentCount: PropTypes.func.isRequired
 };
 
 // Map JData from Redux to this component

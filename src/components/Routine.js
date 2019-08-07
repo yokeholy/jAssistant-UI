@@ -148,6 +148,15 @@ class Routine extends React.Component {
                 this.getRoutineList();
             });
 
+    updateCommentCount = (todoItem, increase) => {
+        if (increase) {
+            todoItem.commentCount += 1;
+        } else {
+            todoItem.commentCount -= 1;
+        }
+        this.forceUpdate();
+    }
+
     render () {
         const routineList = this.state.routineList.length
             ? this.sortedRoutineList().map(routineItem =>
@@ -205,7 +214,8 @@ class Routine extends React.Component {
                 && <tr key={ `commentList_${routineItem.routineId}` }>
                     <td colSpan="4">
                         <Comment commentType={2}
-                            entityId={ routineItem.routineId } />
+                            entityId={ routineItem.routineId }
+                            updateCommentCount={ increase => this.updateCommentCount(routineItem, increase) } />
                     </td>
                 </tr>]
             )
