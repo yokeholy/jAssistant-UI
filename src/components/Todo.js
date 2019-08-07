@@ -32,7 +32,7 @@ class Todo extends React.Component {
                     todoDangerLevel: this.props.todoDangerLevel
                 }
             });
-            this.getTodoList(false);
+            this.getTodoList();
         }
     }
 
@@ -59,8 +59,8 @@ class Todo extends React.Component {
             }
         });
 
-    getTodoList = done =>
-        API.get(done ? "/todo/getDoneTodoList" : "/todo/getTodoList")
+    getTodoList = () =>
+        API.get(this.state.displayingDoneTodos ? "/todo/getDoneTodoList" : "/todo/getTodoList")
             .then(response => {
                 this.setState({
                     todoCategoryList: response.todoCategoryList
@@ -74,6 +74,12 @@ class Todo extends React.Component {
 
     enterCreatingSubTodo = todoItem => {
         todoItem.creatingSubTodo = true;
+        todoItem.newTodoItemName = "";
+        this.forceUpdate();
+    }
+
+    updateNewTodoItemName = (todoItem, e) => {
+        todoItem.newTodoItemName = e.target.value;
         this.forceUpdate();
     }
 
@@ -89,7 +95,7 @@ class Todo extends React.Component {
     }
 
     toggleTodoItemStatus = todoItem => {
-        // TODO: Use non-destructive State update (don't use use setState() to update the todoItem)
+        // TODO: Use non-destructive State update (don't use use forceUpdate() to update the todoItem)
         todoItem.todoDone = true;
         this.forceUpdate();
         return API.post("/todo/toggleTodoStatus", { todoId: todoItem.todoId })
@@ -136,8 +142,9 @@ class Todo extends React.Component {
             });
 
     toggleDisplayDoneTodos = () => {
-        this.getTodoList(!this.state.displayingDoneTodos);
-        this.setState({ displayingDoneTodos: !this.state.displayingDoneTodos });
+        this.setState({ displayingDoneTodos: !this.state.displayingDoneTodos },
+            this.getTodoList
+        );
     }
 
     updateCommentCount = (todoItem, increase) => {
@@ -231,7 +238,7 @@ class Todo extends React.Component {
                                         <input type="text"
                                             className="form-control hidingElement"
                                             value={ todoItem.newTodoItemName }
-                                            onChange={ e => { todoItem.newTodoItemName = e.target.value; } } />
+                                            onChange={ e => this.updateNewTodoItemName(todoItem, e) } />
                                         <div className="input-group-append">
                                             <StateButton buttonType="primary"
                                                 buttonIcon="fas fa-plus"
@@ -313,7 +320,7 @@ class Todo extends React.Component {
                         <input type="text"
                             className="form-control hidingElement"
                             value={ category.newTodoItemName }
-                            onChange={ e => { category.newTodoItemName = e.target.value; } } />
+                            onChange={ e => this.updateNewTodoItemName(category, e) } />
                         <div className="input-group-append">
                             <StateButton buttonType="primary"
                                 buttonIcon="fas fa-plus"
