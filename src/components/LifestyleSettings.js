@@ -1,11 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 
 import API from "../services/api";
 import StateButton from "./fragments/StateButton";
 import ConfirmationButton from "./fragments/ConfirmationButton";
 
-class SettingsTodoCategories extends React.Component {
+class LifestyleSettings extends React.Component {
     state = {
         lifestyleSettings: [],
         contentSettings: [],
@@ -38,6 +39,7 @@ class SettingsTodoCategories extends React.Component {
             .then(() => {
                 toast.success(`${newLifestyleName} is updated.`);
                 this.getLifestyleSettings();
+                this.props.getLifestyle();
             });
     }
 
@@ -50,6 +52,7 @@ class SettingsTodoCategories extends React.Component {
             .then(() => {
                 toast.success(`${lifestyleItem.lifestyleName} is updated.`);
                 this.getLifestyleSettings();
+                this.props.getLifestyle();
             });
     }
 
@@ -62,6 +65,7 @@ class SettingsTodoCategories extends React.Component {
             .then(() => {
                 toast.success(`${lifestyleItem.lifestyleName}'s caption is updated.`);
                 this.getLifestyleSettings();
+                this.props.getLifestyle();
             });
     }
 
@@ -73,6 +77,7 @@ class SettingsTodoCategories extends React.Component {
             .then(() => {
                 toast.success(`${lifestyleItem.lifestyleName}'s icon is updated.`);
                 this.getLifestyleSettings();
+                this.props.getLifestyle();
             });
     }
 
@@ -84,6 +89,7 @@ class SettingsTodoCategories extends React.Component {
             .then(() => {
                 toast.success(`${lifestyleItem.lifestyleName}'s color is updated.`);
                 this.getLifestyleSettings();
+                this.props.getLifestyle();
             });
     }
 
@@ -231,4 +237,8 @@ class SettingsTodoCategories extends React.Component {
     }
 }
 
-export default SettingsTodoCategories;
+LifestyleSettings.propTypes = {
+    getLifestyle: PropTypes.func.isRequired
+};
+
+export default LifestyleSettings;
