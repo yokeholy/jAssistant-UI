@@ -59,8 +59,12 @@ class API {
     }
 
     static post (URL, body) {
-        // Exception for authorization check: login
-        let loginAPI = URL === "/account/login";
+        // Exception for authorization check
+        let exceptions = [
+            "/account/login",
+            "/account/signUp"
+        ];
+        let loginAPI = exceptions.includes(URL);
         return API.prototype._prepareAPICall(loginAPI)
             .then(() =>
                 API.prototype._handleAPIResponse(axios.post(Config.APIURL + URL, body)));
