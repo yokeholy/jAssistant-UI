@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import API from "../../services/api";
@@ -82,6 +82,9 @@ class SignUp extends React.Component {
                                         buttonLabel="Sign Up"
                                         inProgressLabel="Signing Up"
                                         action={ this.signUp } />
+                                    <p>Already have an account?
+                                        <Link to="/login">Login</Link>
+                                    </p>
                                 </Form>
                             </div>
                         </div>
