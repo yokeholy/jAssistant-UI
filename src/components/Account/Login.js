@@ -1,11 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import API from "../services/api";
-import StateButton from "./fragments/StateButton";
+import API from "../../services/api";
+import StateButton from "../fragments/StateButton";
+
+// Bootstrap
+import Form from "react-bootstrap/Form";
 
 class Login extends React.Component {
     state = {
@@ -13,15 +16,8 @@ class Login extends React.Component {
         accountPassword: ""
     };
 
-    updateEmail = e => {
-        this.setState({ accountEmail: e.target.value });
-    }
-
-    updatePassword = e => {
-        this.setState({ accountPassword: e.target.value });
-    }
-
-    login = () => {
+    login = e => {
+        e.preventDefault();
         if (!this.state.accountEmail || !this.state.accountPassword) {
             return Promise.reject("Please enter your Email and Password to login.");
         } else {
@@ -53,26 +49,27 @@ class Login extends React.Component {
                         <h3>Login</h3>
                         <div className="row">
                             <div className="col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
-                                <div className="form-group">
-                                    <label htmlFor="accountEmail">Email</label>
-                                    <input type="text"
-                                        className="form-control"
-                                        value={ this.state.accountEmail }
-                                        onChange={ this.updateEmail }/>
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="accountPassword">Password</label>
-                                    <input type="password"
-                                        className="form-control"
-                                        value={ this.state.accountPassword }
-                                        onChange={ this.updatePassword }/>
-                                </div>
-                                <StateButton buttonType="primary"
-                                    buttonIcon="fas fa-sign-in-alt"
-                                    buttonLabel="Login"
-                                    inProgressLabel="Logging In"
-                                    action={ this.login }>
-                                </StateButton>
+                                <Form>
+                                    <Form.Group>
+                                        <Form.Label htmlFor="accountEmail">Email</Form.Label>
+                                        <Form.Control value={ this.state.accountEmail }
+                                            onChange={ e => this.setState({ accountEmail: e.target.value }) } />
+                                    </Form.Group>
+                                    <Form.Group>
+                                        <Form.Label htmlFor="accountPassword">Password</Form.Label>
+                                        <Form.Control type="password"
+                                            value={ this.state.accountPassword }
+                                            onChange={ e => this.setState({ accountPassword: e.target.value }) } />
+                                    </Form.Group>
+                                    <StateButton buttonType="primary"
+                                        buttonIcon="fas fa-sign-in-alt"
+                                        buttonLabel="Login"
+                                        inProgressLabel="Logging In"
+                                        action={ this.login } />
+                                    <p>Need a new account?
+                                        <Link to="/signUp">Sign Up</Link>
+                                    </p>
+                                </Form>
                             </div>
                         </div>
                     </div>

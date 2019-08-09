@@ -10,6 +10,7 @@ class Navigation extends React.Component {
     render () {
         if (!this.props.loginStatus
             && this.props.location.pathname !== "/login"
+            && this.props.location.pathname !== "/signUp"
             && this.props.location.pathname !== "/help") {
             return <Redirect to="/login" />;
         }
@@ -56,6 +57,9 @@ class Navigation extends React.Component {
                         : <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="/login"><i className="fas fa-sign-in-alt" /> Login</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/signUp"><i className="fas fa-user-plus" /> Sign Up</NavLink>
                             </li>
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="/help"><i className="fas fa-question-circle" /> Help</NavLink>
