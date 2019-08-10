@@ -67,6 +67,11 @@ class Navigation extends React.Component {
                         </ul>
                     }
                     <ul className="navbar-nav my-2">
+                        { this.props.loginStatus
+                        && <li className="nav-item">
+                            <NavLink className="nav-link" to="/account"><i className="fas fa-user" /> Account</NavLink>
+                        </li>
+                        }
                         <li className="nav-item">
                             <button className={`btn ${this.props.hideEverything ? "btn-success" : "btn-danger"}`}
                                 onClick={ this.props.showHideEverything }>
