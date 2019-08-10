@@ -19,6 +19,7 @@ import Settings from "./components/Settings";
 import Login from "./components/Account/Login";
 import SignUp from "./components/Account/SignUp";
 import Account from "./components/Account/Account";
+import Password from "./components/Account/Password";
 import Help from "./components/Help";
 
 import API from "./services/api";
@@ -91,6 +92,7 @@ class JAssistant extends React.Component {
                         <Route exact path="/login" component={ Login } />
                         <Route exact path="/signup" component={ SignUp } />
                         <Route exact path="/account" component={ Account } />
+                        <Route exact path="/password" component={ Password } />
                         <Route exact path="/help/:page?" component={ Help } />
                     </section>
                     <ToastContainer />
