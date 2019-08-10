@@ -18,6 +18,7 @@ import Lifestyle from "./components/Lifestyle";
 import Settings from "./components/Settings";
 import Login from "./components/Account/Login";
 import SignUp from "./components/Account/SignUp";
+import Account from "./components/Account/Account";
 import Help from "./components/Help";
 
 import API from "./services/api";
@@ -89,6 +90,7 @@ class JAssistant extends React.Component {
                         <Route exact path="/settings" component={ Settings } />
                         <Route exact path="/login" component={ Login } />
                         <Route exact path="/signup" component={ SignUp } />
+                        <Route exact path="/account" component={ Account } />
                         <Route exact path="/help/:page?" component={ Help } />
                     </section>
                     <ToastContainer />

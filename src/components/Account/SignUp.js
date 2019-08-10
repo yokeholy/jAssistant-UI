@@ -20,7 +20,12 @@ class SignUp extends React.Component {
 
     signUp = e => {
         e.preventDefault();
-        if (!this.state.userName || !this.state.accountEmail || !this.state.accountPassword || !this.state.confirmPassword) {
+        if (
+            !this.state.userName
+            || !this.state.accountEmail
+            || !this.state.accountPassword
+            || !this.state.confirmPassword
+        ) {
             return Promise.reject("Please enter your Name, Email and Password to sign up.");
         } else if (this.state.accountPassword !== this.state.confirmPassword) {
             return Promise.reject("Passwords don't match.");
