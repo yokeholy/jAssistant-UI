@@ -1,5 +1,11 @@
 # Change Log
 
+## v1.1.0
+#### New Feature
+* JA-65, JA-66, JA-71: User account functions
+  * Login/logout, sign up, update profile, change password
+  * Todos, Routines, Lifestyles, Comments now will associate with user accounts for ownership
+
 ## v1.0.2
 #### Improvement
 * JA-60: When editing Todo Item and Routine, pressing Enter should also finish the editing
