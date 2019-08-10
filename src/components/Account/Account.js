@@ -19,11 +19,11 @@ class Account extends React.Component {
         editingProfile: false
     };
 
-    componentDidMount () {
+    componentDidMount = () => {
         if (this.props.loginStatus) {
             this.getAccount();
         }
-    }
+    };
 
     getAccount = () =>
         API.get("/account/getAccount")
@@ -33,7 +33,6 @@ class Account extends React.Component {
                     accountEmail: response.accountEmail
                 });
             });
-
 
     updateAccount = e => {
         e.preventDefault();
@@ -51,7 +50,19 @@ class Account extends React.Component {
                     toast.error(`Updating your account was not successful: ${error.response.data.metadata.message}`);
                 });
         }
-    }
+    };
+
+    logout = () =>
+        API.post("/account/logout", {
+            userName: this.state.userName,
+            accountEmail: this.state.accountEmail
+        })
+            .then(response => {
+                toast.success(`Your account is updated, ${response.userName}`);
+                this.setState({ editingProfile: false });
+            }, error => {
+                toast.error(`Updating your account was not successful: ${error.response.data.metadata.message}`);
+            });
 
     render () {
         return (

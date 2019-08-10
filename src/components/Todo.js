@@ -25,7 +25,7 @@ class Todo extends React.Component {
         displayingDoneTodos: false
     };
 
-    componentDidMount () {
+    componentDidMount = () => {
         if (this.props.loginStatus) {
             this.setState({
                 todoSettings: {
@@ -35,7 +35,7 @@ class Todo extends React.Component {
             });
             this.getTodoList();
         }
-    }
+    };
 
     setSort = field => {
         if (field === this.state.sortingItem) {
@@ -47,7 +47,7 @@ class Todo extends React.Component {
                 sortingItem: field
             });
         }
-    }
+    };
 
     sortedTodoList = list =>
         list.sort((a, b) => {
@@ -71,32 +71,31 @@ class Todo extends React.Component {
     enterEditing = todoItem => {
         todoItem.editing = true;
         this.forceUpdate();
-    }
+    };
 
     enterCreatingSubTodo = todoItem => {
         todoItem.creatingSubTodo = true;
         todoItem.newTodoItemName = "";
         this.forceUpdate();
-    }
+    };
 
     updateNewTodoItemName = (todoItem, e) => {
         todoItem.newTodoItemName = e.target.value;
         this.forceUpdate();
-    }
+    };
 
     showHideComment = todoItem => {
         todoItem.showingComment = !todoItem.showingComment;
         this.forceUpdate();
-    }
+    };
 
     exitCreatingSubTodo = (e, todoItem) => {
         e.preventDefault();
         todoItem.creatingSubTodo = false;
         this.forceUpdate();
-    }
+    };
 
     toggleTodoItemStatus = todoItem => {
-        // TODO: Use non-destructive State update (don't use use forceUpdate() to update the todoItem)
         todoItem.todoDone = true;
         this.forceUpdate();
         return API.post("/todo/toggleTodoStatus", { todoId: todoItem.todoId })
@@ -104,7 +103,7 @@ class Todo extends React.Component {
                 toast.success(`${todoItem.todoName} is now done!`);
                 this.getTodoList();
             });
-    }
+    };
 
     createTodoItem = (e, parentTodoId = null, todoCategoryId, entity) => {
         e.preventDefault();
@@ -119,7 +118,7 @@ class Todo extends React.Component {
                 this.forceUpdate();
                 this.getTodoList();
             });
-    }
+    };
 
     updateTodoItem = (e, todoItem) => {
         todoItem.editing = false;
@@ -133,7 +132,7 @@ class Todo extends React.Component {
                 toast.success(`${todoItem.todoName} is updated.`);
                 this.getTodoList();
             });
-    }
+    };
 
     deleteTodoItem = todoItem =>
         API.post("/todo/deleteTodo", { todoId: todoItem.todoId })
@@ -142,11 +141,10 @@ class Todo extends React.Component {
                 this.getTodoList();
             });
 
-    toggleDisplayDoneTodos = () => {
+    toggleDisplayDoneTodos = () =>
         this.setState({ displayingDoneTodos: !this.state.displayingDoneTodos },
             this.getTodoList
         );
-    }
 
     updateCommentCount = (todoItem, increase) => {
         if (increase) {
@@ -155,7 +153,7 @@ class Todo extends React.Component {
             todoItem.commentCount -= 1;
         }
         this.forceUpdate();
-    }
+    };
 
     render () {
         const sortingIndicator = field => {
@@ -243,7 +241,9 @@ class Todo extends React.Component {
                                                 buttonIcon="fas fa-plus"
                                                 buttonLabel="Create"
                                                 inProgressLabel="Creating"
-                                                action={ e => this.createTodoItem(e, todoItem.todoId, todoCategoryId, todoItem) } />
+                                                action={ e =>
+                                                    this.createTodoItem(e, todoItem.todoId, todoCategoryId, todoItem)
+                                                } />
                                             <button type="button"
                                                 className="btn btn-secondary"
                                                 onClick={ e => this.exitCreatingSubTodo(e, todoItem) }>
@@ -293,7 +293,9 @@ class Todo extends React.Component {
                                     <td colSpan="4">
                                         <Comment commentType={1}
                                             entityId={ subTodoItem.todoId }
-                                            updateCommentCount={ increase => this.updateCommentCount(subTodoItem, increase) } />
+                                            updateCommentCount={ increase =>
+                                                this.updateCommentCount(subTodoItem, increase)
+                                            } />
                                     </td>
                                 </tr>])
                             : null

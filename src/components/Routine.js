@@ -49,12 +49,12 @@ class Routine extends React.Component {
         }
     };
 
-    componentDidMount () {
+    componentDidMount = () => {
         if (this.props.loginStatus) {
             this.getRoutineList();
             window.setInterval(this._startTimer, 1000);
         }
-    }
+    };
 
     setSort = field => {
         if (field === this.state.sortingItem) {
@@ -66,7 +66,7 @@ class Routine extends React.Component {
                 sortingItem: field
             });
         }
-    }
+    };
 
     sortedRoutineList = () =>
         this.state.routineList.sort((a, b) => {
@@ -82,12 +82,12 @@ class Routine extends React.Component {
     showHideComment = routineItem => {
         routineItem.showingComment = !routineItem.showingComment;
         this.forceUpdate();
-    }
+    };
 
     showHideRoutineConfig = routineItem => {
         routineItem.showingRoutineConfig = !routineItem.showingRoutineConfig;
         this.forceUpdate();
-    }
+    };
 
     getRoutineList = () =>
         API.get("/routine/getRoutineList")
@@ -99,14 +99,13 @@ class Routine extends React.Component {
                 });
             });
 
-    updateNewRoutineName = e => {
+    updateNewRoutineName = e =>
         this.setState({ newRoutineName: e.target.value });
-    }
 
     enterEditing = routineItem => {
         routineItem.editing = true;
         this.forceUpdate();
-    }
+    };
 
     checkInRoutine = routineItem => {
         routineItem.routineCheckedIn = true;
@@ -116,7 +115,7 @@ class Routine extends React.Component {
                 toast.success(`${routineItem.routineName} is done today!`);
                 this.getRoutineList();
             });
-    }
+    };
 
     createRoutine = e => {
         e.preventDefault();
@@ -126,7 +125,7 @@ class Routine extends React.Component {
                 this.setState({newRoutineName: ""});
                 this.getRoutineList();
             });
-    }
+    };
 
     updateRoutine = (e, routineItem) => {
         routineItem.editing = false;
@@ -140,7 +139,7 @@ class Routine extends React.Component {
                 toast.success(`${routineItem.routineName} is updated.`);
                 this.getRoutineList();
             });
-    }
+    };
 
     deleteRoutine = routineItem =>
         API.post("/routine/deleteRoutine", { routineId: routineItem.routineId })
@@ -156,7 +155,7 @@ class Routine extends React.Component {
             todoItem.commentCount -= 1;
         }
         this.forceUpdate();
-    }
+    };
 
     render () {
         const routineList = this.state.routineList.length

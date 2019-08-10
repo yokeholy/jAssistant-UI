@@ -25,7 +25,7 @@ class RoutineConfig extends React.Component {
         daysInMonth: [...Array(31).keys()]
     };
 
-    componentDidMount () {
+    componentDidMount = () => {
         let routineFrequencyConfig = {
             periodType: 1,
             monthlyDay: 1,
@@ -49,7 +49,7 @@ class RoutineConfig extends React.Component {
         this.setState({
             frequencyConfig: routineFrequencyConfig
         });
-    }
+    };
 
     updatePeriodType = (e, newPeriod) => {
         if (e.target.checked) {
@@ -60,37 +60,37 @@ class RoutineConfig extends React.Component {
                 }
             });
         }
-    }
+    };
 
-    updateMonthlyFrequency = e => {
+    updateMonthlyFrequency = e =>
         this.setState({
             frequencyConfig: {
                 ...this.state.frequencyConfig,
                 monthlyDay: e.target.value
             }
         });
-    }
 
-    updateWeeklyFrequency = e => {
+    updateWeeklyFrequency = e =>
         this.setState({
             frequencyConfig: {
                 ...this.state.frequencyConfig,
                 weeklyDay: e.target.value
             }
         });
-    }
 
     updateDailyFrequency = index => {
         let frequencyConfig = this.state.frequencyConfig.dailyFrequency;
         let newFrequency = frequencyConfig[index] === "0" ? "1" : "0";
-        frequencyConfig = frequencyConfig.substr(0, index) + newFrequency + frequencyConfig.substr(index + newFrequency.length);
+        frequencyConfig = frequencyConfig.substr(0, index)
+            + newFrequency
+            + frequencyConfig.substr(index + newFrequency.length);
         this.setState({
             frequencyConfig: {
                 ...this.state.frequencyConfig,
                 dailyFrequency: frequencyConfig
             }
         });
-    }
+    };
 
     updateRoutineConfig = () =>
         API.post("/routine/updateRoutineConfig", {

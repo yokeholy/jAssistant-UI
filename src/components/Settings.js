@@ -21,11 +21,11 @@ class Settings extends React.Component {
         todoCategorySettings: []
     };
 
-    componentDidMount () {
+    componentDidMount = () => {
         if (this.props.loginStatus) {
             this.getAllSettings();
         }
-    }
+    };
 
     getAllSettings = () =>
         API.get("/settings/getAllSettings")
@@ -42,41 +42,37 @@ class Settings extends React.Component {
                 });
             });
 
-    resetAppName = () => {
+    resetAppName = () =>
         this.setState({
             generalSettings: {
                 ...this.state.generalSettings,
                 appName: "jAssistant"
             }
         });
-    }
 
-    updateAppName = e => {
+    updateAppName = e =>
         this.setState({
             generalSettings: {
                 ...this.state.generalSettings,
                 appName: e.target.value
             }
         });
-    }
 
-    updateTodoAlertLevel = e => {
+    updateTodoAlertLevel = e =>
         this.setState({
             generalSettings: {
                 ...this.state.generalSettings,
                 todoAlertLevel: e.target.value
             }
         });
-    }
 
-    updateTodoDangerLevel = e => {
+    updateTodoDangerLevel = e =>
         this.setState({
             generalSettings: {
                 ...this.state.generalSettings,
                 todoDangerLevel: e.target.value
             }
         });
-    }
 
     saveGeneralSettings = () => {
         let newSettings = [];
@@ -96,7 +92,7 @@ class Settings extends React.Component {
             .then(() => {
                 this.getAllSettings();
             });
-    }
+    };
 
     render () {
         return (
@@ -115,7 +111,8 @@ class Settings extends React.Component {
                                             value={ this.state.generalSettings.appName }
                                             onChange={ this.updateAppName } />
                                         <Form.Text>
-                                            The App Name will be displayed at the top-left corner of every page, as well as in the title bar of your browser.<br />
+                                            The App Name will be displayed at the top-left corner of every page,
+                                            as well as in the title bar of your browser.<br />
                                             If you leave it as <span className="text-success clickable" onClick={ this.resetAppName }>jAssistant</span>, the jAssistant logo will be displayed. :)
                                         </Form.Text>
                                     </Form.Group>
