@@ -14,7 +14,7 @@ class Comment extends React.Component {
         newCommentContent: ""
     };
 
-    componentDidMount () {
+    componentDidMount = () => {
         this.getCommentList();
     }
 
@@ -46,7 +46,7 @@ class Comment extends React.Component {
                 this.getCommentList();
                 this.props.updateCommentCount(true);
             });
-    }
+    };
 
     deleteComment = comment =>
         API.post("/comment/deleteComment", { commentId: comment.commentId })

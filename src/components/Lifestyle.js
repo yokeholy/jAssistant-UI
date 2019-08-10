@@ -13,27 +13,26 @@ class Lifestyle extends React.Component {
         lifestyles: []
     };
 
-    componentDidMount () {
+    componentDidMount = () => {
         if (this.props.loginStatus) {
             this.getLifestyle();
         }
-    }
+    };
 
-    getLifestyle () {
+    getLifestyle = () =>
         API.get("/lifestyle/getLifestyle")
             .then(response => {
                 this.setState({
                     lifestyles: response.lifestyles
                 });
             });
-    }
-    lifestyleUp = lifestyleId => {
+
+    lifestyleUp = lifestyleId =>
         API.post("/lifestyle/upLifestyle", { lifestyleId })
             .then(() => {
                 toast.success("Cheers! Keep this good lifestyle up.");
                 this.getLifestyle();
             });
-    }
 
     render () {
         const lifestyleList = this.state.lifestyles.length

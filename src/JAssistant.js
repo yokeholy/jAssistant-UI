@@ -29,7 +29,7 @@ class JAssistant extends React.Component {
         timer: null
     }
 
-    componentDidMount () {
+    componentDidMount = () => {
         this.getGeneralSettings();
         this.resetTimer();
         // DOM Events
@@ -39,14 +39,14 @@ class JAssistant extends React.Component {
         document.onclick = this.resetTimer;
         document.ondblclick = this.resetTimer;
         document.onkeypress = this.resetTimer;
-    }
+    };
 
-    componentWillUnmount () {
+    componentWillUnmount = () => {
         window.clearTimeout(this.state.timer);
         this.setState({
             timer: null
         });
-    }
+    };
 
     resetTimer = () => {
         window.clearTimeout(this.state.timer);
@@ -74,7 +74,7 @@ class JAssistant extends React.Component {
                     this.props.updateGeneralSettings(generalSettings);
                 });
         }
-    }
+    };
 
     render () {
         return (

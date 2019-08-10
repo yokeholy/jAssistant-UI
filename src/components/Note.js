@@ -16,7 +16,7 @@ class Note extends React.Component {
         archivedNoteList: []
     };
 
-    componentDidMount () {
+    componentDidMount = () => {
         if (this.props.loginStatus) {
             this.getNotes();
         }
@@ -25,7 +25,7 @@ class Note extends React.Component {
         if (!this.props.dashboard) {
             this.getArchivedNotes();
         }
-    }
+    };
 
     getNotes = () =>
         API.get("/note/getNotes")
@@ -46,19 +46,19 @@ class Note extends React.Component {
     watchNoteTitle = (e, noteItem) => {
         noteItem.noteTitle = e.target.value;
         this.forceUpdate();
-    }
+    };
 
     watchNoteContent = (e, noteItem) => {
         noteItem.noteContent = e.target.value;
         this.forceUpdate();
-    }
+    };
 
     checkToSave = (e, noteItem) => {
         if (e.keyCode === 83 && e.metaKey) {
             e.preventDefault();
             this.updateNote(noteItem);
         }
-    }
+    };
 
     createNote = () =>
         API.post("/note/createNote")

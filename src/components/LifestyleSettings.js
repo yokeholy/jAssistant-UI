@@ -14,13 +14,12 @@ class LifestyleSettings extends React.Component {
         newLifestyleName: ""
     };
 
-    componentDidMount () {
+    componentDidMount = () => {
         this.getLifestyleSettings();
-    }
+    };
 
-    updateNewLifestyleName = e => {
+    updateNewLifestyleName = e =>
         this.setState({ newLifestyleName: e.target.value });
-    }
 
     getLifestyleSettings = () =>
         API.get("/lifestyle/getLifestyleSettings")
@@ -42,7 +41,7 @@ class LifestyleSettings extends React.Component {
                 this.getLifestyleSettings();
                 this.props.getLifestyle();
             });
-    }
+    };
 
     updateLifestyleValue = (e, lifestyleItem) => {
         let newLifestyleDailyValue = e.target.value;
@@ -55,7 +54,7 @@ class LifestyleSettings extends React.Component {
                 this.getLifestyleSettings();
                 this.props.getLifestyle();
             });
-    }
+    };
 
     updateLifestyleCaption = (e, lifestyleItem) => {
         let newLifestyleName = e.target.value;
@@ -68,9 +67,9 @@ class LifestyleSettings extends React.Component {
                 this.getLifestyleSettings();
                 this.props.getLifestyle();
             });
-    }
+    };
 
-    selectLifestyleIcon = (lifestyleItem, iconName) => {
+    selectLifestyleIcon = (lifestyleItem, iconName) =>
         API.post("/lifestyle/saveLifestyleSetting", {
             lifestyleId: lifestyleItem.lifestyleId,
             lifestyleIconName: iconName
@@ -80,9 +79,8 @@ class LifestyleSettings extends React.Component {
                 this.getLifestyleSettings();
                 this.props.getLifestyle();
             });
-    }
 
-    selectLifestyleColor = (lifestyleItem, colorName) => {
+    selectLifestyleColor = (lifestyleItem, colorName) =>
         API.post("/lifestyle/saveLifestyleSetting", {
             lifestyleId: lifestyleItem.lifestyleId,
             lifestyleColorName: colorName
@@ -92,7 +90,6 @@ class LifestyleSettings extends React.Component {
                 this.getLifestyleSettings();
                 this.props.getLifestyle();
             });
-    }
 
     createLifestyle = () =>
         API.post("/lifestyle/saveLifestyleSetting", {

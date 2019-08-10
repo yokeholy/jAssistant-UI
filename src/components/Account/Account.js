@@ -19,11 +19,11 @@ class Account extends React.Component {
         editingProfile: false
     };
 
-    componentDidMount () {
+    componentDidMount = () => {
         if (this.props.loginStatus) {
             this.getAccount();
         }
-    }
+    };
 
     getAccount = () =>
         API.get("/account/getAccount")
@@ -33,7 +33,6 @@ class Account extends React.Component {
                     accountEmail: response.accountEmail
                 });
             });
-
 
     updateAccount = e => {
         e.preventDefault();
@@ -51,7 +50,16 @@ class Account extends React.Component {
                     toast.error(`Updating your account was not successful: ${error.response.data.metadata.message}`);
                 });
         }
-    }
+    };
+
+    logout = () =>
+        API.post("/account/logout")
+            .then(() => {
+                toast.success("You've successfully logged out.");
+                this.props.updateLoginStatus(false);
+            }, error => {
+                toast.error(`Logging out was not successful: ${error.response.data.metadata.message}`);
+            });
 
     render () {
         return (
@@ -79,6 +87,11 @@ class Account extends React.Component {
                                             </Link>
                                         </Card.Footer>
                                     </Card>
+                                    <Button variant="outline-danger"
+                                        className="mt-3"
+                                        onClick={ this.logout }>
+                                        <i className="fas fa-sign-out-alt" /> Log Out
+                                    </Button>
                                 </div>
                                 : <div className="col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
                                     <Form>
@@ -109,10 +122,20 @@ class Account extends React.Component {
 }
 
 Account.propTypes = {
-    loginStatus: PropTypes.bool.isRequired
+    loginStatus: PropTypes.bool.isRequired,
+    updateLoginStatus: PropTypes.func.isRequired
 };
 
 // Map JData from Redux to this component
 const mapStateToProps = state => state;
 
-export default connect(mapStateToProps)(Account);
+// Map JData dispatch methods
+const mapDispatchToProps = dispatch => ({
+    updateLoginStatus: newStatus =>
+        dispatch({
+            type: "UPDATE_LOGIN_STATUS",
+            newStatus
+        })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Account);

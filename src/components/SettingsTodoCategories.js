@@ -12,9 +12,8 @@ class SettingsTodoCategories extends React.Component {
         newTodoCategoryName: ""
     }
 
-    updateNewTodoCategoryName = e => {
+    updateNewTodoCategoryName = e =>
         this.setState({ newTodoCategoryName: e.target.value });
-    }
 
     createTodoCategorySetting = () =>
         API.post("/settings/saveTodoCategorySetting", {
@@ -42,7 +41,7 @@ class SettingsTodoCategories extends React.Component {
             .then(() => {
                 this.props.getAllSettings();
             });
-    }
+    };
 
     deleteTodoCategory = todoCategoryItem => {
         if (todoCategoryItem.todoCount > 0) {
@@ -57,7 +56,7 @@ class SettingsTodoCategories extends React.Component {
                     this.props.getAllSettings();
                 });
         }
-    }
+    };
 
     render () {
         const todoCategoryList = this.props.todoCategorySettings.length
